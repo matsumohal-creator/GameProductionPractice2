@@ -5,6 +5,7 @@ using UnityEngine;
 // キャラクターのクラスを定義する列挙型
 public enum CharacterClass
 {
+    None,    // クラスなし（全てのクラスで使用可能なスキルに使用）
     Fighter, // 近接攻撃に優れたクラス
     Healer,  // 回復やサポートに特化したクラス
     Knight,  // 防御力が高く、盾を使うクラス

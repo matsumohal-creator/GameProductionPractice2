@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adb0fb5e9aa9bbb4f9c0596e707543fc, type: 3}
-  m_Name: New Status Effect Data
+  m_Name: Weakness
   m_EditorClassIdentifier: 
-  effectName: 
-  description: 
+  effectName: "\u5F31\u70B9"
+  description: "\u88AB\u30C0\u30E1\u30FC\u30B8\u306E\u5897\u52A01\u5C64\u3054\u3068\u306B10\uFF05\u5897\u52A0\u3057\u3001\u30BF\u30FC\u30F3\u7D42\u4E86\u6642\u306B0\u306B\u30EA\u30BB\u30C3\u30C8\u3055\u308C\u308B"
   icon: {fileID: 0}
   isBuff: 0
-  maxStack: 0
+  maxStack: 999

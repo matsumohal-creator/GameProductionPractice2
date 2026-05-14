@@ -19,4 +19,19 @@ public class StatusEffectData : ScriptableObject
     public bool isBuff;
     // 状態異常の効果の値。バフの場合は強化量、デバフの場合は弱体化量を設定します。
     public int maxStack;
+    
+    public StatusEffectType effectType;
+}
+
+public class StatusEffect
+{
+    public StatusEffectData data;
+
+    public int stack;
+
+    public StatusEffect(StatusEffectData data, int amount)
+    {
+        this.data = data;
+        this.stack = amount;
+    }
 }

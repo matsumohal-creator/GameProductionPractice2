@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb0fb5e9aa9bbb4f9c0596e707543fc, type: 3}
+  m_Name: Vulnerable
+  m_EditorClassIdentifier: 
+  effectName: "\u8131\u529B"
+  description: "\u4E0E\u3048\u308B\u30C0\u30E1\u30FC\u30B8\u304C\u5C64\u5206\u6E1B\u5C11\u3002\u30BF\u30FC\u30F3\u7D42\u4E86\u6642\u306B0\u306B\u30EA\u30BB\u30C3\u30C8"
+  icon: {fileID: 0}
+  isBuff: 0
+  maxStack: 999

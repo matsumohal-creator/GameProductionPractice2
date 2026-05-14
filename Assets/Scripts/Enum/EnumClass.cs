@@ -35,3 +35,12 @@ public enum SkillEffectType
     CostGain,    // コストを増加させる効果
     Special      // 特殊な効果（例: 特定の条件で発動する効果）
 }
+
+public enum StatusEffectType
+{
+    Poison,    //  毒
+    Burn,      // 燃焼
+    Fatigue,   // 疲労
+    Weakness,  // 弱点
+    Vulnerable // 脱力
+}

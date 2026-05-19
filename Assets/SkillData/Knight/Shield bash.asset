@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
+  m_Name: Shield bash
+  m_EditorClassIdentifier: 
+  skillName: "\u30B7\u30FC\u30EB\u30C9\u30D0\u30C3\u30B7\u30E5"
+  description: "\u5BFE\u8C61\u306B6\u30C0\u30E1\u30FC\u30B8"
+  icon: {fileID: 0}
+  cost: 1
+  targetType: 0
+  effects:
+  - effectType: 0
+    value: 6
+    statusEffect: {fileID: 0}
+    statusStack: 0
+  exclusiveClass: 3

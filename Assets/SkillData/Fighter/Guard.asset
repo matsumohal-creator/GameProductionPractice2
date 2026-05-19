@@ -19,7 +19,7 @@ MonoBehaviour:
   targetType: 4
   effects:
   - effectType: 2
-    value: 0
+    value: 6
     statusEffect: {fileID: 0}
-    duration: 0
-  exclusiveClass: 0
+    statusStack: 0
+  exclusiveClass: 1

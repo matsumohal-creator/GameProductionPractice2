@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
-  m_Name: Slash
+  m_Name: Ally All Heal
   m_EditorClassIdentifier: 
-  skillName: "\u30B9\u30E9\u30C3\u30B7\u30E5"
-  description: "\u6575\u5358\u4F53\u306B\u5BFE\u3057\u30666\u30C0\u30E1\u30FC\u30B8\u4E0E\u3048\u308B"
+  skillName: "\u5168\u4F53\u56DE\u5FA9"
+  description: "\u5473\u65B9\u5168\u4F53\u306B\u5BFE\u3057\u3066\u3001\u56DE\u5FA9\u3092\u884C\u3046"
   icon: {fileID: 0}
-  cost: 1
-  targetType: 0
+  cost: 4
+  targetType: 3
   effects:
-  - effectType: 0
-    value: 6
+  - effectType: 1
+    value: 0
     statusEffect: {fileID: 0}
-    duration: 0
-  exclusiveClass: 0
+    statusStack: 0
+  exclusiveClass: 2

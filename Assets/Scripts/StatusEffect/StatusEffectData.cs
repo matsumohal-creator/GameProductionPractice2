@@ -22,16 +22,3 @@ public class StatusEffectData : ScriptableObject
     
     public StatusEffectType effectType;
 }
-
-public class StatusEffect
-{
-    public StatusEffectData data;
-
-    public int stack;
-
-    public StatusEffect(StatusEffectData data, int amount)
-    {
-        this.data = data;
-        this.stack = amount;
-    }
-}

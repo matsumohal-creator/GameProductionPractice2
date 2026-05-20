@@ -17,3 +17,4 @@ MonoBehaviour:
   icon: {fileID: 0}
   isBuff: 0
   maxStack: 999
+  effectType: 3

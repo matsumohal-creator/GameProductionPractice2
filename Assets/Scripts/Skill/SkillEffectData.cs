@@ -19,5 +19,6 @@ public class SkillEffectData
     public StatusEffectData statusEffect;
     // 効果の持続ターン数。ダメージや回復などの即時効果の場合は0に設定します。
     [Header("Duration")]
-    public int statusStack;
+    public int duration; // 継続ターン数
+    public int stack; //効果量
 }

@@ -2,4 +2,16 @@ public interface IStatusEffectTarget
 {
     // 状態異常処理から呼ばれるダメージ受け取り口
     void TakeDamage(int amount);
+
+    // 状態異常処理から呼ばれる回復受け取り口
+    void Heal(int amount);
+
+    // 状態異常処理から呼ばれる状態異常付与口
+    void ApplyStatusEffect(
+        StatusEffectData statusData,
+        int duration,
+        int stack);
+
+    // 状態異常処理から呼ばれる受け取り口
+    int GetStatusStack(StatusEffectType type);
 }

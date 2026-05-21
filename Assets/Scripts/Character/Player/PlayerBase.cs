@@ -199,7 +199,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
             StatusEffectManager.ApplyTurnTick(this, pair.Value);
             pair.Value.remainingTurns--;
 
-            if (pair.Value.remainingTurns <= 0)
+            if (pair.Value.remainingTurns <= 0 || pair.Value.stack <= 0)
             {
                 expired.Add(pair.Key);
             }

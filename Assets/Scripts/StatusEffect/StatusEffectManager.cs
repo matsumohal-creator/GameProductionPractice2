@@ -12,10 +12,12 @@ public static class StatusEffectManager
         {
             case StatusEffectType.Poison:
                 target.TakeDamage(instance.stack);
+                instance.stack--;
                 break;
 
             case StatusEffectType.Burn:
-                target.TakeDamage(instance.stack * 2);
+                target.TakeDamage(instance.stack);
+                instance.stack--;
                 break;
 
             case StatusEffectType.Fatigue:

@@ -7,8 +7,8 @@
 public class StatusEffectInstance
 {
     public StatusEffectData data;
-
+    // ƒ^[ƒ“”
     public int remainingTurns;
-
+    // Œø‰Ê—Ê
     public int stack;
 }

@@ -10,17 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
-  m_Name: Poison
+  m_Name: Twin Slash
   m_EditorClassIdentifier: 
-  skillName: "\u3069\u304F\u3069\u304F"
-  description: "\u76F8\u624B\u5358\u4F53\u3092\u5BFE\u8C61\u306B\u6BD2\u30922\u4ED8\u4E0E\u3059\u308B"
+  skillName: "\u30C4\u30A4\u30F3\u30B9\u30E9\u30C3\u30B7\u30E5"
+  description: "5\u30C0\u30E1\u30FC\u30B8\u3092\u4E8C\u56DE\u4E0E\u3048\u308B"
   icon: {fileID: 0}
-  cost: 1
+  cost: 2
   targetType: 0
   effects:
   - effectType: 0
-    value: 0
-    statusEffect: {fileID: 11400000, guid: 82e0d744e854abd4a812ade4ffe6333f, type: 2}
-    duration: 2
-    stack: 2
-  exclusiveClass: 4
+    value: 5
+    statusEffect: {fileID: 0}
+    duration: 0
+    stack: 0
+  - effectType: 0
+    value: 5
+    statusEffect: {fileID: 0}
+    duration: 0
+    stack: 0
+  exclusiveClass: 1

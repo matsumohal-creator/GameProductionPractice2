@@ -15,12 +15,7 @@ MonoBehaviour:
   skillName: 
   description: 
   icon: {fileID: 0}
-  cost: 2
+  cost: 0
   targetType: 0
-  effects:
-  - effectType: 0
-    value: 0
-    statusEffect: {fileID: 0}
-    duration: 0
-    stack: 0
-  exclusiveClass: 1
+  effects: []
+  exclusiveClass: 0

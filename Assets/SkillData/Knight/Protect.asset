@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Protect
   m_EditorClassIdentifier: 
   skillName: "\u304B\u3070\u3046"
-  description: "\u5473\u65B91\u540D\u306B\u30B7\u30FC\u30EB\u30C9\u309210\u4ED8\u4E0E\u3059\u308B"
+  description: "\u5473\u65B91\u540D\u306B\u30B7\u30FC\u30EB\u30C9\u30928\u4ED8\u4E0E\u3059\u308B"
   icon: {fileID: 0}
   cost: 0
   targetType: 2

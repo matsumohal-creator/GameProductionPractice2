@@ -14,4 +14,10 @@ public interface IStatusEffectTarget
 
     // 状態異常処理から呼ばれる受け取り口
     int GetStatusStack(StatusEffectType type);
+
+    // シールドを獲得
+    void GainShield(int amount);
+
+    // シールドを無視して直接HPへダメージ
+    void TakeDirectDamage(int amount);
 }

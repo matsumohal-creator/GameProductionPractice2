@@ -7,7 +7,7 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     [Header("Base Status")]
     [SerializeField] private int maxHp = 100;
     [SerializeField] private int currentHp = 100;
-
+    [SerializeField] private int shield = 0;
     [Header("Status Effect Master")]
     [SerializeField] private List<StatusEffectData> statusEffectMaster = new List<StatusEffectData>();
 
@@ -19,6 +19,7 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
 
     public int CurrentHp => currentHp;
     public int MaxHp => maxHp;
+    public int Shield => shield;
     public IReadOnlyCollection<StatusEffectInstance> ActiveStatusEffects => activeStatusEffects.Values;
     public IReadOnlyList<SkillData> Skills => skills;
 
@@ -143,8 +144,32 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
         currentHp = Mathf.Clamp(value, 0, maxHp);
     }
 
+    // シールドを加算する
+    public void GainShield(int amount)
+    {
+        shield += Mathf.Max(0, amount);
+    }
+
     // ダメージを受ける
     public void TakeDamage(int amount)
+    {
+        amount = Mathf.Max(0, amount);
+
+        // シールドで吸収
+        if (shield > 0)
+        {
+            int blocked = Mathf.Min(shield, amount);
+
+            shield -= blocked;
+            amount -= blocked;
+        }
+
+        // 残ったダメージをHPへ
+        currentHp = Mathf.Max(0, currentHp - amount);
+    }
+
+    // シールド無視ダメージ
+    public void TakeDirectDamage(int amount)
     {
         currentHp = Mathf.Max(0, currentHp - Mathf.Max(0, amount));
     }
@@ -153,6 +178,14 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     public void Heal(int amount)
     {
         currentHp = Mathf.Min(maxHp, currentHp + Mathf.Max(0, amount));
+    }
+
+    // ターン終了時処理
+    public void OnTurnEnd()
+    {
+        TickStatusEffects();
+        // ターン終了時にシールドをリセット
+        shield = 0;
     }
 
     // ターン進行時の状態異常処理を行う
@@ -165,7 +198,7 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
             StatusEffectManager.ApplyTurnTick(this, pair.Value);
             pair.Value.remainingTurns--;
 
-            if (pair.Value.remainingTurns <= 0)
+            if (pair.Value.remainingTurns <= 0 || pair.Value.stack <= 0)
             {
                 expired.Add(pair.Key);
             }

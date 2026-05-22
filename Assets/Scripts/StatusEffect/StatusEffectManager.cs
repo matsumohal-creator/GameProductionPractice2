@@ -13,17 +13,28 @@ public static class StatusEffectManager
             // 毒ダメージ：スタック数分のダメージを受ける
             case StatusEffectType.Poison:
                 target.TakeDamage(instance.stack);
+                instance.stack--;
                 break;
 
-            // 燃焼ダメージ：スタック数の2倍のダメージを受ける
+            // 燃焼（シールド貫通）
             case StatusEffectType.Burn:
-                target.TakeDamage(instance.stack * 2);
+                target.TakeDirectDamage(instance.stack);
+                instance.stack--;
                 break;
 
-            // 疲労、弱体化、脱力：現在は特殊効果なし（スキルで個別に処理）
+            // 疲労
             case StatusEffectType.Fatigue:
+                instance.stack--;
+                break;
+
+            // 脱力
             case StatusEffectType.Weakness:
+                instance.stack = 0;
+                break;
+
+            // 弱点
             case StatusEffectType.Vulnerable:
+                instance.stack = 0;
                 break;
         }
     }

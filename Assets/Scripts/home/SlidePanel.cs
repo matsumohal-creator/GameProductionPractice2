@@ -3,48 +3,39 @@ using System.Collections;
 
 public class SlidePanel : MonoBehaviour
 {
-    RectTransform rect;
+    private RectTransform rect;
 
-    [SerializeField] Vector2 hiddenPos;
-    [SerializeField] Vector2 showPos;
+    [SerializeField] private Vector2 hiddenPos;
+    [SerializeField] private Vector2 showPos;
 
-    [SerializeField] float speed = 10f;
+    [SerializeField] private float speed = 10f;
 
-    bool isOpen = false;
-
-    Coroutine moveCoroutine;
+    private bool isOpen = false;
 
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+
         rect.anchoredPosition = hiddenPos;
     }
 
     public void Toggle()
     {
+        StopAllCoroutines();
+
         if (isOpen)
         {
-            Move(hiddenPos);
+            StartCoroutine(MovePanel(hiddenPos));
         }
         else
         {
-            Move(showPos);
+            StartCoroutine(MovePanel(showPos));
         }
 
         isOpen = !isOpen;
     }
 
-    void Move(Vector2 target)
-    {
-        if (moveCoroutine != null)
-        {
-            StopCoroutine(moveCoroutine);
-        }
-
-        moveCoroutine = StartCoroutine(Slide(target));
-    }
-
-    IEnumerator Slide(Vector2 target)
+    IEnumerator MovePanel(Vector2 target)
     {
         while (Vector2.Distance(rect.anchoredPosition, target) > 0.1f)
         {

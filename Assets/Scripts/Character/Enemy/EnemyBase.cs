@@ -11,12 +11,16 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     [Header("Status Effect Master")]
     [SerializeField] private List<StatusEffectData> statusEffectMaster = new List<StatusEffectData>();
 
+    [Header("Skills")]
+    [SerializeField] private List<SkillData> skills = new List<SkillData>();
+
     private readonly Dictionary<StatusEffectType, StatusEffectData> statusEffectLookup = new Dictionary<StatusEffectType, StatusEffectData>();
     private readonly Dictionary<StatusEffectType, StatusEffectInstance> activeStatusEffects = new Dictionary<StatusEffectType, StatusEffectInstance>();
 
     public int CurrentHp => currentHp;
     public int MaxHp => maxHp;
     public IReadOnlyCollection<StatusEffectInstance> ActiveStatusEffects => activeStatusEffects.Values;
+    public IReadOnlyList<SkillData> Skills => skills;
 
     public event Action<StatusEffectInstance> StatusEffectApplied;
     public event Action<StatusEffectInstance> StatusEffectRemoved;
@@ -161,7 +165,7 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
             StatusEffectManager.ApplyTurnTick(this, pair.Value);
             pair.Value.remainingTurns--;
 
-            if (pair.Value.remainingTurns <= 0 || pair.Value.stack <= 0)
+            if (pair.Value.remainingTurns <= 0)
             {
                 expired.Add(pair.Key);
             }

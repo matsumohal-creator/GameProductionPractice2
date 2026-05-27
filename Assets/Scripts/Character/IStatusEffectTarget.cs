@@ -12,6 +12,9 @@ public interface IStatusEffectTarget
         int duration,
         int stack);
 
+    // ó‘ÔˆÙíˆ—‚©‚çŒÄ‚Î‚ê‚éó‘ÔˆÙí‰ğœŒû
+    void RemoveStatusEffect(StatusEffectType type);
+
     // ó‘ÔˆÙíˆ—‚©‚çŒÄ‚Î‚ê‚éó‚¯æ‚èŒû
     int GetStatusStack(StatusEffectType type);
 

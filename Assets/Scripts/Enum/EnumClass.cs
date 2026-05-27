@@ -31,6 +31,7 @@ public enum SkillEffectType
     Heal,        // HPを回復する効果
     Shield,      // ダメージを軽減する効果
     ApplyStatus, // 状態異常を付与する効果
+    RemoveStatus,// 状態異常を解除する効果
     Draw,        // カードを引く効果
     CostGain,    // コストを増加させる効果
     Special      // 特殊な効果（例: 特定の条件で発動する効果）

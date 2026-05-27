@@ -52,9 +52,25 @@ public static class SkillExecution
             case SkillEffectType.ApplyStatus:
                 ApplyStatus(target, effect);
                 break;
+            // 状態異常解除
+            case SkillEffectType.RemoveStatus:
+                ApplyRemoveStatus(target, effect);
+                break;
             // シールド付与
             case SkillEffectType.Shield:
                 ApplyShield(target, effect);
+                break;
+            // ドロー
+            case SkillEffectType.Draw:
+                ApplyDraw(user, effect);
+                break;
+            // コスト獲得
+            case SkillEffectType.CostGain:
+                ApplyCostGain(user, effect);
+                break;
+            // 特殊効果
+            case SkillEffectType.Special:
+                //ApplySpecial(user, target, effect);
                 break;
         }
     }
@@ -97,11 +113,40 @@ public static class SkillExecution
             effect.stack);
     }
 
+    // 状態異常解除処理
+    private static void ApplyRemoveStatus(
+    IStatusEffectTarget target,
+    SkillEffectData effect)
+    {
+        if (effect.statusEffect == null)
+        {
+            return;
+        }
+
+        target.RemoveStatusEffect(
+            effect.statusEffect.effectType);
+    }
+
     // シールド付与
     private static void ApplyShield(
         IStatusEffectTarget target,
         SkillEffectData effect)
     {
         target.GainShield(effect.value);
+    }
+
+    private static void ApplyCostGain(
+    PlayerBase user,
+    SkillEffectData effect)
+    {
+        user.GainEnergy(effect.value);
+    }
+
+    private static void ApplyDraw(
+    PlayerBase user,
+    SkillEffectData effect)
+    {
+        // TODO:
+        // CardManager.Draw(effect.value);
     }
 }

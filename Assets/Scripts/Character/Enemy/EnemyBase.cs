@@ -8,6 +8,8 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     [SerializeField] private int maxHp = 100;
     [SerializeField] private int currentHp = 100;
     [SerializeField] private int shield = 0;
+    [SerializeField] private int speed = 0; //’Ç‰Á‚µ‚½‚æ
+
     [Header("Status Effect Master")]
     [SerializeField] private List<StatusEffectData> statusEffectMaster = new List<StatusEffectData>();
 
@@ -17,6 +19,7 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     private readonly Dictionary<StatusEffectType, StatusEffectData> statusEffectLookup = new Dictionary<StatusEffectType, StatusEffectData>();
     private readonly Dictionary<StatusEffectType, StatusEffectInstance> activeStatusEffects = new Dictionary<StatusEffectType, StatusEffectInstance>();
 
+    public int Speed => speed; // ’Ç‰Á‚µ‚½‚æ
     public int CurrentHp => currentHp;
     public int MaxHp => maxHp;
     public int Shield => shield;

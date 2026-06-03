@@ -1,5 +1,5 @@
-using System.Collections.Generic; // List
-using System.Linq; // LINQ
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour
@@ -7,19 +7,48 @@ public class TurnManager : MonoBehaviour
     public List<PlayerBase> players;
     public List<EnemyBase> enemies;
 
-    private Queue<Unit> turnQueue;
+    private Queue<TurnUnit> turnQueue;
 
-    public Unit currentUnit;
+    private TurnUnit currentUnit;
+
+    private void Start()
+    {
+        StartRound();
+    }
 
     public void StartRound()
     {
-        var sortedUnits =
-            units
-            .Where(x => x.currentHP > 0)
-            .OrderByDescending(x => x.speed)
-            .ToList();
+        List<TurnUnit> units = new List<TurnUnit>();
 
-        turnQueue = new Queue<Unit>(sortedUnits);
+        foreach (PlayerBase player in players)
+        {
+            if (player.CurrentHp > 0)
+            {
+                units.Add(new TurnUnit()
+                {
+                    isPlayer = true,
+                    player = player
+                });
+            }
+        }
+
+        foreach (EnemyBase enemy in enemies)
+        {
+            if (enemy.CurrentHp > 0)
+            {
+                units.Add(new TurnUnit()
+                {
+                    isPlayer = false,
+                    enemy = enemy
+                });
+            }
+        }
+
+        var sortedUnits =
+            units.OrderByDescending(x => x.Speed)
+                 .ToList();
+
+        turnQueue = new Queue<TurnUnit>(sortedUnits);
 
         NextTurn();
     }
@@ -28,12 +57,26 @@ public class TurnManager : MonoBehaviour
     {
         if (turnQueue.Count == 0)
         {
+            Debug.Log("ラウンド終了");
             StartRound();
             return;
         }
 
         currentUnit = turnQueue.Dequeue();
 
-        Debug.Log(currentUnit.unitName + "のターン");
+        if (currentUnit.isPlayer)
+        {
+            Debug.Log(
+                currentUnit.player.name +
+                " のターン"
+            );
+        }
+        else
+        {
+            Debug.Log(
+                currentUnit.enemy.name +
+                " のターン"
+            );
+        }
     }
 }

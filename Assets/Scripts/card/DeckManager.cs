@@ -41,6 +41,43 @@ public class DeckManager : MonoBehaviour
         Shuffle();
     }
 
+
+    //カードを引くメソッド
+    public SkillData DrawCard()
+    {
+        if (drawPile.Count == 0)
+        {
+            ReshuffleDiscardPile();
+        }
+
+        if (drawPile.Count == 0)
+        {
+            return null;
+        }
+
+        SkillData card = drawPile[0];
+
+        drawPile.RemoveAt(0);
+
+        return card;
+    }
+
+    //カードを捨てるメソッド
+    public void AddToDiscardPile(SkillData card)
+    {
+        discardPile.Add(card);
+    }
+
+    private void ReshuffleDiscardPile()
+    {
+        drawPile.AddRange(discardPile);
+
+        discardPile.Clear();
+
+        Shuffle();
+    }
+
+
     // 山札をシャッフルするメソッド
     public void Shuffle()
     {

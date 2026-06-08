@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4946616923007539474}
   - component: {fileID: 3660572737076232345}
   - component: {fileID: 9092300362706392269}
+  - component: {fileID: 6435468479320901189}
+  - component: {fileID: 3128211328259459310}
   m_Layer: 5
   m_Name: Mage
   m_TagString: Untagged
@@ -123,6 +125,32 @@ MonoBehaviour:
   speed: 0
   statusEffectMaster: []
   skills: []
+--- !u!114 &6435468479320901189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012555718734965504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8490024ad1dffae4db854b1951bab01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDeck: []
+--- !u!114 &3128211328259459310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012555718734965504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760c8524fd5a6df448d0b991fdc578ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckManager: {fileID: 0}
 --- !u!1 &7523689786307826601
 GameObject:
   m_ObjectHideFlags: 0

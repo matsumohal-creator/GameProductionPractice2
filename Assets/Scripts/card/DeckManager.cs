@@ -24,8 +24,13 @@ public class DeckManager : MonoBehaviour
 
     private void Awake()
     {
-        // デッキを初期化する
-        InitializeDeck();
+        // SetDeck()で後から初期化するため、
+        // startDeck未設定なら何もしない
+        // デッキの初期化
+        if (startDeck.Count > 0)
+        {
+            InitializeDeck();
+        }
     }
 
     public void InitializeDeck()
@@ -39,6 +44,20 @@ public class DeckManager : MonoBehaviour
 
         // 山札をシャッフルする
         Shuffle();
+    }
+
+    // 追加：外部からデッキを設定するためのメソッド
+    public void SetDeck(List<SkillData> deck)
+    {
+        if (deck == null)
+        {
+            return;
+        }
+
+        startDeck.Clear();
+        startDeck.AddRange(deck);
+
+        InitializeDeck();
     }
 
 

@@ -6,6 +6,9 @@ public class HandManager : MonoBehaviour
     //インスペクターで初期手札
     private List<SkillData> hand = new();
 
+    //手札を外部からアクセスできるようにする
+    public IReadOnlyList<SkillData> Hand => hand;
+
     //デッキマネージャーのアタッチ
     [SerializeField]
     private DeckManager deckManager;

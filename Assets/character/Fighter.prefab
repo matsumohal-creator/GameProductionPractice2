@@ -126,6 +126,8 @@ MonoBehaviour:
   statusEffectMaster: []
   skills:
   - {fileID: 11400000, guid: 6dd75f2ac8e11164b81f45ce6261446e, type: 2}
+  characterClass: 1
+  defaultDeck: {fileID: 0}
 --- !u!114 &8189561433758489487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +238,6 @@ SpriteRenderer:
   m_Size: {x: 3.8, y: 3.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

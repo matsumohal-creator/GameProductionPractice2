@@ -23,6 +23,17 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     private readonly Dictionary<StatusEffectType, StatusEffectData> statusEffectLookup = new Dictionary<StatusEffectType, StatusEffectData>();
     private readonly Dictionary<StatusEffectType, StatusEffectInstance> activeStatusEffects = new Dictionary<StatusEffectType, StatusEffectInstance>();
 
+    // 以下を追加しました
+    [Header("Character Class")]
+    [SerializeField]
+    private CharacterClass characterClass;// 各プレイヤーのクラスを指定するフィールド
+    public CharacterClass CharacterClass => characterClass;// キャラクタークラスは、プレイヤーの役割やスキルセットを定義するためのものです。
+
+    [Header("Default Deck")]
+    [SerializeField]
+    private CharacterDeckData defaultDeck;// 各プレイヤーのデフォルトデッキを指定するフィールド
+    public CharacterDeckData DefaultDeck => defaultDeck;// デフォルトデッキは、プレイヤーのクラスに応じた初期カードセットを提供するためのものです。
+    // ここまで追加
     public int Speed => speed; // 追加したよ
     public int CurrentHp => currentHp;
     public int MaxHp => maxHp;

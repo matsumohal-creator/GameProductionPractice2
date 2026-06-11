@@ -125,6 +125,8 @@ MonoBehaviour:
   speed: 0
   statusEffectMaster: []
   skills: []
+  characterClass: 4
+  defaultDeck: {fileID: 0}
 --- !u!114 &6435468479320901189
 MonoBehaviour:
   m_ObjectHideFlags: 0

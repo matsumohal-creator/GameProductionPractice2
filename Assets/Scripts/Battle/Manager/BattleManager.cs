@@ -21,8 +21,30 @@ public class BattleManager : MonoBehaviour
         Instance = this;
     }
 
+    // プレイヤーのデッキを初期化
+    private void Start()
+    {
+        InitializePlayerDecks();
+    }
+
     public List<PlayerBase> Players => players;
     public List<EnemyBase> Enemies => enemies;
+
+
+    // プレイヤーのデッキを初期化するメソッド
+    private void InitializePlayerDecks()
+    {
+        foreach (PlayerBase player in players)
+        {
+            DeckManager deck =
+                player.GetComponent<DeckManager>();
+
+            if (deck == null)
+                continue;
+
+            deck.SetDeck(player.DefaultDeck.startDeck);
+        }
+    }
 
     //スキルの使用
     public void UseSkill(

@@ -15,23 +15,87 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private List<EnemyBase> enemies = new();
 
+
+    //スポーン位置
+
+    // プレイヤーのスポーン位置
+    [Header("Player Spawn Points")]
+    [SerializeField]
+    private Transform[] playerSpawnPoints;
+
+    // エネミーのスポーン位置
+    [Header("Enemy Spawn Points")]
+    [SerializeField]
+    private Transform[] enemySpawnPoints;
+
+    //プレハブ（今後消す）
+    [Header("Test Player Prefabs")]
+    [SerializeField]
+    private List<PlayerBase> testPlayerPrefabs = new();
+
+    [Header("Test Enemy Prefabs")]
+    [SerializeField]
+    private List<EnemyBase> testEnemyPrefabs = new();
+    //消す
+
     //シングルトンの初期化
     private void Awake()
     {
         Instance = this;
     }
 
-    // プレイヤーのデッキを初期化
+    // 初期化
     private void Start()
     {
+        //
+        SpawnPlayers();
+        SpawnEnemies();
+
+        //デッキの初期化
         InitializePlayerDecks();
     }
 
     public List<PlayerBase> Players => players;
     public List<EnemyBase> Enemies => enemies;
 
+    // プレイヤーを生成
+    private void SpawnPlayers()
+    {
+        players.Clear();
 
-    // プレイヤーのデッキを初期化するメソッド
+        for (int i = 0; i < testPlayerPrefabs.Count; i++)
+        {
+            if (i >= playerSpawnPoints.Length)
+                break;
+
+            PlayerBase player =
+                Instantiate(
+                    testPlayerPrefabs[i],
+                    playerSpawnPoints[i].position,
+                    Quaternion.identity);
+
+            players.Add(player);
+        }
+    }
+
+    // エネミーを生成
+    private void SpawnEnemies()
+    {
+        enemies.Clear();
+        for (int i = 0; i < testEnemyPrefabs.Count; i++)
+        {
+            if (i >= enemySpawnPoints.Length)
+                break;
+            EnemyBase enemy =
+                Instantiate(
+                    testEnemyPrefabs[i],
+                    enemySpawnPoints[i].position,
+                    Quaternion.identity);
+            enemies.Add(enemy);
+        }
+    }
+
+    // プレイヤーのデッキを初期化
     private void InitializePlayerDecks()
     {
         foreach (PlayerBase player in players)

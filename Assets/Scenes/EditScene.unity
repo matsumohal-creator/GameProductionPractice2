@@ -1496,6 +1496,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c280b9141db2f394e9f03f4960e00575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterImages: []
+  selectedBrightness: 0.7
+  maxSelectedCount: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     [SerializeField] private int currentHp = 100;
     [SerializeField] private int shield = 0;
     [SerializeField] private int speed = 0; //’Ç‰Á‚µ‚½‚æ
+    [SerializeField] private int attackPower = 0;
 
     [Header("Status Effect Master")]
     [SerializeField] private List<StatusEffectData> statusEffectMaster = new List<StatusEffectData>();
@@ -23,6 +24,8 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     public int CurrentHp => currentHp;
     public int MaxHp => maxHp;
     public int Shield => shield;
+
+    public int attack => attackPower;
     public IReadOnlyCollection<StatusEffectInstance> ActiveStatusEffects => activeStatusEffects.Values;
     public IReadOnlyList<SkillData> Skills => skills;
 

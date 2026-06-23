@@ -64,4 +64,14 @@ public class EditScene : MonoBehaviour
     {
         OnCharacterClick(5);
     }
+
+    public void GoToBattle()
+    {
+        // 選択されたキャラクターのインデックスをGameManagerに保存
+        GameManager.selectedFlgs.Clear();
+        for (int i = 0; i < characterCards.Count; i++)
+        {
+            GameManager.selectedFlgs.Add(i);      
+        }
+    }
 }

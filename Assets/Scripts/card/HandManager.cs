@@ -1,8 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// 手札の管理を行うクラス  
+// 手札の管理は、プレイヤーが持っているカードのリストを保持し、デッキからカードを引く処理を行います。
+
+//参照している物
 public class HandManager : MonoBehaviour
 {
+    //手札のUIマネージャーのアタッチ
+    [SerializeField]
+    private HandUIManager handUIManager;
+
     //インスペクターで初期手札
     private List<SkillData> hand = new();
 
@@ -28,5 +37,9 @@ public class HandManager : MonoBehaviour
             //引いたカードを手札に追加
             hand.Add(card);
         }
+
+        // UI更新
+        //HandUIManager参照
+        handUIManager.RefreshHand(hand);
     }
 }

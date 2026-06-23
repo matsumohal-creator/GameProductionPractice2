@@ -6,12 +6,12 @@ public class BattleManager : MonoBehaviour
     public static BattleManager Instance;
 
     //プレイヤーベース
-    [Header("Players")]
+    [Header("Players Base")]
     [SerializeField]
     private List<PlayerBase> players = new();
 
     //エネミーベース
-    [Header("Enemies")]
+    [Header("Enemies Base")]
     [SerializeField]
     private List<EnemyBase> enemies = new();
 
@@ -27,6 +27,8 @@ public class BattleManager : MonoBehaviour
     [Header("Enemy Spawn Points")]
     [SerializeField]
     private Transform[] enemySpawnPoints;
+
+
 
     //プレハブ（今後消す）
     [Header("Test Player Prefabs")]

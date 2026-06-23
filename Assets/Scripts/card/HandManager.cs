@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 
 // 手札の管理を行うクラス  
@@ -8,9 +9,6 @@ using UnityEngine;
 //参照している物
 public class HandManager : MonoBehaviour
 {
-    //手札のUIマネージャーのアタッチ
-    [SerializeField]
-    private HandUIManager handUIManager;
 
     //インスペクターで初期手札
     private List<SkillData> hand = new();
@@ -18,9 +16,22 @@ public class HandManager : MonoBehaviour
     //手札を外部からアクセスできるようにする
     public IReadOnlyList<SkillData> Hand => hand;
 
-    //デッキマネージャーのアタッチ
-    [SerializeField]
+    [Header("Manager")]
+    [SerializeField] //デッキマネージャーのアタッチ
     private DeckManager deckManager;
+
+    [SerializeField] //ハンドマネージャーのアタッチ
+    private HandUIManager handUIManager;
+
+    private void Awake()
+    {
+        // デッキマネージャーがアタッチされていない場合、同じGameObjectから取得
+        if (deckManager == null)
+        {
+            deckManager = GetComponent<DeckManager>();
+        }
+    }
+
 
     //手札を5枚になるまで引く
     public void DrawToFive()
@@ -39,7 +50,35 @@ public class HandManager : MonoBehaviour
         }
 
         // UI更新
-        //HandUIManager参照
-        handUIManager.RefreshHand(hand);
+        RefreshUI();
+    }
+
+    // UIを更新するメソッド  
+    public void RefreshUI()
+    {
+        if (handUIManager != null)
+        {
+            handUIManager.RefreshHand(hand);
+        }
+    }
+
+    //手札からカードを削除する
+    public void RemoveCard(SkillData card)
+    {
+        hand.Remove(card);
+        RefreshUI();
+    }
+
+    //手札をすべて捨てる
+    public void DiscardAll()
+    {
+        foreach (SkillData card in hand)
+        {
+            deckManager.AddToDiscardPile(card);
+        }
+
+        hand.Clear();
+
+        RefreshUI();
     }
 }

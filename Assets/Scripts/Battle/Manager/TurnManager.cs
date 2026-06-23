@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    public List<PlayerBase> players;
-    public List<EnemyBase> enemies;
+    //プレイヤーとエネミーのリストを保持
+    private List<PlayerBase> players;
+    private List<EnemyBase> enemies;
 
     private Queue<TurnUnit> turnQueue;
 
@@ -13,7 +14,11 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
-        StartRound();
+        // BattleManagerからプレイヤーとエネミーのリストを取得
+        players = BattleManager.Instance.Players;
+        enemies = BattleManager.Instance.Enemies;
+
+        StartRound(); //ターン開始
     }
 
     public void StartRound()
@@ -62,21 +67,51 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
+        // 現在のターンユニットを取得
         currentUnit = turnQueue.Dequeue();
 
+        // ターンの開始処理
         if (currentUnit.isPlayer)
         {
-            Debug.Log(
-                currentUnit.player.name +
-                " のターン"
-            );
+            StartPlayerTurn(currentUnit.player);
+            Debug.Log( currentUnit.player.name +" のターン" );
         }
         else
         {
-            Debug.Log(
-                currentUnit.enemy.name +
-                " のターン"
-            );
+            StartEnemyTurn(currentUnit.enemy);
+            Debug.Log(currentUnit.enemy.name + " のターン");
         }
+    }
+            
+ 
+
+    // プレイヤーのターン処理
+    private void StartPlayerTurn(PlayerBase player)
+    {
+        Debug.Log(player.name + " のターン開始");
+
+        // エナジー回復
+        player.RefillEnergy();
+
+        // 手札取得
+        HandManager hand =
+            player.GetComponent<HandManager>();
+
+        if (hand != null)
+        {
+            hand.DrawToFive();
+        }
+
+        // 今後
+        // UI更新
+        // カード操作開始
+    }
+
+    // エネミーのターン処理
+    private void StartEnemyTurn(EnemyBase enemy)
+    {
+        Debug.Log(enemy.name + " のターン開始");
+
+        // 後でAIを書く
     }
 }

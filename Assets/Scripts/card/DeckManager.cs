@@ -47,12 +47,10 @@ public class DeckManager : MonoBehaviour
     }
 
     // 追加：外部からデッキを設定するためのメソッド
-    public void SetDeck(List<SkillData> deck)
+    public void SetDeck(IReadOnlyList<SkillData> deck)
     {
         if (deck == null)
-        {
             return;
-        }
 
         startDeck.Clear();
         startDeck.AddRange(deck);

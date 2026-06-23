@@ -187,11 +187,17 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     }
 
     // ターン終了時処理
-    public void OnTurnEnd()
+    public virtual void OnTurnEnd()
     {
         TickStatusEffects();
         // ターン終了時にシールドをリセット
         shield = 0;
+    }
+
+    // 敵のターン開始時の行動を実行（派生クラスでオーバーライド）
+    public virtual void ExecuteTurn()
+    {
+        // デフォルトでは何もしない（派生クラスで実装）
     }
 
     // ターン進行時の状態異常処理を行う

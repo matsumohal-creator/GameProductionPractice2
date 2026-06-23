@@ -43,5 +43,6 @@ public enum StatusEffectType
     Burn,      // ”RÄ
     Fatigue,   // ”æ˜J
     Weakness,  // ã“_
-    Vulnerable // ’E—Í
+    Vulnerable,// ’E—Í
+    Strength   // ‹Ø—ÍiUŒ‚—Íã¸ƒoƒtj
 }

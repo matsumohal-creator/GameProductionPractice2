@@ -13,4 +13,10 @@ public class HomeManager : MonoBehaviour
         SceneLoader.NextSceneName = "BattleScene";
         SceneManager.LoadScene("LoadingScene");
     }
+
+    public void OnClickParty()
+    {
+        SceneLoader.NextSceneName = "EditScene";
+        SceneManager.LoadScene("LoadingScene");
+    }
 }

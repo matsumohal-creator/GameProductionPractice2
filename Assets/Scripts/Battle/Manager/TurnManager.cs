@@ -14,9 +14,13 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(BattleManager.Instance);
+
         // BattleManagerからプレイヤーとエネミーのリストを取得
         players = BattleManager.Instance.Players;
         enemies = BattleManager.Instance.Enemies;
+
+        Debug.Log(players.Count);
 
         StartRound(); //ターン開始
     }
@@ -25,8 +29,21 @@ public class TurnManager : MonoBehaviour
     {
         List<TurnUnit> units = new List<TurnUnit>();
 
+        Debug.Log("players = " + players.Count);
+        Debug.Log("enemies = " + enemies.Count);
+
         foreach (PlayerBase player in players)
         {
+            Debug.Log(player);
+
+            if (player == null)
+            {
+                Debug.LogError("Playerがnullです");
+                continue;
+            }
+
+            Debug.Log(player.name);
+
             if (player.CurrentHp > 0)
             {
                 units.Add(new TurnUnit()
@@ -39,6 +56,16 @@ public class TurnManager : MonoBehaviour
 
         foreach (EnemyBase enemy in enemies)
         {
+            Debug.Log(enemy);
+
+            if (enemy == null)
+            {
+                Debug.LogError("Enemyがnullです");
+                continue;
+            }
+
+            Debug.Log(enemy.name);
+
             if (enemy.CurrentHp > 0)
             {
                 units.Add(new TurnUnit()
@@ -57,6 +84,10 @@ public class TurnManager : MonoBehaviour
 
         NextTurn();
     }
+
+
+
+
 
     public void NextTurn()
     {
@@ -112,6 +143,6 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log(enemy.name + " のターン開始");
 
-        // 後でAIを書く
+        // この後敵のAI処理
     }
 }

@@ -29,32 +29,37 @@ public class BattleManager : MonoBehaviour
     private Transform[] enemySpawnPoints;
 
 
+   
 
-    //プレハブ（今後消す）
-    [Header("Test Player Prefabs")]
+    [Header("Debug Player")]
     [SerializeField]
-    private List<PlayerBase> testPlayerPrefabs = new();
+    private PlayerBase playerPrefab;
 
-    [Header("Test Enemy Prefabs")]
+    [Header("Debug Enemy")]
     [SerializeField]
-    private List<EnemyBase> testEnemyPrefabs = new();
-    //消す
+    private EnemyBase enemyPrefab;
+
 
     //シングルトンの初期化
     private void Awake()
     {
         Instance = this;
+
+        SpawnPlayers();
+        SpawnEnemies();
+
     }
 
     // 初期化
     private void Start()
     {
-        //
-        SpawnPlayers();
-        SpawnEnemies();
 
+        // partyMembers = GameManager.Instance.partyMembers;
+
+        //
         //デッキの初期化
         InitializePlayerDecks();
+
     }
 
     public List<PlayerBase> Players => players;
@@ -63,38 +68,43 @@ public class BattleManager : MonoBehaviour
     // プレイヤーを生成
     private void SpawnPlayers()
     {
-        players.Clear();
+        PlayerBase player = Instantiate(
+     playerPrefab,
+     playerSpawnPoints[0].position,
+     Quaternion.identity);
 
-        for (int i = 0; i < testPlayerPrefabs.Count; i++)
+        if (player == null)
         {
-            if (i >= playerSpawnPoints.Length)
-                break;
-
-            PlayerBase player =
-                Instantiate(
-                    testPlayerPrefabs[i],
-                    playerSpawnPoints[i].position,
-                    Quaternion.identity);
-
-            players.Add(player);
+            Debug.LogError("InstantiateしたPlayerがnull");
         }
+        else
+        {
+            Debug.Log("生成成功 : " + player.name);
+        }
+
+        players.Add(player);
     }
 
     // エネミーを生成
     private void SpawnEnemies()
     {
         enemies.Clear();
-        for (int i = 0; i < testEnemyPrefabs.Count; i++)
+        Debug.Log("SpawnEnemies開始");
+
+        if (enemyPrefab == null)
         {
-            if (i >= enemySpawnPoints.Length)
-                break;
-            EnemyBase enemy =
-                Instantiate(
-                    testEnemyPrefabs[i],
-                    enemySpawnPoints[i].position,
-                    Quaternion.identity);
-            enemies.Add(enemy);
+            Debug.LogError("EnemyPrefabが設定されていません");
+            return;
         }
+
+        EnemyBase enemy = Instantiate(
+            enemyPrefab,
+            enemySpawnPoints[0].position,
+            Quaternion.identity);
+
+        Debug.Log("Enemy生成完了: " + enemy.name);
+        enemies.Add(enemy);
+        Debug.Log("enemies数 = " + enemies.Count);
     }
 
     // プレイヤーのデッキを初期化

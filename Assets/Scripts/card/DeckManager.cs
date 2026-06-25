@@ -19,8 +19,6 @@ public class DeckManager : MonoBehaviour
     // ドローパイルとディスカードパイルを外部からアクセスできるようにする
     public List<SkillData> DrawPile => drawPile;
 
-    // ドローパイルとディスカードパイルを外部からアクセスできるようにする
-    public List<SkillData> DiscardPile => discardPile;
 
     private void Awake()
     {

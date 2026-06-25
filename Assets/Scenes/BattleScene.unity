@@ -694,7 +694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &458342912
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1643,10 +1643,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6bf1d2d0ee4d2d4aa2d4701f5f578b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players:
-  - {fileID: 0}
-  enemies:
-  - {fileID: 0}
+  players: []
+  enemies: []
   playerSpawnPoints:
   - {fileID: 1613102609}
   - {fileID: 1224284855}

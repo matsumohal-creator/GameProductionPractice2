@@ -68,20 +68,28 @@ public class BattleManager : MonoBehaviour
     // プレイヤーを生成
     private void SpawnPlayers()
     {
-        PlayerBase player = Instantiate(
-     playerPrefab,
-     playerSpawnPoints[0].position,
-     Quaternion.identity);
 
-        if (player == null)
+        Debug.Log("SpawnPlayers開始");
+
+        GameObject obj = Instantiate(
+           playerPrefab.gameObject,
+           playerSpawnPoints[0].position,
+           Quaternion.identity);
+
+        // 生成したGameObjectからPlayerBaseコンポーネントを取得
+        PlayerBase player = obj.GetComponent<PlayerBase>();
+
+        Debug.Log("生成したGameObject = " + obj);
+
+        if (obj == null)
         {
             Debug.LogError("InstantiateしたPlayerがnull");
         }
-        else
-        {
-            Debug.Log("生成成功 : " + player.name);
-        }
 
+        Debug.Log(obj);
+        Debug.Log(player);
+
+        // 生成したプレイヤーをリストに追加
         players.Add(player);
     }
 
@@ -89,7 +97,7 @@ public class BattleManager : MonoBehaviour
     private void SpawnEnemies()
     {
         enemies.Clear();
-        Debug.Log("SpawnEnemies開始");
+       // Debug.Log("SpawnEnemies開始");
 
         if (enemyPrefab == null)
         {
@@ -102,9 +110,9 @@ public class BattleManager : MonoBehaviour
             enemySpawnPoints[0].position,
             Quaternion.identity);
 
-        Debug.Log("Enemy生成完了: " + enemy.name);
+       // Debug.Log("Enemy生成完了: " + enemy.name);
         enemies.Add(enemy);
-        Debug.Log("enemies数 = " + enemies.Count);
+        //Debug.Log("enemies数 = " + enemies.Count);
     }
 
     // プレイヤーのデッキを初期化
@@ -118,6 +126,11 @@ public class BattleManager : MonoBehaviour
             if (deck == null)
                 continue;
 
+
+            //確認用のログ
+            Debug.Log(player);
+            Debug.Log(player.DefaultDeck);
+            Debug.Log(deck);
             deck.SetDeck(player.DefaultDeck.startDeck);
         }
     }

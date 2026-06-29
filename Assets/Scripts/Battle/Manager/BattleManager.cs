@@ -72,9 +72,10 @@ public class BattleManager : MonoBehaviour
         Debug.Log("SpawnPlayers開始");
 
         GameObject obj = Instantiate(
-           playerPrefab.gameObject,
-           playerSpawnPoints[0].position,
-           Quaternion.identity);
+       playerPrefab.gameObject,
+       playerSpawnPoints[0],   // ← 1Pを親にする
+       false                   // ワールド座標を維持しない
+         );
 
         // 生成したGameObjectからPlayerBaseコンポーネントを取得
         PlayerBase player = obj.GetComponent<PlayerBase>();
@@ -105,13 +106,14 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        EnemyBase enemy = Instantiate(
-            enemyPrefab,
-            enemySpawnPoints[0].position,
-            Quaternion.identity);
+        GameObject obj = Instantiate(
+      enemyPrefab.gameObject,
+      enemySpawnPoints[0],   // ← Enemy側の1P(敵スロット)を親にする
+      false                  // ローカル座標を使用
+      );
 
-       // Debug.Log("Enemy生成完了: " + enemy.name);
-        enemies.Add(enemy);
+        // Debug.Log("Enemy生成完了: " + obj.name);
+        enemies.Add(obj.GetComponent<EnemyBase>());
         //Debug.Log("enemies数 = " + enemies.Count);
     }
 

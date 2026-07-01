@@ -15,12 +15,18 @@ public class HandUIManager : MonoBehaviour
     public void RefreshHand(
         IReadOnlyList<SkillData> hand)
     {
+
+        Debug.Log("RefreshHand呼ばれた");
+        Debug.Log("カード枚数 = " + hand.Count);
+
         //手札のUIをクリアする
         ClearHand();
 
         //手札のカードを生成する
         foreach (SkillData skill in hand)
         {
+            Debug.Log("生成：" + skill.skillName);
+
             CardView card =
                 Instantiate(
                     cardPrefab,

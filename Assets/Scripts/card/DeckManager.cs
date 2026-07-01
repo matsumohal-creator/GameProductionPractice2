@@ -40,6 +40,8 @@ public class DeckManager : MonoBehaviour
         // 初期デッキを山札に追加
         drawPile.AddRange(startDeck);
 
+        Debug.Log("Initialize後 DrawPile = " + drawPile.Count);
+
         // 山札をシャッフルする
         Shuffle();
     }
@@ -48,10 +50,17 @@ public class DeckManager : MonoBehaviour
     public void SetDeck(IReadOnlyList<SkillData> deck)
     {
         if (deck == null)
+        {
+            Debug.LogError("渡されたデッキがnull");
             return;
+        }
+
+        Debug.Log("受け取ったデッキ枚数 = " + deck.Count);
 
         startDeck.Clear();
         startDeck.AddRange(deck);
+
+        Debug.Log("startDeck枚数 = " + startDeck.Count);
 
         InitializeDeck();
     }
@@ -71,6 +80,12 @@ public class DeckManager : MonoBehaviour
         }
 
         SkillData card = drawPile[0];
+
+        Debug.Log(card);
+
+        Debug.Log(card == null);
+
+        Debug.Log(card != null ? card.name : "NULL");
 
         drawPile.RemoveAt(0);
 

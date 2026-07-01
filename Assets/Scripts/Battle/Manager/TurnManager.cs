@@ -14,15 +14,12 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(BattleManager.Instance);
+       // Debug.Log(BattleManager.Instance);
 
         // BattleManagerからプレイヤーとエネミーのリストを取得
         players = BattleManager.Instance.Players;
         enemies = BattleManager.Instance.Enemies;
 
-        Debug.Log(players.Count);
-
-        StartRound(); //ターン開始
     }
 
     public void StartRound()
@@ -42,7 +39,7 @@ public class TurnManager : MonoBehaviour
                 continue;
             }
 
-            Debug.Log(player.name);
+           
 
             if (player.CurrentHp > 0)
             {
@@ -56,15 +53,13 @@ public class TurnManager : MonoBehaviour
 
         foreach (EnemyBase enemy in enemies)
         {
-            Debug.Log(enemy);
-
+            //enemyの有無を確認
             if (enemy == null)
             {
                 Debug.LogError("Enemyがnullです");
                 continue;
             }
 
-            Debug.Log(enemy.name);
 
             if (enemy.CurrentHp > 0)
             {

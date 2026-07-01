@@ -25,11 +25,24 @@ public class HandManager : MonoBehaviour
 
     private void Awake()
     {
-        // デッキマネージャーがアタッチされていない場合、同じGameObjectから取得
+        Debug.Log(gameObject.name);
+        Debug.Log(deckManager);
+
+
+        //デッキマネージャーとハンドUIマネージャーの参照を取得
         if (deckManager == null)
         {
             deckManager = GetComponent<DeckManager>();
         }
+
+        //ハンドUIマネージャーがアタッチされていない場合、シーン内のHandUIManagerを探す
+        if (handUIManager == null)
+        {
+            handUIManager = FindFirstObjectByType<HandUIManager>();
+        }
+
+        
+       // Debug.Log(handUIManager);
     }
 
 
@@ -41,6 +54,8 @@ public class HandManager : MonoBehaviour
             //デッキからカードを引く
             SkillData card = deckManager.DrawCard();
 
+            Debug.Log("引いたカード = " + card);
+
             //引いたカードがnullならデッキが空なので終了
             if (card == null)
                 break;
@@ -49,6 +64,9 @@ public class HandManager : MonoBehaviour
             hand.Add(card);
         }
 
+
+        Debug.Log("手札枚数 = " + hand.Count);
+
         // UI更新
         RefreshUI();
     }
@@ -56,6 +74,7 @@ public class HandManager : MonoBehaviour
     // UIを更新するメソッド  
     public void RefreshUI()
     {
+        //
         if (handUIManager != null)
         {
             handUIManager.RefreshHand(hand);

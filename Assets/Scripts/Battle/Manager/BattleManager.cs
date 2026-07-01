@@ -15,6 +15,11 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private List<EnemyBase> enemies = new();
 
+    //scriptの取得
+
+    [Header("TurnManager")]
+    [SerializeField]
+    private TurnManager turnManager;
 
     //スポーン位置
 
@@ -60,6 +65,9 @@ public class BattleManager : MonoBehaviour
         //デッキの初期化
         InitializePlayerDecks();
 
+        //ターンの開始
+        turnManager.StartRound();
+
     }
 
     public List<PlayerBase> Players => players;
@@ -69,7 +77,7 @@ public class BattleManager : MonoBehaviour
     private void SpawnPlayers()
     {
 
-        Debug.Log("SpawnPlayers開始");
+       // Debug.Log("SpawnPlayers開始");
 
         GameObject obj = Instantiate(
        playerPrefab.gameObject,
@@ -80,15 +88,11 @@ public class BattleManager : MonoBehaviour
         // 生成したGameObjectからPlayerBaseコンポーネントを取得
         PlayerBase player = obj.GetComponent<PlayerBase>();
 
-        Debug.Log("生成したGameObject = " + obj);
-
         if (obj == null)
         {
             Debug.LogError("InstantiateしたPlayerがnull");
         }
 
-        Debug.Log(obj);
-        Debug.Log(player);
 
         // 生成したプレイヤーをリストに追加
         players.Add(player);
@@ -122,18 +126,30 @@ public class BattleManager : MonoBehaviour
     {
         foreach (PlayerBase player in players)
         {
+            //デッキマネージャーのデッキ
             DeckManager deck =
                 player.GetComponent<DeckManager>();
 
+            //デッキの有無の確認
             if (deck == null)
+            {
+                Debug.LogError("DeckManagerがありません");
                 continue;
+            }
 
+            //プレイヤーのデッキ
+            Debug.Log("DefaultDeck = " + player.DefaultDeck);
 
-            //確認用のログ
-            Debug.Log(player);
-            Debug.Log(player.DefaultDeck);
-            Debug.Log(deck);
+            if (player.DefaultDeck != null)
+            {
+                Debug.Log("デッキ枚数 = " + player.DefaultDeck.startDeck.Count);
+            }
+
             deck.SetDeck(player.DefaultDeck.startDeck);
+
+            Debug.Log("DrawPile枚数 = " + deck.DrawPile.Count);
+
+
         }
     }
 

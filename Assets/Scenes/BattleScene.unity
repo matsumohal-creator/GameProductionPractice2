@@ -1645,6 +1645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   players: []
   enemies: []
+  turnManager: {fileID: 223025135}
   playerSpawnPoints:
   - {fileID: 1613102609}
   - {fileID: 1224284855}

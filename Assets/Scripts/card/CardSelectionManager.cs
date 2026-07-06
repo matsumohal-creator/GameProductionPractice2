@@ -13,6 +13,7 @@ public class CardSelectionManager : MonoBehaviour
         Instance = this;
     }
 
+    // カードを選択する関数
     public void Select(CardView card)
     {
         //同じカードなら解除
@@ -35,6 +36,50 @@ public class CardSelectionManager : MonoBehaviour
 
 
     }
+
+    // 選択したカードを使用する関数
+    public void UseSelectedCard(IStatusEffectTarget target)
+    {
+        //nullチェック
+        if (selectedCard == null)
+            return;
+
+        PlayerBase player = BattleManager.Instance.Players[0];
+
+        SkillData skill = selectedCard.SkillData;
+
+        // エナジー確認
+        if (!player.TryUseEnergy(skill.cost))
+        {
+            Debug.Log("エナジー不足");
+            return;
+        }
+
+        // スキル使用
+        BattleManager.Instance.UseSkill(
+            player,
+            skill,
+            target);
+
+        // 手札から削除
+        HandManager hand =
+            player.GetComponent<HandManager>();
+
+        hand.RemoveCard(skill);
+
+        // 捨て札へ
+        DeckManager deck =
+            player.GetComponent<DeckManager>();
+
+        deck.AddToDiscardPile(skill);
+
+        // UI更新
+        hand.RefreshUI();
+
+        // 選択解除
+        Clear();
+    }
+
 
     public void Clear()
     {

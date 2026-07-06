@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EnemyBase : MonoBehaviour, IStatusEffectTarget
 {
@@ -232,5 +233,12 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     protected virtual void OnStatusEffectRemoved(StatusEffectInstance instance)
     {
         StatusEffectRemoved?.Invoke(instance);
+    }
+
+    // カードがクリックされたときに呼ばれる関数
+    //フジタが追加
+    public void OnClickTarget()
+    {
+        CardSelectionManager.Instance.UseSelectedCard(this);
     }
 }

@@ -49,6 +49,9 @@ public class CardView : MonoBehaviour
     //カードの選択状態を設定する関数
     public void SetSelected(bool value)
     {
+        if (selectFrame == null)
+            return;
+
         selectFrame.SetActive(value);
     }
 }

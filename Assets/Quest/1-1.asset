@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
-  m_Name: Fire
+  m_Script: {fileID: 11500000, guid: 6c9956f3449cff842839cb645fdf5b7c, type: 3}
+  m_Name: 1-1
   m_EditorClassIdentifier: 
-  skillName: 
-  description: 
-  icon: {fileID: 0}
-  cost: 0
-  targetType: 0
-  effects: []
-  exclusiveClass: 4
+  questName: 
+  enemyPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

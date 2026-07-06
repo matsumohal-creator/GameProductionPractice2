@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
-  m_Name: Fire
+  m_Script: {fileID: 11500000, guid: d839c6003483ee04d82dccebacb9d2a7, type: 3}
+  m_Name: QuestDataBase
   m_EditorClassIdentifier: 
-  skillName: 
-  description: 
-  icon: {fileID: 0}
-  cost: 0
-  targetType: 0
-  effects: []
-  exclusiveClass: 4
+  quests:
+  - {fileID: 11400000, guid: 156cae203e30b044eb879aadb4c3d17b, type: 2}
+  - {fileID: 0}

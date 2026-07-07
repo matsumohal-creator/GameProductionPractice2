@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c9956f3449cff842839cb645fdf5b7c, type: 3}
   m_Name: 1-1
   m_EditorClassIdentifier: 
-  questName: 
+  questName: "\u30C7\u30D0\u30C3\u30B0\u306A\u3046"
   enemyPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8658986864154508826, guid: e827ca6a6bcd1be4c9789212d1163143, type: 3}
+  - {fileID: 8658986864154508826, guid: e827ca6a6bcd1be4c9789212d1163143, type: 3}
+  - {fileID: 8658986864154508826, guid: e827ca6a6bcd1be4c9789212d1163143, type: 3}

@@ -9,7 +9,8 @@ public class SaveData
 {
     // 現在地点
     public int currentStageIndex;
-
+    // 選択中クエストのインデックス(-1は未選択)
+    public int selectedQuestIndex = -1;
     // 現在進行中クエスト
     public string currentQuestName;
 
@@ -17,5 +18,5 @@ public class SaveData
     public List<int> partyHp = new();
 
     // デッキ
-    public List<string> deckCardNames;
+    public List<string> deckCardNames = new();
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
+    //シングルトン
+    public static TurnManager Instance;
+
     //プレイヤーとエネミーのリストを保持
     private List<PlayerBase> players;
     private List<EnemyBase> enemies;
@@ -12,16 +15,24 @@ public class TurnManager : MonoBehaviour
 
     private TurnUnit currentUnit;
 
+    private void Awake()
+    {
+        // シングルトンの初期化
+        Instance = this;
+    }
+
     private void Start()
     {
-       // Debug.Log(BattleManager.Instance);
-
+        // Debug.Log(BattleManager.Instance);
         // BattleManagerからプレイヤーとエネミーのリストを取得
         players = BattleManager.Instance.Players;
         enemies = BattleManager.Instance.Enemies;
 
+        // 最初のラウンド開始
+        StartRound();
     }
 
+    // ターンの開始
     public void StartRound()
     {
         List<TurnUnit> units = new List<TurnUnit>();
@@ -31,15 +42,12 @@ public class TurnManager : MonoBehaviour
 
         foreach (PlayerBase player in players)
         {
-            Debug.Log(player);
-
+            // Debug.Log(player);
             if (player == null)
             {
                 Debug.LogError("Playerがnullです");
                 continue;
             }
-
-           
 
             if (player.CurrentHp > 0)
             {
@@ -60,7 +68,6 @@ public class TurnManager : MonoBehaviour
                 continue;
             }
 
-
             if (enemy.CurrentHp > 0)
             {
                 units.Add(new TurnUnit()
@@ -73,17 +80,33 @@ public class TurnManager : MonoBehaviour
 
         var sortedUnits =
             units.OrderByDescending(x => x.Speed)
-                 .ToList();
+            .ToList();
 
         turnQueue = new Queue<TurnUnit>(sortedUnits);
 
         NextTurn();
     }
 
+    // ターンの終了
+    public void EndTurn()
+    {
+        if (currentUnit == null)
+            return;
 
+        if (currentUnit.isPlayer)
+        {
+            currentUnit.player.OnTurnEnd();
+        }
+        else
+        {
+            currentUnit.enemy.OnTurnEnd();
+        }
 
+        IsWaitingPlayerInput = false;
+        NextTurn();
+    }
 
-
+    // 次のターンに進む
     public void NextTurn()
     {
         if (turnQueue.Count == 0)
@@ -100,7 +123,7 @@ public class TurnManager : MonoBehaviour
         if (currentUnit.isPlayer)
         {
             StartPlayerTurn(currentUnit.player);
-            Debug.Log( currentUnit.player.name +" のターン" );
+            Debug.Log(currentUnit.player.name + " のターン");
         }
         else
         {
@@ -108,8 +131,6 @@ public class TurnManager : MonoBehaviour
             Debug.Log(currentUnit.enemy.name + " のターン");
         }
     }
-            
- 
 
     // プレイヤーのターン処理
     private void StartPlayerTurn(PlayerBase player)
@@ -128,16 +149,57 @@ public class TurnManager : MonoBehaviour
             hand.DrawToFive();
         }
 
-        // 今後
-        // UI更新
-        // カード操作開始
+        //↓playerターン処理
+        IsWaitingPlayerInput = true;
     }
 
     // エネミーのターン処理
     private void StartEnemyTurn(EnemyBase enemy)
     {
+        IsWaitingPlayerInput = false;
         Debug.Log(enemy.name + " のターン開始");
 
         // この後敵のAI処理
+    }
+
+    // 現在のターンのプレイヤーを取得するプロパティ
+    public PlayerBase CurrentPlayer
+    {
+        get
+        {
+            if (currentUnit == null) return null;
+
+            if (!currentUnit.isPlayer) return null;
+
+            return currentUnit.player;
+        }
+    }
+
+    // 現在のターンのエネミーを取得するプロパティ
+    public EnemyBase CurrentEnemy
+    {
+        get
+        {
+            if (currentUnit == null) return null;
+            if (currentUnit.isPlayer) return null;
+            return currentUnit.enemy;
+        }
+    }
+
+    //
+    public TurnUnit CurrentUnit => currentUnit;
+
+    // プレイヤーの入力待ち状態を管理するプロパティ
+    public bool IsWaitingPlayerInput { get; private set; }
+
+    //別スクリプトのUI用
+    public bool IsPlayerTurn
+    {
+        //TurnManager.Instance.EndTurn(); で次のターンになる
+        get
+        {
+            if (currentUnit == null) return false;
+            return currentUnit.isPlayer;
+        }
     }
 }

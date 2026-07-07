@@ -91,7 +91,7 @@ public class CardSelectionManager : MonoBehaviour
         selectedCard = null;
     }
 
-    private void UseCard(CardView card)
+    public void UseCard(CardView card)
     {
         Debug.Log(card.SkillData.skillName + " ‚ðŽg—p");
 

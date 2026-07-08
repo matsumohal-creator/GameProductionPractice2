@@ -13,4 +13,24 @@ MonoBehaviour:
   m_Name: Mage
   m_EditorClassIdentifier: 
   characterClass: 4
-  startDeck: []
+  startDeck:
+  - {fileID: 11400000, guid: 8a75f183c1001594d9bc2b8b4f3a0cdb, type: 2}
+  - {fileID: 11400000, guid: 8a75f183c1001594d9bc2b8b4f3a0cdb, type: 2}
+  - {fileID: 11400000, guid: 8a75f183c1001594d9bc2b8b4f3a0cdb, type: 2}
+  - {fileID: 11400000, guid: 774079b4a6a1f2f48bdc12207ad45a55, type: 2}
+  - {fileID: 11400000, guid: 774079b4a6a1f2f48bdc12207ad45a55, type: 2}
+  - {fileID: 11400000, guid: 774079b4a6a1f2f48bdc12207ad45a55, type: 2}
+  - {fileID: 11400000, guid: 8d7fe5dd4e0dbfb4ba7e22dc17595b35, type: 2}
+  - {fileID: 11400000, guid: 8d7fe5dd4e0dbfb4ba7e22dc17595b35, type: 2}
+  - {fileID: 11400000, guid: 8d7fe5dd4e0dbfb4ba7e22dc17595b35, type: 2}
+  - {fileID: 11400000, guid: cd56dbac59d36e64581e1052706ff48a, type: 2}
+  - {fileID: 11400000, guid: cd56dbac59d36e64581e1052706ff48a, type: 2}
+  - {fileID: 11400000, guid: cd56dbac59d36e64581e1052706ff48a, type: 2}
+  - {fileID: 11400000, guid: 9281ff19fc225f5419beb41ff36df3b6, type: 2}
+  - {fileID: 11400000, guid: 9281ff19fc225f5419beb41ff36df3b6, type: 2}
+  - {fileID: 11400000, guid: 9281ff19fc225f5419beb41ff36df3b6, type: 2}
+  - {fileID: 11400000, guid: 6d859d0ac1c588040a8081af33d37861, type: 2}
+  - {fileID: 11400000, guid: 6d859d0ac1c588040a8081af33d37861, type: 2}
+  - {fileID: 11400000, guid: 6d859d0ac1c588040a8081af33d37861, type: 2}
+  - {fileID: 11400000, guid: 2f64d3dde77812843a9326e4940482ad, type: 2}
+  - {fileID: 11400000, guid: 2f64d3dde77812843a9326e4940482ad, type: 2}

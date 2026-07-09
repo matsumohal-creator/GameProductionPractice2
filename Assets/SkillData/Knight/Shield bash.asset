@@ -18,7 +18,8 @@ MonoBehaviour:
   cost: 2
   targetType: 0
   effects:
-  - effectType: 0
+  - effectType: 7
+    specialType: 1
     value: 0
     statusEffect: {fileID: 0}
     duration: 0

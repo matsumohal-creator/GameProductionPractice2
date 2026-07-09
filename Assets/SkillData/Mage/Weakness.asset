@@ -19,8 +19,9 @@ MonoBehaviour:
   targetType: 0
   effects:
   - effectType: 0
+    specialType: 0
     value: 0
     statusEffect: {fileID: 11400000, guid: 7c81f70d1abf9e44693284345558849a, type: 2}
-    duration: 2
-    stack: 1
+    duration: 1
+    stack: 2
   exclusiveClass: 4

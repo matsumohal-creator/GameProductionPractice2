@@ -19,6 +19,7 @@ MonoBehaviour:
   targetType: 4
   effects:
   - effectType: 6
+    specialType: 0
     value: 1
     statusEffect: {fileID: 0}
     duration: 0

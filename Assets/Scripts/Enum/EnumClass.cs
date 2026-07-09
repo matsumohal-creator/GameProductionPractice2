@@ -37,6 +37,17 @@ public enum SkillEffectType
     Special      // 特殊な効果（例: 特定の条件で発動する効果）
 }
 
+// Specialの種類を定義する列挙型
+public enum SpecialEffectType
+{
+    None,
+
+    ShieldBash
+}
+
+
+
+// 状態異常の種類を定義する列挙型
 public enum StatusEffectType
 {
     Poison,    //  毒

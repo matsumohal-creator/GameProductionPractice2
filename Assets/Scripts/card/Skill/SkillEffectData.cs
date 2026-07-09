@@ -9,6 +9,8 @@ using UnityEngine;
 public class SkillEffectData
 {
     public SkillEffectType effectType;
+    [Header("Special")]
+    public SpecialEffectType specialType;
     // 効果の値。ダメージ量、回復量、シールド量など、効果の種類に応じた値を設定します。
     // そのため、effectTypeによってvalueの値が変わります。
     [Header("Value")]

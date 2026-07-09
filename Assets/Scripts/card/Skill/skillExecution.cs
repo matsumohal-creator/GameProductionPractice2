@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+
 // スキルの実行処理を担当するクラス
 // スキルの効果をターゲットに適用するための静的クラス
 
@@ -70,7 +71,7 @@ public static class SkillExecution
                 break;
             // 特殊効果
             case SkillEffectType.Special:
-                //ApplySpecial(user, target, effect);
+                ApplySpecial(user, target, effect);
                 break;
         }
     }
@@ -148,5 +149,29 @@ public static class SkillExecution
     {
         // TODO:
         // CardManager.Draw(effect.value);
+    }
+
+    // 特殊効果の処理
+    private static void ApplySpecial(
+    PlayerBase user,
+    IStatusEffectTarget target,
+    SkillEffectData effect)
+    {
+        switch (effect.specialType)
+        {
+            case SpecialEffectType.ShieldBash:
+                ApplyShieldBash(user, target);
+                break;
+        }
+    }
+
+    // シールドバッシュの処理
+    private static void ApplyShieldBash(
+    PlayerBase user,
+    IStatusEffectTarget target)
+    {
+        int damage = user.Shield;
+
+        target.TakeDamage(damage);
     }
 }

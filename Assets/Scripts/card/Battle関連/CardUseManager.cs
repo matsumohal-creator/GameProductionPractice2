@@ -51,8 +51,7 @@ public class CardUseManager : MonoBehaviour
         //選択解除
         CardSelectionManager.Instance.Clear();
 
-        //ターン終了
-        TurnManager.Instance.EndTurn();
+      
 
     }
 }

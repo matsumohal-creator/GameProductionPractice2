@@ -17,6 +17,7 @@ public class BattleManager : MonoBehaviour
 
     //scriptの取得
 
+    //ターンマネージャー
     [Header("TurnManager")]
     [SerializeField]
     private TurnManager turnManager;
@@ -35,7 +36,7 @@ public class BattleManager : MonoBehaviour
 
 
    
-
+    //デバック用・後で消す
     [Header("Debug Player")]
     [SerializeField]
     private PlayerBase playerPrefab;
@@ -68,8 +69,12 @@ public class BattleManager : MonoBehaviour
         //ターンの開始
         turnManager.StartRound();
 
+        //BattleStateをBattleStartに移行
+        ChangeState(BattleState.BattleStart);
+
     }
 
+    // プレイヤーとエネミーのリストを取得するプロパティ
     public List<PlayerBase> Players => players;
     public List<EnemyBase> Enemies => enemies;
 
@@ -152,6 +157,17 @@ public class BattleManager : MonoBehaviour
 
         }
     }
+
+    // バトルの状態を管理するプロパティ
+    public BattleState CurrentState { get; private set; }
+
+    public void ChangeState(BattleState state)
+    {
+        CurrentState = state;
+
+        Debug.Log("現在の状態：" + state);
+    }
+
 
     //スキルの使用
     public void UseSkill(

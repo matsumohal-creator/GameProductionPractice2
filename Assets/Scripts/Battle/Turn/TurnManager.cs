@@ -149,6 +149,10 @@ public class TurnManager : MonoBehaviour
             hand.DrawToFive();
         }
 
+        // ターン開始時のステータス効果処理
+        BattleManager.Instance.ChangeState(
+         BattleState.PlayerInput);
+
         //↓playerターン処理
         IsWaitingPlayerInput = true;
     }
@@ -159,7 +163,8 @@ public class TurnManager : MonoBehaviour
         IsWaitingPlayerInput = false;
         Debug.Log(enemy.name + " のターン開始");
 
-        // この後敵のAI処理
+        //AI処理
+        enemy.ExecuteTurn();
     }
 
     // 現在のターンのプレイヤーを取得するプロパティ

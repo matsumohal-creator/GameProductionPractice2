@@ -139,6 +139,14 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         return instance.stack;
     }
 
+    // 指定状態異常を取得する。存在しない場合はfalseを返す。
+    public bool TryGetStatusEffect(
+    StatusEffectType type,
+    out StatusEffectInstance instance)
+    {
+        return activeStatusEffects.TryGetValue(type, out instance);
+    }
+
     // 指定状態異常を解除する
     public void RemoveStatusEffect(StatusEffectType type)
     {

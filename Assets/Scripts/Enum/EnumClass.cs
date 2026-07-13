@@ -41,11 +41,12 @@ public enum SkillEffectType
 public enum SpecialEffectType
 {
     None,
+    ShieldBash, // シールドバッシュ(Knightの特殊スキル)
+    Erosion,    // 侵食(Mageの特殊スキル)
 
-    ShieldBash
+
+
 }
-
-
 
 // 状態異常の種類を定義する列挙型
 public enum StatusEffectType
@@ -55,5 +56,10 @@ public enum StatusEffectType
     Fatigue,   // 疲労
     Weakness,  // 弱点
     Vulnerable,// 脱力
-    Strength   // 筋力（攻撃力上昇バフ）
+    Strength,  // 筋力（攻撃力上昇バフ）
+    Regeneration, // 再生（HP回復バフ）
+
+
+
+
 }

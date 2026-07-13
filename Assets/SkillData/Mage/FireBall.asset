@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
   m_Name: FireBall
   m_EditorClassIdentifier: 
-  skillName: "\u706B\u708E"
-  description: "\u76F8\u624B\u5358\u4F53\u3092\u5BFE\u8C61\u306B5\u30C0\u30E1\u30FC\u30B8\u3001\u3084\u3051\u3069\u30922\u4ED8\u4E0E"
+  skillName: "\u30D5\u30A1\u30A4\u30A2\u30FC\u30DC\u30FC\u30EB"
+  description: "\u76F8\u624B\u5358\u4F53\u3092\u5BFE\u8C61\u306B6\u30C0\u30E1\u30FC\u30B8\u3001\u3084\u3051\u3069\u30922\u4ED8\u4E0E"
   icon: {fileID: 0}
   cost: 1
   targetType: 0
   effects:
   - effectType: 0
+    specialType: 0
     value: 6
     statusEffect: {fileID: 11400000, guid: 3f27206db245cca4bb73fe39c156b6a3, type: 2}
     duration: 2

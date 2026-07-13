@@ -162,6 +162,10 @@ public static class SkillExecution
             case SpecialEffectType.ShieldBash:
                 ApplyShieldBash(user, target);
                 break;
+
+            case SpecialEffectType.Erosion:
+                ApplyErosion(target);
+                break;
         }
     }
 
@@ -173,5 +177,19 @@ public static class SkillExecution
         int damage = user.Shield;
 
         target.TakeDamage(damage);
+    }
+
+    // êNêHÇÃèàóù
+    private static void ApplyErosion(
+    IStatusEffectTarget target)
+    {
+        if (!target.TryGetStatusEffect(
+            StatusEffectType.Poison,
+            out StatusEffectInstance poison))
+        {
+            return;
+        }
+
+        StatusEffectManager.TriggerStatusEffect(target, poison);
     }
 }

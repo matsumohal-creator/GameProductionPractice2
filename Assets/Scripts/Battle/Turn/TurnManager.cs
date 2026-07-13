@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -161,10 +162,12 @@ public class TurnManager : MonoBehaviour
     private void StartEnemyTurn(EnemyBase enemy)
     {
         IsWaitingPlayerInput = false;
-        Debug.Log(enemy.name + " のターン開始");
+        //Debug.Log(enemy.name + " のターン開始");
 
         //AI処理
-        enemy.ExecuteTurn();
+        //Coroutine化
+        StartCoroutine(EnemyTurnRoutine(enemy));
+
     }
 
     // 現在のターンのプレイヤーを取得するプロパティ
@@ -206,5 +209,23 @@ public class TurnManager : MonoBehaviour
             if (currentUnit == null) return false;
             return currentUnit.isPlayer;
         }
+    }
+
+    // エネミーのターン処理をコルーチンで実行する
+    private IEnumerator EnemyTurnRoutine(EnemyBase enemy)
+    {
+        Debug.Log(enemy.name + " のターン開始");
+
+        //0.5秒待機
+        yield return new WaitForSeconds(0.5f);
+
+        // エネミーのターン処理を実行
+        enemy.ExecuteTurn();
+
+        //1.0秒待機
+        yield return new WaitForSeconds(1.0f);
+
+        // ターン終了処理
+        EndTurn();
     }
 }

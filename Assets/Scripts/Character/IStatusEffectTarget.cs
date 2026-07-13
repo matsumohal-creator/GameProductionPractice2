@@ -18,6 +18,11 @@ public interface IStatusEffectTarget
     // 状態異常処理から呼ばれる受け取り口
     int GetStatusStack(StatusEffectType type);
 
+    // 状態異常処理から呼ばれる受け取り口。状態異常を取得し、存在しない場合はnullを返す。
+    bool TryGetStatusEffect(
+    StatusEffectType type,
+    out StatusEffectInstance instance);
+
     // シールドを獲得
     void GainShield(int amount);
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class BattleManager : MonoBehaviour
 {
@@ -66,12 +67,30 @@ public class BattleManager : MonoBehaviour
         //デッキの初期化
         InitializePlayerDecks();
 
-        //ターンの開始
-        turnManager.StartRound();
-
         //BattleStateをBattleStartに移行
         ChangeState(BattleState.BattleStart);
 
+        //ターンの開始
+        turnManager.StartRound();
+
+       
+
+    }
+
+    //Battleの司令塔
+    // バトルの状態を管理するプロパティ
+    public BattleState CurrentState { get; private set; }
+
+    public void ChangeState(BattleState newState)
+    {
+        CurrentState = newState;
+
+        if (BattleUIManager.Instance != null)
+        {
+          //  BattleUIManager.Instance.RefreshUI(newState);
+        }
+
+       // Debug.Log("現在の状態：" + newState);
     }
 
     // プレイヤーとエネミーのリストを取得するプロパティ
@@ -129,6 +148,7 @@ public class BattleManager : MonoBehaviour
     // プレイヤーのデッキを初期化
     private void InitializePlayerDecks()
     {
+
         foreach (PlayerBase player in players)
         {
             //デッキマネージャーのデッキ
@@ -158,15 +178,6 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // バトルの状態を管理するプロパティ
-    public BattleState CurrentState { get; private set; }
-
-    public void ChangeState(BattleState state)
-    {
-        CurrentState = state;
-
-        Debug.Log("現在の状態：" + state);
-    }
 
 
     //スキルの使用

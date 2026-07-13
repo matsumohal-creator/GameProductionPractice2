@@ -28,9 +28,6 @@ public class TurnManager : MonoBehaviour
         // BattleManagerからプレイヤーとエネミーのリストを取得
         players = BattleManager.Instance.Players;
         enemies = BattleManager.Instance.Enemies;
-
-        // 最初のラウンド開始
-        StartRound();
     }
 
     // ターンの開始
@@ -103,6 +100,9 @@ public class TurnManager : MonoBehaviour
             currentUnit.enemy.OnTurnEnd();
         }
 
+        BattleManager.Instance.ChangeState(
+           BattleState.TurnEnd);
+
         IsWaitingPlayerInput = false;
         NextTurn();
     }
@@ -138,6 +138,10 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log(player.name + " のターン開始");
 
+        // ターン開始時のステータス効果処理
+        BattleManager.Instance.ChangeState(
+         BattleState.PlayerInput);
+
         // エナジー回復
         player.RefillEnergy();
 
@@ -150,10 +154,6 @@ public class TurnManager : MonoBehaviour
             hand.DrawToFive();
         }
 
-        // ターン開始時のステータス効果処理
-        BattleManager.Instance.ChangeState(
-         BattleState.PlayerInput);
-
         //↓playerターン処理
         IsWaitingPlayerInput = true;
     }
@@ -163,6 +163,9 @@ public class TurnManager : MonoBehaviour
     {
         IsWaitingPlayerInput = false;
         //Debug.Log(enemy.name + " のターン開始");
+
+        BattleManager.Instance.ChangeState(
+          BattleState.EnemyAction);
 
         //AI処理
         //Coroutine化

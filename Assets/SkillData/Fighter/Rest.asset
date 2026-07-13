@@ -24,4 +24,4 @@ MonoBehaviour:
     statusEffect: {fileID: 0}
     duration: 0
     stack: 0
-  exclusiveClass: 0
+  exclusiveClass: 1

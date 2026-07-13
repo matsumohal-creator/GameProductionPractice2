@@ -7,7 +7,7 @@
 public class StatusEffectInstance
 {
     public StatusEffectData data;
-    // ターン数
+    // 現在あと何ターン残っているか
     public int remainingTurns;
     // 効果量
     public int stack;

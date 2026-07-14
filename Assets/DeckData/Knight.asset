@@ -13,4 +13,19 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   characterClass: 3
-  startDeck: []
+  startDeck:
+  - {fileID: 11400000, guid: a0044c0227d0b7f448fe6381efa6da04, type: 2}
+  - {fileID: 11400000, guid: a0044c0227d0b7f448fe6381efa6da04, type: 2}
+  - {fileID: 11400000, guid: a0044c0227d0b7f448fe6381efa6da04, type: 2}
+  - {fileID: 11400000, guid: 2cabf691f96584b47a8bf0c1d1a3f324, type: 2}
+  - {fileID: 11400000, guid: 2cabf691f96584b47a8bf0c1d1a3f324, type: 2}
+  - {fileID: 11400000, guid: 2cabf691f96584b47a8bf0c1d1a3f324, type: 2}
+  - {fileID: 11400000, guid: 1e4e08b7a75e28c47a9ff9e1c7ab4a02, type: 2}
+  - {fileID: 11400000, guid: 1e4e08b7a75e28c47a9ff9e1c7ab4a02, type: 2}
+  - {fileID: 11400000, guid: 1e4e08b7a75e28c47a9ff9e1c7ab4a02, type: 2}
+  - {fileID: 11400000, guid: a3f2882beba288849ae5c8f218b3ee09, type: 2}
+  - {fileID: 11400000, guid: a3f2882beba288849ae5c8f218b3ee09, type: 2}
+  - {fileID: 11400000, guid: a3f2882beba288849ae5c8f218b3ee09, type: 2}
+  - {fileID: 11400000, guid: 28f799310f4866f49b5fb8a54db278f3, type: 2}
+  - {fileID: 11400000, guid: 28f799310f4866f49b5fb8a54db278f3, type: 2}
+  - {fileID: 11400000, guid: 28f799310f4866f49b5fb8a54db278f3, type: 2}

@@ -6,6 +6,9 @@ public interface IStatusEffectTarget
     // 状態異常処理から呼ばれる回復受け取り口
     void Heal(int amount);
 
+    // 最大HPを取得するプロパティ。状態異常処理から呼ばれる。
+    int MaxHp { get; }
+
     // 状態異常処理から呼ばれる状態異常付与口
     void ApplyStatusEffect(
         StatusEffectData statusData,

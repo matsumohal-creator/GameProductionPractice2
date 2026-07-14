@@ -1,11 +1,10 @@
-using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine;
 
 // スライムの行動パターン
 // 1ターン目: 10ダメージの攻撃
-// 2ターン目: 何もせず、ターン終了時に筋力バフ5を付与
-// 3ターン目: 15ダメージの攻撃（筋力バフで強化される）
+// 2ターン目: 何もしない
+// 3ターン目: 攻撃前に筋力+5して攻撃、攻撃後に筋力をリセット
 // 以降ループ
 public class Slime : EnemyBase
 {
@@ -16,13 +15,9 @@ public class Slime : EnemyBase
     [SerializeField]
     private int baseAttackDamage = 10;
 
-    // 2ターン目に付与する筋力バフのスタック数
+    // 3ターン目の攻撃前に付与する筋力バフのスタック数
     [SerializeField]
     private int strengthStack = 5;
-
-    // 筋力バフは永続（持続ターン数を999など大きな値に設定）
-    [SerializeField]
-    private int strengthDuration = 999;
 
     public override void ExecuteTurn()
     {
@@ -53,13 +48,20 @@ public class Slime : EnemyBase
                 break;
 
             case 2:
-                // 2ターン目: 何もしない（ターン終了時に筋力バフを付与）
+                // 2ターン目: 何もしない
                 Debug.Log(name + " は力を溜めている...");
                 break;
 
             case 3:
-                // 3ターン目: 10ダメージ攻撃（筋力バフ5で15ダメージになる）
+                // 3ターン目: 攻撃前に筋力+5してから攻撃
+                ApplyStatusEffect(StatusEffectType.Strength, 1, strengthStack);
+                Debug.Log(name + " は筋力が上がった（+" + strengthStack + "）");
+
                 ExecuteAttack(alivePlayers, baseAttackDamage);
+
+                // 攻撃後は筋力をリセット
+                RemoveStatusEffect(StatusEffectType.Strength);
+                Debug.Log(name + " の筋力が元に戻った");
                 break;
         }
 
@@ -89,19 +91,5 @@ public class Slime : EnemyBase
         target.TakeDamage(finalDamage);
 
         Debug.Log(name + " が " + target.name + " に " + finalDamage + " のダメージを与えた");
-    }
-
-    // ターン終了時の処理をオーバーライド
-    public override void OnTurnEnd()
-    {
-        // 2ターン目のターン終了時に筋力バフを付与
-        if (turnCount == 3) // turnCountは次のターンを指しているので3になっている
-        {
-            ApplyStatusEffect(StatusEffectType.Strength, strengthDuration, strengthStack);
-            Debug.Log(name + " は筋力バフを得た（+" + strengthStack + "）");
-        }
-
-        // 基底クラスのターン終了処理（状態異常の進行など）
-        base.OnTurnEnd();
     }
 }

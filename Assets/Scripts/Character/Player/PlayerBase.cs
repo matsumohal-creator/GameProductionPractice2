@@ -35,7 +35,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     public CharacterDeckData DefaultDeck => defaultDeck;// デフォルトデッキは、プレイヤーのクラスに応じた初期カードセットを提供するためのものです。
     // ここまで追加
     public int Speed => speed; // 追加したよ
-    public int CurrentHp => currentHp;
+    public int CurrentHp => currentHp; 
     public int MaxHp => maxHp;
     public int CurrentEnergy => currentEnergy;
     public int MaxEnergy => maxEnergy;

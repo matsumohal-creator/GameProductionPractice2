@@ -71,7 +71,10 @@ public class EditScene : MonoBehaviour
         GameManager.selectedFlgs.Clear();
         for (int i = 0; i < characterCards.Count; i++)
         {
-            GameManager.selectedFlgs.Add(i);      
+            if (characterCards[i].selectedFlg == 1)
+            {
+                GameManager.selectedFlgs.Add(i);
+            }
         }
     }
 }

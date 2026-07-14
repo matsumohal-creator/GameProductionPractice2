@@ -35,12 +35,13 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private Transform[] enemySpawnPoints;
 
-
-   
-    //デバック用・後で消す
-    [Header("Debug Player")]
+    // プレイヤーのプレハブ
+    [Header("Player Prefabs")]
     [SerializeField]
-    private PlayerBase playerPrefab;
+    private List<PlayerBase> playerPrefabs = new();
+
+    //デバック用・後で消す
+
 
     [Header("Debug Enemy")]
     [SerializeField]
@@ -87,7 +88,7 @@ public class BattleManager : MonoBehaviour
 
         if (BattleUIManager.Instance != null)
         {
-          //  BattleUIManager.Instance.RefreshUI(newState);
+            BattleUIManager.Instance.RefreshUI(newState);
         }
 
        // Debug.Log("現在の状態：" + newState);
@@ -100,26 +101,54 @@ public class BattleManager : MonoBehaviour
     // プレイヤーを生成
     private void SpawnPlayers()
     {
+        players.Clear();
+        // Debug.Log("SpawnPlayers開始");
 
-       // Debug.Log("SpawnPlayers開始");
-
-        GameObject obj = Instantiate(
-       playerPrefab.gameObject,
-       playerSpawnPoints[0],   // ← 1Pを親にする
-       false                   // ワールド座標を維持しない
-         );
-
-        // 生成したGameObjectからPlayerBaseコンポーネントを取得
-        PlayerBase player = obj.GetComponent<PlayerBase>();
-
-        if (obj == null)
+        // デバッグ用
+        if (GameManager.selectedFlgs.Count == 0)
         {
-            Debug.LogError("InstantiateしたPlayerがnull");
+            GameManager.selectedFlgs.Add(0);
+            GameManager.selectedFlgs.Add(1);
+            GameManager.selectedFlgs.Add(2);
+            GameManager.selectedFlgs.Add(3);
+
         }
 
 
-        // 生成したプレイヤーをリストに追加
-        players.Add(player);
+        for (int i = 0; i < GameManager.selectedFlgs.Count; i++)
+        {
+            //
+            int index = GameManager.selectedFlgs[i];
+            if (index < 0 || index >= playerPrefabs.Count)
+            {
+                continue;
+            }
+
+            //
+            PlayerBase prefab = playerPrefabs[index];
+
+            //プレイヤーの生成
+            GameObject obj = Instantiate(
+           prefab.gameObject,
+           playerSpawnPoints[i],
+           false);
+            if (i >= playerSpawnPoints.Length)
+            {
+                Debug.LogError("スポーンポイントが足りません");
+                break;
+            }
+
+            //playerベースの取得
+            PlayerBase player = obj.GetComponent<PlayerBase>();
+            if (obj == null)
+            {
+                Debug.LogError("InstantiateしたPlayerがnull");
+            }
+
+            // 生成したプレイヤーをリストに追加
+            players.Add(player);
+        }
+
     }
 
     // エネミーを生成
@@ -244,6 +273,7 @@ public class BattleManager : MonoBehaviour
         // 全ての敵が倒されている場合、勝利と判断
         if (allEnemiesDead)
         {
+            ChangeState(BattleState.Victory);
             Debug.Log("Victory");
             return;
         }
@@ -265,6 +295,7 @@ public class BattleManager : MonoBehaviour
         // 全てのプレイヤーが倒されている場合、敗北と判断
         if (allPlayersDead)
         {
+            ChangeState(BattleState.Defeat);
             Debug.Log("Defeat");
         }
     }

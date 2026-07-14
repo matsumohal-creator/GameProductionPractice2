@@ -19,8 +19,8 @@ public static class DamageCalculator
         {
             int strength = attacker.GetStatusStack(StatusEffectType.Strength);
 
-            // 1‘w = 10%‘‰Á
-            damage *= (1f + strength * 0.1f);
+            // ‹Ø—Í1‚É‚Â‚«UŒ‚—Í‚ğ1‰ÁZ
+            damage += strength;
         }
 
         // ’E—ÍiWeaknessjUŒ‚‘¤‚Ìƒfƒoƒt
@@ -58,8 +58,8 @@ public static class DamageCalculator
         {
             int strength = attacker.GetStatusStack(StatusEffectType.Strength);
 
-            // 1‘w = 10%‘‰Á
-            damage *= (1f + strength * 0.1f);
+            // ‹Ø—Í1‚É‚Â‚«UŒ‚—Í‚ğ1‰ÁZ
+            damage += strength;
         }
 
         // ’E—ÍiWeaknessjUŒ‚‘¤‚Ìƒfƒoƒt

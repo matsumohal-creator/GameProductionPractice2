@@ -166,7 +166,7 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     }
 
     // ダメージを受ける
-    public void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount)
     {
         amount = Mathf.Max(0, amount);
 
@@ -179,12 +179,12 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
             amount -= blocked;
         }
 
-        // 残ったダメージをHPへ
+        // 残りダメージをHPへ
         currentHp = Mathf.Max(0, currentHp - amount);
     }
 
     // シールド無視ダメージ
-    public void TakeDirectDamage(int amount)
+    public virtual void TakeDirectDamage(int amount)
     {
         currentHp = Mathf.Max(0, currentHp - Mathf.Max(0, amount));
     }

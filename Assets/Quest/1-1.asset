@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: "\u30C7\u30D0\u30C3\u30B0\u306A\u3046"
   enemyPrefabs:
-  - {fileID: 8658986864154508826, guid: e827ca6a6bcd1be4c9789212d1163143, type: 3}
-  - {fileID: 8658986864154508826, guid: e827ca6a6bcd1be4c9789212d1163143, type: 3}
-  - {fileID: 8658986864154508826, guid: e827ca6a6bcd1be4c9789212d1163143, type: 3}
+  - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
+  - {fileID: 1456464827486147717, guid: 0f2a00c263807f545b22bbc55b169880, type: 3}
+  - {fileID: 287172984597432225, guid: b02d1daf925113a49b27e007dfb74945, type: 3}

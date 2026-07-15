@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 3564475240644824092}
   - component: {fileID: 5256074285017300902}
   - component: {fileID: 6023370701667122395}
+  - component: {fileID: 2698566877156859}
+  - component: {fileID: 878898804067276599}
   m_Layer: 5
   m_Name: healer
   m_TagString: Untagged
@@ -36,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -115.50002, y: 6}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 231, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6372631857855825608
@@ -119,5 +121,32 @@ MonoBehaviour:
   speed: 0
   statusEffectMaster: []
   skills: []
-  characterClass: 0
-  defaultDeck: {fileID: 0}
+  characterClass: 2
+  defaultDeck: {fileID: 11400000, guid: 9ccfbb6d2b2a80f418b2dc4c3e587b55, type: 2}
+--- !u!114 &2698566877156859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5986572927557720390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760c8524fd5a6df448d0b991fdc578ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckManager: {fileID: 878898804067276599}
+  handUIManager: {fileID: 0}
+--- !u!114 &878898804067276599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5986572927557720390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8490024ad1dffae4db854b1951bab01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDeck: []

@@ -23,6 +23,14 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private TurnManager turnManager;
 
+    //プレイヤーUIコントロール
+    [SerializeField]
+    private PlayerUIController playerUIPrefab;
+
+    //プレイヤーUI
+    [SerializeField]
+    private Transform playerUIRoot;
+
     //スポーン位置
 
     // プレイヤーのスポーン位置

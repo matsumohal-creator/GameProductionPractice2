@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBase : MonoBehaviour, IStatusEffectTarget
 {
     [Header("Base Status")]
+    [SerializeField] private string characterName;
     [SerializeField] private int maxHp = 100;
     [SerializeField] private int currentHp = 100;
     [SerializeField] private int maxEnergy = 3;
@@ -33,7 +34,15 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     [SerializeField]
     private CharacterDeckData defaultDeck;// 各プレイヤーのデフォルトデッキを指定するフィールド
     public CharacterDeckData DefaultDeck => defaultDeck;// デフォルトデッキは、プレイヤーのクラスに応じた初期カードセットを提供するためのものです。
-    // ここまで追加
+
+    [Header("Icon")]
+    [SerializeField]
+    private Sprite icon;
+
+    public Sprite Icon => icon;
+
+
+    public string CharacterName => characterName;
     public int Speed => speed; // 追加したよ
     public int CurrentHp => currentHp; 
     public int MaxHp => maxHp;

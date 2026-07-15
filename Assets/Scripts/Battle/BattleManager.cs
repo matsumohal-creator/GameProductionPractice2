@@ -138,6 +138,10 @@ public class BattleManager : MonoBehaviour
                 break;
             }
 
+            // 生成したプレイヤーの位置リセット
+            obj.transform.localPosition = Vector3.zero;
+           
+
             //playerベースの取得
             PlayerBase player = obj.GetComponent<PlayerBase>();
             if (obj == null)

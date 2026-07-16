@@ -4,26 +4,42 @@ using UnityEngine;
 
 public class PlayerUIController : MonoBehaviour
 {
+    // UI Elements
+
+    //アイコン
     [SerializeField]
     private Image icon;
 
+    //名前
     [SerializeField]
     private TMP_Text nameText;
 
+    //HPバー
     [SerializeField]
     private Slider hpBar;
 
+    //HPテキスト
     [SerializeField]
     private TMP_Text hpText;
 
+    //エネルギーバー
     [SerializeField]
     private Slider energyBar;
 
+    //シールドテキスト
     [SerializeField]
     private TMP_Text shieldText;
 
-    private PlayerBase player;
+    //状態異常
+    [SerializeField]
+    private Transform statusIconRoot;
 
+
+    // Target Player
+    private PlayerBase player;
+    public PlayerBase Target => player;
+
+    //
     public void Initialize(PlayerBase target)
     {
         player = target;
@@ -32,21 +48,21 @@ public class PlayerUIController : MonoBehaviour
 
         icon.sprite = player.Icon;
 
+        hpBar.maxValue = player.MaxHp;
+        energyBar.maxValue = player.MaxEnergy;
+
         UIRefresh();
     }
 
+    //更新
     public void UIRefresh()
     {
-        hpBar.maxValue = player.MaxHp;
         hpBar.value = player.CurrentHp;
+        hpText.text = $"{player.CurrentHp}/{player.MaxHp}";
 
-        hpText.text =
-            $"{player.CurrentHp}/{player.MaxHp}";
-
-        energyBar.maxValue = player.MaxEnergy;
         energyBar.value = player.CurrentEnergy;
 
-        shieldText.text =
-            player.Shield.ToString();
+        shieldText.text = player.Shield.ToString();
     }
 }
+

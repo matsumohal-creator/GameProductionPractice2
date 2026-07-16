@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class EnemyBase : MonoBehaviour, IStatusEffectTarget
 {
     [Header("Base Status")]
+    [SerializeField] private string characterName;
     [SerializeField] private int maxHp = 100;
     [SerializeField] private int currentHp = 100;
     [SerializeField] private int shield = 0;
@@ -18,8 +19,17 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     [Header("Skills")]
     [SerializeField] private List<SkillData> skills = new List<SkillData>();
 
+    [Header("Icon")]
+    [SerializeField]
+    private Sprite icon;
+
+    public Sprite Icon => icon;
+
+
     private readonly Dictionary<StatusEffectType, StatusEffectData> statusEffectLookup = new Dictionary<StatusEffectType, StatusEffectData>();
     private readonly Dictionary<StatusEffectType, StatusEffectInstance> activeStatusEffects = new Dictionary<StatusEffectType, StatusEffectInstance>();
+
+    public string CharacterName => characterName;
 
     public int Speed => speed; // ’Ç‰Á‚µ‚½‚æ
     public int CurrentHp => currentHp;

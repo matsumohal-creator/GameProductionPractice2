@@ -23,13 +23,15 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private TurnManager turnManager;
 
-    //プレイヤーUIコントロール
-    [SerializeField]
-    private PlayerUIController playerUIPrefab;
 
-    //プレイヤーUI
+    //プレイヤーUIマネージャー
     [SerializeField]
-    private Transform playerUIRoot;
+    private PlayerUIManager playerUIManager;
+
+
+    // EnemyUI
+    [SerializeField]
+    private EnemyUIManager enemyUIManager;
 
     //スポーン位置
 
@@ -61,20 +63,23 @@ public class BattleManager : MonoBehaviour
     {
         Instance = this;
 
-        SpawnPlayers();
-        SpawnEnemies();
-
     }
 
     // 初期化
     private void Start()
     {
+        SpawnPlayers();
+        SpawnEnemies();
 
         // partyMembers = GameManager.Instance.partyMembers;
 
         //
         //デッキの初期化
         InitializePlayerDecks();
+
+        //UIManagerの初期化
+        playerUIManager.CreateUI(players);
+        enemyUIManager.CreateUI(enemies);
 
         //BattleStateをBattleStartに移行
         ChangeState(BattleState.BattleStart);

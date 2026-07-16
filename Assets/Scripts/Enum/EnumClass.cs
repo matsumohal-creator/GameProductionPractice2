@@ -58,4 +58,5 @@ public enum StatusEffectType
     Vulnerable,// 脱力
     Strength,  // 筋力（攻撃力上昇バフ）
     Regeneration, // 再生（HP回復バフ）
+    Thorn,     // トゲ（攻撃者に反射ダメージを与えるバフ）
 }

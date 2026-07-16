@@ -7,10 +7,12 @@ using System.Collections.Generic;
 [System.Serializable]
 public class SaveData
 {
-    // 現在地点
+    // 現在ステージ
     public int currentStageIndex;
-    // 選択中クエストのインデックス(-1は未選択)
+    // ステージ画面で選択中のインデックス(-1は未選択)
     public int selectedQuestIndex = -1;
+    // BattleSceneへ渡すクエスト
+    public int currentBattleQuestIndex = -1;
     // 現在進行中クエスト
     public string currentQuestName;
 

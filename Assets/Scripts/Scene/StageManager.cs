@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // かなり適当ですので、必要に応じて修正してください。
 
@@ -103,11 +104,13 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        QuestData quest = questDatabase.quests[saveData.selectedQuestIndex];
+        saveData.currentBattleQuestIndex = saveData.selectedQuestIndex;
 
-        Debug.Log("クエスト開始 : " + quest.questName);
+        QuestData quest =
+            questDatabase.quests[saveData.currentBattleQuestIndex];
 
-        // BattleScene担当が出来たらここで遷移
-        // SceneManager.LoadScene("BattleScene");
+        Debug.Log("戦闘開始 : " + quest.questName);
+        SceneLoader.NextSceneName = "BattleScene";
+        SceneManager.LoadScene("LoadingScene");
     }
 }

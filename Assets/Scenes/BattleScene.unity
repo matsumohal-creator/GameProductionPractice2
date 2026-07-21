@@ -390,7 +390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &157532127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1955,8 +1955,6 @@ MonoBehaviour:
   - {fileID: 0}
   enemies: []
   turnManager: {fileID: 223025135}
-  playerUIManager: {fileID: 1126799029}
-  enemyUIManager: {fileID: 1244949045}
   playerSpawnPoints:
   - {fileID: 1613102609}
   - {fileID: 1224284855}
@@ -1972,7 +1970,7 @@ MonoBehaviour:
   - {fileID: 8541219358920493068, guid: 380d95d43304f0342ba8684b44ddf624, type: 3}
   - {fileID: 6023370701667122395, guid: 661706a4c7b10a543adbf521cd0f351b, type: 3}
   - {fileID: 1015632791882434457, guid: b1345e2fdf36c8546bdc50d507d928f3, type: 3}
-  enemyPrefab: {fileID: 8529786653237145506, guid: e827ca6a6bcd1be4c9789212d1163143, type: 3}
+  enemyPrefab: {fileID: 9177570379734201288, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
 --- !u!1 &1126799027
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,7 +1987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1126799028
 Transform:
   m_ObjectHideFlags: 0
@@ -2414,7 +2412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1244949044
 Transform:
   m_ObjectHideFlags: 0
@@ -3174,7 +3172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1531594295
 MonoBehaviour:
   m_ObjectHideFlags: 0

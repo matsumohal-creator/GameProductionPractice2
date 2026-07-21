@@ -18,7 +18,6 @@ public class SkillData : ScriptableObject
 
     [Header("Cost")]
     public int cost; // 個人コスト
-
     [Header("対象")]
     public SkillTargetType targetType;// ターゲットの種類（単体、全体、ランダムなど）
 

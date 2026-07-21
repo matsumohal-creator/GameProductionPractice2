@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
   m_Name: Shield Bash
   m_EditorClassIdentifier: 
-  skillName: "\u30B7\u30FC\u30EB\u30C9\u30A2\u30BF\u30C3\u30AF"
+  skillName: "\u30B7\u30FC\u30EB\u30C9\u30D0\u30C3\u30B7\u30E5"
   description: "\u81EA\u8EAB\u306B\u4ED8\u4E0E\u3055\u308C\u3066\u3044\u308B\u30B7\u30FC\u30EB\u30C9\u306E\u6570\u5206\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u76F8\u624B\u5358\u4F53\u306B\u4E0E\u3048\u308B"
   icon: {fileID: 0}
   cost: 2

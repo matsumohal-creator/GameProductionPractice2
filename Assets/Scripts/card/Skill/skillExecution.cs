@@ -87,7 +87,7 @@ public static class SkillExecution
             user,
             target);
 
-        target.TakeDamage(damage);
+        target.TakeDamage(damage, user);
     }
 
     // ‰ñ•œˆ—
@@ -176,7 +176,7 @@ public static class SkillExecution
     {
         int damage = user.Shield;
 
-        target.TakeDamage(damage);
+        target.TakeDamage(damage, user);
     }
 
     // NH‚Ìˆ—

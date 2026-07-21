@@ -73,4 +73,22 @@ public static class StatusEffectManager
                 break;
         }
     }
+
+    // ダメージを受けたときのトリガー処理
+    public static void OnDamaged(
+    IStatusEffectTarget target,
+    IStatusEffectTarget attacker)
+    {
+        if (attacker == null)
+            return;
+
+        if (!target.TryGetStatusEffect(
+            StatusEffectType.Thorn,
+            out StatusEffectInstance thorns))
+        {
+            return;
+        }
+
+        attacker.TakeDamage(thorns.stack);
+    }
 }

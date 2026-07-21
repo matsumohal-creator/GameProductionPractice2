@@ -22,6 +22,6 @@ MonoBehaviour:
     specialType: 0
     value: 1
     statusEffect: {fileID: 11400000, guid: 293c9aa356d16f449a0727ab1e993295, type: 2}
-    duration: 5
-    stack: 1
+    duration: 1
+    stack: 5
   exclusiveClass: 0

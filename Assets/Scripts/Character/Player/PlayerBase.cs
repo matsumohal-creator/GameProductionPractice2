@@ -222,11 +222,10 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     }
 
     // ダメージを受ける
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, IStatusEffectTarget attacker = null)
     {
         amount = Mathf.Max(0, amount);
 
-        // シールドで吸収
         if (shield > 0)
         {
             int blocked = Mathf.Min(shield, amount);
@@ -235,8 +234,15 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
             amount -= blocked;
         }
 
-        // 残ったダメージをHPへ
         currentHp = Mathf.Max(0, currentHp - amount);
+
+        // 被弾時の状態異常処理
+        OnDamaged(attacker);
+    }
+
+    public void OnDamaged(IStatusEffectTarget attacker)
+    {
+        StatusEffectManager.OnDamaged(this, attacker);
     }
 
     // シールド無視ダメージ

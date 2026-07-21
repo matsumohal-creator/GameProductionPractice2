@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -176,7 +177,7 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     }
 
     // ダメージを受ける
-    public virtual void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount, IStatusEffectTarget attacker = null)
     {
         amount = Mathf.Max(0, amount);
 
@@ -191,6 +192,13 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
 
         // 残りダメージをHPへ
         currentHp = Mathf.Max(0, currentHp - amount);
+
+        OnDamaged(attacker);
+    }
+
+    public void OnDamaged(IStatusEffectTarget attacker)
+    {
+        StatusEffectManager.OnDamaged(this, attacker);
     }
 
     // シールド無視ダメージ

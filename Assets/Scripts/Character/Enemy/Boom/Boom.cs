@@ -70,7 +70,7 @@ public class Boom : EnemyBase
         }
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int amount, IStatusEffectTarget attacker = null)
     {
         if (isCountdownActive)
         {

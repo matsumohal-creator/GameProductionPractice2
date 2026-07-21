@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
-  m_Name: Vulnerable
+  m_Name: Sharpen the thorn
   m_EditorClassIdentifier: 
-  skillName: "\u8131\u529B"
-  description: "\u6575\u5358\u4F53\u306B4\u30C0\u30E1\u30FC\u30B8\u4E0E\u3048\u3001\u8131\u529B\u30922\u4ED8\u4E0E\u3059\u308B"
+  skillName: "\u30C8\u30B2\u3092\u7825\u3050"
+  description: "\u81EA\u8EAB\u306B\u3064\u3044\u3066\u3044\u308B\u30C8\u30B2\u306E\u5C64\u30922\u500D\u306B\u3059\u308B\u4EE3\u308F\u308A\u306B\u56DE\u6570\u30921/2\u306B\u3059\u308B"
   icon: {fileID: 0}
-  cost: 1
-  targetType: 0
+  cost: 3
+  targetType: 4
   effects:
-  - effectType: 0
+  - effectType: 7
     specialType: 0
-    value: 4
-    statusEffect: {fileID: 11400000, guid: 293c9aa356d16f449a0727ab1e993295, type: 2}
-    duration: 1
-    stack: 2
-  exclusiveClass: 4
+    value: 0
+    statusEffect: {fileID: 0}
+    duration: 0
+    stack: 0
+  exclusiveClass: 3

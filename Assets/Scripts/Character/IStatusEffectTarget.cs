@@ -1,7 +1,10 @@
 public interface IStatusEffectTarget
 {
     // 状態異常処理から呼ばれるダメージ受け取り口
-    void TakeDamage(int amount);
+    void TakeDamage(int amount, IStatusEffectTarget attacker = null);
+
+    // 状態異常処理から呼ばれるダメージ受け取り口（攻撃者情報付き）
+    void OnDamaged(IStatusEffectTarget attacker);
 
     // 状態異常処理から呼ばれる回復受け取り口
     void Heal(int amount);

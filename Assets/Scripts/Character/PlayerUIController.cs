@@ -49,7 +49,7 @@ public class PlayerUIController : MonoBehaviour
         icon.sprite = player.Icon;
 
         hpBar.maxValue = player.MaxHp;
-        energyBar.maxValue = player.MaxEnergy;
+       energyBar.maxValue = player.MaxEnergy;
 
         UIRefresh();
     }

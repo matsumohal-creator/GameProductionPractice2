@@ -45,6 +45,21 @@ public class HandManager : MonoBehaviour
        // Debug.Log(handUIManager);
     }
 
+    // 指定した枚数のカードを引く
+    public void DrawCards(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            SkillData card = deckManager.DrawCard();
+
+            if (card == null)
+                break;
+
+            hand.Add(card);
+        }
+
+        RefreshUI();
+    }
 
     //手札を5枚になるまで引く
     public void DrawToFive()

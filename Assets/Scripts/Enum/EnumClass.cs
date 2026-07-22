@@ -41,7 +41,11 @@ public enum SkillEffectType
 public enum SpecialEffectType
 {
     None,
+    SacrificeStrike,// 犠牲の一撃(Fighterの特殊スキル)
+    BloodCharge,    // ブラッドチャージ(Fighterの特殊スキル)
+
     ShieldBash, // シールドバッシュ(Knightの特殊スキル)
+    Sharpen_the_thorn, // トゲを研ぐ(Knightの特殊スキル)
     Erosion,    // 侵食(Mageの特殊スキル)
 
 

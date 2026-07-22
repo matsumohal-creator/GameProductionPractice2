@@ -251,6 +251,29 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         currentHp = Mathf.Max(0, currentHp - Mathf.Max(0, amount));
     }
 
+    // 自身のHPを消費する（最低1HPは残す）
+    public int ConsumeHpPercent(int percent)
+    {
+        percent = Mathf.Clamp(percent, 0, 100);
+
+        // 消費量
+        int consume = maxHp * percent / 100;
+
+        // 現在HP-1までしか減らせない
+        consume = Mathf.Min(consume, currentHp - 1);
+
+        // HP1なら消費できない
+        if (consume <= 0)
+        {
+            return 0;
+        }
+
+        currentHp -= consume;
+
+        // 実際に減った値を返す
+        return consume;
+    }
+
     // HPを回復する
     public void Heal(int amount)
     {

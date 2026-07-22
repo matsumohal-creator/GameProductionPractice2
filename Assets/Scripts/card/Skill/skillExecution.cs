@@ -144,11 +144,15 @@ public static class SkillExecution
     }
 
     private static void ApplyDraw(
-    PlayerBase user,
-    SkillEffectData effect)
+        PlayerBase user,
+        SkillEffectData effect)
     {
-        // TODO:
-        // CardManager.Draw(effect.value);
+        HandManager handManager = Object.FindFirstObjectByType<HandManager>();
+
+        if (handManager == null)
+            return;
+
+        handManager.DrawCards(effect.value);
     }
 
     // 特殊効果の処理
@@ -159,13 +163,48 @@ public static class SkillExecution
     {
         switch (effect.specialType)
         {
+            case SpecialEffectType.SacrificeStrike:
+                ApplySacrificeStrike(user, target);
+                break;
+
+            case SpecialEffectType.BloodCharge:
+                ApplyBloodCharge(user);
+                break;
+
             case SpecialEffectType.ShieldBash:
                 ApplyShieldBash(user, target);
+                break;
+
+            case SpecialEffectType.Sharpen_the_thorn:
+                ApplySharpenTheThorn(user);
                 break;
 
             case SpecialEffectType.Erosion:
                 ApplyErosion(target);
                 break;
+        }
+    }
+
+    // 犠牲の一撃の処理
+    private static void ApplySacrificeStrike(
+    PlayerBase user,
+    IStatusEffectTarget target)
+    {
+        int bonusDamage = user.ConsumeHpPercent(20);
+
+        target.TakeDamage(bonusDamage, user);
+    }
+
+    private static void ApplyBloodCharge(PlayerBase user)
+    {
+        user.ConsumeHpPercent(50);
+        user.GainEnergy(3);
+
+        HandManager handManager = Object.FindFirstObjectByType<HandManager>();
+
+        if (handManager != null)
+        {
+            handManager.DrawCards(3);
         }
     }
 
@@ -177,6 +216,24 @@ public static class SkillExecution
         int damage = user.Shield;
 
         target.TakeDamage(damage, user);
+    }
+
+    // トゲを研ぐの処理
+    private static void ApplySharpenTheThorn(
+    PlayerBase user)
+    {
+        if (!user.TryGetStatusEffect(
+            StatusEffectType.Thorn,
+            out StatusEffectInstance thorns))
+        {
+            return;
+        }
+
+        thorns.stack *= 2;
+        // 小数点切り捨ての場合はこれを使用
+        //thorns.remainingTurns /= 2;
+        // 小数点は切り上げ、この効果で1未満にならないようにする
+        thorns.remainingTurns = Mathf.Max(1, thorns.remainingTurns / 2);
     }
 
     // 侵食の処理

@@ -10,6 +10,10 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField]
     private Image icon;
 
+    //選択フレーム
+    [SerializeField]
+    private GameObject selectionFrame;
+
     //名前
     [SerializeField]
     private TMP_Text nameText;
@@ -54,7 +58,7 @@ public class PlayerUIController : MonoBehaviour
         UIRefresh();
     }
 
-    //更新
+    //UIの更新
     public void UIRefresh()
     {
         hpBar.value = player.CurrentHp;
@@ -62,7 +66,26 @@ public class PlayerUIController : MonoBehaviour
 
         energyBar.value = player.CurrentEnergy;
 
-        shieldText.text = player.Shield.ToString();
+        RefreshShield();
+    }
+
+    //キャラクターの選択状態
+    public void SetSelected(bool value)
+    {
+        selectionFrame.SetActive(value);
+    }
+
+    //シールドの更新
+    private void RefreshShield()
+    {
+        bool hasShield = player.Shield > 0;
+
+        shieldText.gameObject.SetActive(hasShield);
+
+        if (hasShield)
+        {
+            shieldText.text = player.Shield.ToString();
+        }
     }
 }
 

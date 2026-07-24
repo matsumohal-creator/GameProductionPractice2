@@ -25,7 +25,6 @@ public class BattleUIManager : MonoBehaviour
 
     private void Start()
     {
-        endTurnButton.SetActive(false);
         victoryPanel.SetActive(false);
         defeatPanel.SetActive(false);
 

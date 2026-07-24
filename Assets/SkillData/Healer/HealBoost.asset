@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
-  m_Name: Heal Power
+  m_Name: HealBoost
   m_EditorClassIdentifier: 
-  skillName: "\u30D2\u30FC\u30EB\u30D1\u30EF\u30FC"
+  skillName: "\u56DE\u5FA9\u4FC3\u9032"
   description: "3\u30BF\u30FC\u30F3\u306E\u9593\u3001\u56DE\u5FA9\u3092\u884C\u3046\u969B\u306E\u56DE\u5FA9\u91CF\u30921.5\u500D\u3059\u308B\u3002"
   icon: {fileID: 0}
   cost: 3
   targetType: 4
   effects:
   - effectType: 3
+    specialType: 0
     value: 3
-    statusEffect: {fileID: 0}
-    duration: 0
+    statusEffect: {fileID: 11400000, guid: baf202e5e9a5d584d97c31197053d568, type: 2}
+    duration: 3
     stack: 0
   exclusiveClass: 2

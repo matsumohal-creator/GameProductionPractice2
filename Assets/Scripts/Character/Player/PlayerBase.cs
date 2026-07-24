@@ -277,7 +277,17 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     // HPを回復する
     public void Heal(int amount)
     {
-        currentHp = Mathf.Min(maxHp, currentHp + Mathf.Max(0, amount));
+        // 回復量は0以上に補正
+        amount = Mathf.Max(0, amount);
+        // HealBoost状態異常がある場合、回復量を1.5倍にする
+        int healBoost = GetStatusStack(StatusEffectType.HealBoost);
+
+        if (healBoost > 0)
+        {
+            amount = Mathf.RoundToInt(amount * 1.5f);
+        }
+        // 回復量を最大HPを超えないように補正
+        currentHp = Mathf.Min(maxHp, currentHp + amount);
     }
 
     // ターン終了時処理

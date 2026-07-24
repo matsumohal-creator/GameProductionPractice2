@@ -1946,15 +1946,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6bf1d2d0ee4d2d4aa2d4701f5f578b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  players: []
   enemies: []
   turnManager: {fileID: 223025135}
+  playerUIManager: {fileID: 0}
   playerSpawnPoints:
   - {fileID: 1613102609}
   - {fileID: 1224284855}
@@ -1987,7 +1982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1126799028
 Transform:
   m_ObjectHideFlags: 0
@@ -2412,7 +2407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1244949044
 Transform:
   m_ObjectHideFlags: 0

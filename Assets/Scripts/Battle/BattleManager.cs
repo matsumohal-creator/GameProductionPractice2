@@ -25,8 +25,8 @@ public class BattleManager : MonoBehaviour
 
 
     //プレイヤーUIマネージャー
-    //[SerializeField]
-   // private PlayerUIManager playerUIManager;
+    [SerializeField]
+    private PlayerUIManager playerUIManager;
 
 
     // EnemyUI
@@ -78,7 +78,7 @@ public class BattleManager : MonoBehaviour
         InitializePlayerDecks();
 
         //UIManagerの初期化
-        //playerUIManager.CreateUI(players);
+        playerUIManager.CreateUI(players);
        // enemyUIManager.CreateUI(enemies);
 
         //BattleStateをBattleStartに移行

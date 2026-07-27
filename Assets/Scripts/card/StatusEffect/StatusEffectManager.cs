@@ -91,4 +91,22 @@ public static class StatusEffectManager
 
         attacker.TakeDamage(thorns.stack);
     }
+    /*
+    // ダメージの対象を変更する処理
+    public static PlayerBase RedirectDamageTarget(
+        PlayerBase originalTarget)
+    {
+        // Cover状態でなければそのまま
+        if (!originalTarget.TryGetStatusEffect(
+            StatusEffectType.Cover,
+            out _))
+        {
+            return originalTarget;
+        }
+
+        // ランダムな味方を取得
+        PlayerBase redirect = BattleManager.Instance.GetRandomAllyExcept(originalTarget);
+
+        return redirect ?? originalTarget;
+    }*/
 }

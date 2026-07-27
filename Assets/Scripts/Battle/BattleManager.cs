@@ -266,6 +266,11 @@ public class BattleManager : MonoBehaviour
             targets,
             skill);
 
+        // UI更新
+        playerUIManager.RefreshAll();
+       // enemyUIManager.RefreshAll();
+
+
         // 戦闘結果の確認
         CheckBattleResult();
     }

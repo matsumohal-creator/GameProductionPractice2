@@ -321,4 +321,38 @@ public class BattleManager : MonoBehaviour
             Debug.Log("Defeat");
         }
     }
+
+    // 指定したプレイヤー以外の生存している味方をランダムで返す
+    // 今は味方にダメージをそらすときに使用する
+    public PlayerBase GetRandomLivingPlayerExcept(PlayerBase target)
+    {
+        List<PlayerBase> candidates = new();
+
+        foreach (PlayerBase player in players)
+        {
+            // 自分自身は除外
+            if (player == target)
+            {
+                continue;
+            }
+
+            // 戦闘不能は除外
+            if (player.CurrentHp <= 0)
+            {
+                continue;
+            }
+
+            candidates.Add(player);
+        }
+
+        // 候補がいなければnull
+        if (candidates.Count == 0)
+        {
+            return null;
+        }
+
+        int index = Random.Range(0, candidates.Count);
+
+        return candidates[index];
+    }
 }

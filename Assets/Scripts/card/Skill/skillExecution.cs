@@ -87,7 +87,14 @@ public static class SkillExecution
             user,
             target);
 
-        target.TakeDamage(damage, user);
+        if (target is PlayerBase player)
+        {
+            player.ReceiveDamage(damage, user);
+        }
+        else
+        {
+            target.TakeDamage(damage, user);
+        }
     }
 
     // ‰ñ•œˆ—
@@ -192,7 +199,14 @@ public static class SkillExecution
     {
         int bonusDamage = user.ConsumeHpPercent(20);
 
-        target.TakeDamage(bonusDamage, user);
+        if (target is PlayerBase player)
+        {
+            player.ReceiveDamage(bonusDamage, user);
+        }
+        else
+        {
+            target.TakeDamage(bonusDamage, user);
+        }
     }
 
     private static void ApplyBloodCharge(PlayerBase user)
@@ -215,7 +229,14 @@ public static class SkillExecution
     {
         int damage = user.Shield;
 
-        target.TakeDamage(damage, user);
+        if (target is PlayerBase player)
+        {
+            player.ReceiveDamage(damage, user);
+        }
+        else
+        {
+            target.TakeDamage(damage, user);
+        }
     }
 
     // ƒgƒQ‚ğŒ¤‚®‚Ìˆ—

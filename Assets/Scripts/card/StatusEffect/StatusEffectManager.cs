@@ -91,7 +91,7 @@ public static class StatusEffectManager
 
         attacker.TakeDamage(thorns.stack);
     }
-    /*
+    
     // ダメージの対象を変更する処理
     public static PlayerBase RedirectDamageTarget(
         PlayerBase originalTarget)
@@ -105,8 +105,9 @@ public static class StatusEffectManager
         }
 
         // ランダムな味方を取得
-        PlayerBase redirect = BattleManager.Instance.GetRandomAllyExcept(originalTarget);
+        PlayerBase redirect = 
+            BattleManager.Instance.GetRandomLivingPlayerExcept(originalTarget);
 
         return redirect ?? originalTarget;
-    }*/
+    }
 }

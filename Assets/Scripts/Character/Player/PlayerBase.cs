@@ -224,15 +224,6 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     // ダメージを受ける
     public void TakeDamage(int amount, IStatusEffectTarget attacker = null)
     {
-        /*PlayerBase redirect = StatusEffectManager.RedirectDamageTarget(this);
-        // ダメージのリダイレクト先が自分自身でない場合、リダイレクト先にダメージを送る
-        // つまりかばうとかの状態異常を持っている場合に味方にダメージをそらす処理
-        if (redirect != this)
-        {
-            redirect.TakeDamage(amount, attacker);
-            return;
-        }*/
-
         amount = Mathf.Max(0, amount);
 
         if (shield > 0)
@@ -247,6 +238,21 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
 
         // 被弾時の状態異常処理
         OnDamaged(attacker);
+    }
+
+    // 状態異常によるダメージのそらしを考慮してダメージを受ける
+    public void ReceiveDamage(int amount, IStatusEffectTarget attacker = null)
+    {
+        PlayerBase redirect =
+            StatusEffectManager.RedirectDamageTarget(this);
+
+        if (redirect != this)
+        {
+            redirect.TakeDamage(amount, attacker);
+            return;
+        }
+
+        TakeDamage(amount, attacker);
     }
 
     public void OnDamaged(IStatusEffectTarget attacker)

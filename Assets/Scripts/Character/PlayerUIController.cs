@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class PlayerUIController : MonoBehaviour
 {
+    private RectTransform rectTransform;
+    private Camera mainCamera;
+
     // UI Elements
 
     //アイコン
-   // [SerializeField]
-   // private Image icon;
+    // [SerializeField]
+    // private Image icon;
 
     //選択フレーム
     [SerializeField]
@@ -49,11 +52,13 @@ public class PlayerUIController : MonoBehaviour
     {
         player = target;
 
+        rectTransform = GetComponent<RectTransform>();
+        mainCamera = Camera.main;
+
         nameText.text = player.CharacterName;
 
         //icon.sprite = player.Icon;
 
-       energyBar.maxValue = player.MaxEnergy;
 
         UIRefresh();
     }
@@ -67,8 +72,7 @@ public class PlayerUIController : MonoBehaviour
 
         hpText.text = $"{player.CurrentHp}/{player.MaxHp}";
 
-        energyBar.value = player.CurrentEnergy;
-
+        RefreshEnergy();
         RefreshShield();
     }
 
@@ -77,6 +81,14 @@ public class PlayerUIController : MonoBehaviour
     {
         selectionFrame.SetActive(value);
     }
+
+    //エネルギーの更新
+    private void RefreshEnergy()
+    {
+        energyText.text =
+            $"{player.CurrentEnergy}/{player.MaxEnergy}";
+    }
+
 
     //シールドの更新
     private void RefreshShield()

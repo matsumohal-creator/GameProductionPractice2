@@ -64,4 +64,5 @@ public enum StatusEffectType
     Regeneration, // 再生（HP回復バフ）
     Thorn,     // トゲ（攻撃者に反射ダメージを与えるバフ）
     HealBoost, // 回復量50％増加
+    Cover,    // カバー（味方の代わりにダメージを受けるバフ） 
 }

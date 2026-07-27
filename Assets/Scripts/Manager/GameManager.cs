@@ -20,4 +20,11 @@ public class GameManager : MonoBehaviour
     //パーティ編成
     [Header("Party")]
     public static List<int> selectedFlgs = new List<int>();
+
+    //サウンドマネージャーの参照
+    [Header("Sound")]
+    [SerializeField]
+    private SoundManager soundManager;
+
+    public static SoundManager Sound => Instance?.soundManager;
 }

@@ -1,14 +1,15 @@
 using TMPro;
-using UnityEngine.UI;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUIController : MonoBehaviour
 {
     // UI Elements
 
     //アイコン
-    [SerializeField]
-    private Image icon;
+   // [SerializeField]
+   // private Image icon;
 
     //選択フレーム
     [SerializeField]
@@ -20,23 +21,23 @@ public class PlayerUIController : MonoBehaviour
 
     //HPバー
     [SerializeField]
-    private Slider hpBar;
+    private Image hpBar;
 
     //HPテキスト
     [SerializeField]
     private TMP_Text hpText;
 
-    //エネルギーバー
+    //エネルギー
     [SerializeField]
-    private Slider energyBar;
+    private TMP_Text energyText;
 
     //シールドテキスト
     [SerializeField]
     private TMP_Text shieldText;
 
     //状態異常
-    [SerializeField]
-    private Transform statusIconRoot;
+    //[SerializeField]
+    //private Transform statusIconRoot;
 
 
     // Target Player
@@ -50,9 +51,8 @@ public class PlayerUIController : MonoBehaviour
 
         nameText.text = player.CharacterName;
 
-        icon.sprite = player.Icon;
+        //icon.sprite = player.Icon;
 
-        hpBar.maxValue = player.MaxHp;
        energyBar.maxValue = player.MaxEnergy;
 
         UIRefresh();
@@ -61,7 +61,10 @@ public class PlayerUIController : MonoBehaviour
     //UIの更新
     public void UIRefresh()
     {
-        hpBar.value = player.CurrentHp;
+        //HPバーとテキストの更新
+        hpBar.fillAmount =
+      (float)player.CurrentHp / player.MaxHp;
+
         hpText.text = $"{player.CurrentHp}/{player.MaxHp}";
 
         energyBar.value = player.CurrentEnergy;

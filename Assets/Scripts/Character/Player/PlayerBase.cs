@@ -41,6 +41,12 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
 
     public Sprite Icon => icon;
 
+    [Header("UI")]
+    [SerializeField]
+    private Vector3 uiOffset = new Vector3(0, 2.0f, 0);
+
+    public Vector3 UIOffset => uiOffset;
+
 
     public string CharacterName => characterName;
     public int Speed => speed; // ’Ç‰Á‚µ‚½‚æ

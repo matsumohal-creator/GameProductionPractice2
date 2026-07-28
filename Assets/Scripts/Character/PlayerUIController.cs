@@ -76,6 +76,11 @@ public class PlayerUIController : MonoBehaviour
         RefreshShield();
     }
 
+    private void LateUpdate()
+    {
+        FollowTarget();
+    }
+
     //キャラクターの選択状態
     public void SetSelected(bool value)
     {
@@ -101,6 +106,20 @@ public class PlayerUIController : MonoBehaviour
         {
             shieldText.text = player.Shield.ToString();
         }
+    }
+
+    private void FollowTarget()
+    {
+        if (player == null)
+            return;
+
+        Vector3 worldPos =
+            player.transform.position + player.UIOffset;
+
+        Vector3 screenPos =
+            mainCamera.WorldToScreenPoint(worldPos);
+
+        rectTransform.position = screenPos;
     }
 }
 

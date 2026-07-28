@@ -20,7 +20,9 @@ public class PlayerUIManager : MonoBehaviour
         foreach (PlayerBase player in players)
         {
             PlayerUIController ui =
-                Instantiate(playerUIPrefab, uiRoot);
+          Instantiate(
+          playerUIPrefab,
+          player.transform);
 
             ui.Initialize(player);
 

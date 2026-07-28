@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6869d9f34fc9606489bc22b069387a94, type: 3}
-  m_Name: HealBoost
+  m_Name: Substitute
   m_EditorClassIdentifier: 
-  skillName: "\u56DE\u5FA9\u4FC3\u9032"
-  description: "3\u30BF\u30FC\u30F3\u306E\u9593\u3001\u56DE\u5FA9\u3092\u884C\u3046\u969B\u306E\u56DE\u5FA9\u91CF\u30921.5\u500D\u3059\u308B\u3002"
-  icon: {fileID: 21300000, guid: 918d576b209a58f48ba8b5ce0d1458a8, type: 3}
-  cost: 3
+  skillName: "\u8EAB\u4EE3\u308F\u308A"
+  description: "\u81EA\u8EAB\u306B\u300C\u8EAB\u4EE3\u308F\u308A\u300D\u3092\u4ED8\u4E0E\u3059\u308B\u3002"
+  icon: {fileID: 21300000, guid: a1a95e0d6c7a23349bda7b14e2f169ef, type: 3}
+  cost: 1
   targetType: 4
   effects:
   - effectType: 3
     specialType: 0
-    value: 3
-    statusEffect: {fileID: 11400000, guid: baf202e5e9a5d584d97c31197053d568, type: 2}
+    value: 1
+    statusEffect: {fileID: 11400000, guid: 5b3918daaf8184f4a93eb50ae86b87ef, type: 2}
     duration: 3
-    stack: 0
+    stack: 1
   exclusiveClass: 2

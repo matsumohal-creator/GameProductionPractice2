@@ -41,6 +41,7 @@ public class StageManager : MonoBehaviour
         LoadCurrentStage();
     }
 
+    // 現在のステージ情報をロードするメソッド
     private void LoadCurrentStage()
     {
         Debug.Log("現在地点 : " + saveData.currentStageIndex);
@@ -54,6 +55,7 @@ public class StageManager : MonoBehaviour
         stageMarker.MoveToStage(saveData.currentStageIndex);
     }
 
+    // 選択可能なクエストを表示するメソッド
     private void ShowAvailableQuests()
     {
         // クエストデータベースから選択可能なクエストを取得して表示する

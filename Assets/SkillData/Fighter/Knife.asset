@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: "\u30CA\u30A4\u30D5"
   description: "\u6575\u306B3\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 3aed90a416f70f24f8f3d5033007a33c, type: 3}
   cost: 0
   targetType: 0
   effects:
   - effectType: 0
+    specialType: 0
     value: 3
     statusEffect: {fileID: 0}
     duration: 0

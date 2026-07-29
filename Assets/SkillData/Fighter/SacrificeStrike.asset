@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: "\u72A0\u7272\u306E\u4E00\u6483"
   description: "\u81EA\u8EAB\u306E\u6700\u5927HP\u306E20\uFF05\u3092\u6E1B\u3089\u3057\u3001\u5B9F\u969B\u306B\u6E1B\u3063\u305F\u5024\u306B\u5FDC\u3058\u3066\u6575\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 99df7a39a6e32aa4b8e75157697e2d9f, type: 3}
   cost: 1
   targetType: 0
   effects:

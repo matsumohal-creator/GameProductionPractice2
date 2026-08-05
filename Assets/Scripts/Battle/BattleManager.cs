@@ -30,8 +30,8 @@ public class BattleManager : MonoBehaviour
 
 
     // EnemyUI
-   // [SerializeField]
-    //private EnemyUIManager enemyUIManager;
+    [SerializeField]
+    private EnemyUIManager enemyUIManager;
 
     //スポーン位置
 
@@ -58,6 +58,8 @@ public class BattleManager : MonoBehaviour
     private EnemyBase enemyPrefab;
 
 
+
+
     //シングルトンの初期化
     private void Awake()
     {
@@ -79,7 +81,7 @@ public class BattleManager : MonoBehaviour
 
         //UIManagerの初期化
         playerUIManager.CreateUI(players);
-       // enemyUIManager.CreateUI(enemies);
+        enemyUIManager.CreateUI(enemies);
 
         //BattleStateをBattleStartに移行
         ChangeState(BattleState.BattleStart);
@@ -268,7 +270,7 @@ public class BattleManager : MonoBehaviour
 
         // UI更新
         playerUIManager.RefreshAll();
-       // enemyUIManager.RefreshAll();
+        enemyUIManager.RefreshAll();
 
 
         // 戦闘結果の確認
@@ -320,6 +322,42 @@ public class BattleManager : MonoBehaviour
             ChangeState(BattleState.Defeat);
             Debug.Log("Defeat");
         }
+    }
+
+    //敵の攻撃
+    public void EnemyAttack(
+    EnemyBase enemy,
+    PlayerBase target)
+    {
+        if (enemy == null || target == null)
+            return;
+
+        target.TakeDamage(enemy.attack, enemy);
+
+        playerUIManager.RefreshAll();
+        enemyUIManager.RefreshAll();
+
+        CheckBattleResult();
+    }
+
+    
+    public PlayerBase GetRandomLivingPlayer()
+    {
+        List<PlayerBase> candidates = new();
+
+        foreach (PlayerBase player in players)
+        {
+            if (player.CurrentHp > 0)
+            {
+                candidates.Add(player);
+            }
+        }
+
+        if (candidates.Count == 0)
+            return null;
+
+        return candidates[
+            Random.Range(0, candidates.Count)];
     }
 
     // 指定したプレイヤー以外の生存している味方をランダムで返す

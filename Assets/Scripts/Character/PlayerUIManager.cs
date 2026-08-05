@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class PlayerUIManager : MonoBehaviour
 {
-    [Header("UI生成位置")]
-    [SerializeField]
-    private Transform uiRoot;
-
     [Header("UIプレハブ")]
     [SerializeField]
     private PlayerUIController playerUIPrefab;
@@ -17,6 +13,13 @@ public class PlayerUIManager : MonoBehaviour
     //UI生成
     public void CreateUI(List<PlayerBase> players)
     {
+        foreach (PlayerUIController ui in playerUIs)
+        {
+            Destroy(ui.gameObject);
+        }
+
+        playerUIs.Clear();
+
         foreach (PlayerBase player in players)
         {
             PlayerUIController ui =

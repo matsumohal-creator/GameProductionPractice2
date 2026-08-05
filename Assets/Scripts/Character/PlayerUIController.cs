@@ -9,6 +9,8 @@ public class PlayerUIController : MonoBehaviour
     private Camera mainCamera;
 
     // UI Elements
+    [SerializeField]
+    private Vector3 uiOffset = new Vector3(0, 0, 0);
 
     //ÉAÉCÉRÉì
     // [SerializeField]
@@ -78,6 +80,13 @@ public class PlayerUIController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (player == null)
+            return;
+
+        Vector3 screenPos =
+         mainCamera.WorldToScreenPoint(
+             player.transform.position + uiOffset);
+
         FollowTarget();
     }
 

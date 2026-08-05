@@ -6,34 +6,24 @@ public class EnemyUIManager : MonoBehaviour
     [SerializeField]
     private EnemyUIController enemyUIPrefab;
 
-    [SerializeField]
-    private Transform uiRoot;
-
-    private List<EnemyUIController> uiList = new();
+    private readonly List<EnemyUIController> enemyUIs = new();
 
     public void CreateUI(List<EnemyBase> enemies)
     {
-        foreach (Transform child in uiRoot)
-        {
-            Destroy(child.gameObject);
-        }
-
-        uiList.Clear();
-
         foreach (EnemyBase enemy in enemies)
         {
             EnemyUIController ui =
-                Instantiate(enemyUIPrefab, uiRoot);
+                Instantiate(enemyUIPrefab, enemy.transform);
 
             ui.Initialize(enemy);
 
-            uiList.Add(ui);
+            enemyUIs.Add(ui);
         }
     }
 
     public void RefreshAll()
     {
-        foreach (EnemyUIController ui in uiList)
+        foreach (EnemyUIController ui in enemyUIs)
         {
             ui.UIRefresh();
         }

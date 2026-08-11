@@ -21,30 +21,12 @@ public class Slime : EnemyBase
 
     public override void ExecuteTurn()
     {
-        // BattleManagerから全プレイヤーを取得
-        List<PlayerBase> players = BattleManager.Instance.Players;
-
-        // 生存プレイヤーのみ取得
-        List<PlayerBase> alivePlayers = new List<PlayerBase>();
-        foreach (PlayerBase player in players)
-        {
-            if (player.CurrentHp > 0)
-            {
-                alivePlayers.Add(player);
-            }
-        }
-
-        if (alivePlayers.Count == 0)
-        {
-            return;
-        }
-
         // ターンカウントに応じた行動
         switch (turnCount)
         {
             case 1:
                 // 1ターン目: 10ダメージ攻撃
-                ExecuteAttack(alivePlayers, baseAttackDamage);
+                ExecuteAttack(baseAttackDamage);
                 break;
 
             case 2:
@@ -57,7 +39,7 @@ public class Slime : EnemyBase
                 ApplyStatusEffect(StatusEffectType.Strength, 1, strengthStack);
                 Debug.Log(name + " は筋力が上がった（+" + strengthStack + "）");
 
-                ExecuteAttack(alivePlayers, baseAttackDamage);
+                ExecuteAttack(baseAttackDamage);
 
                 // 攻撃後は筋力をリセット
                 RemoveStatusEffect(StatusEffectType.Strength);
@@ -73,23 +55,4 @@ public class Slime : EnemyBase
         }
     }
 
-    // 攻撃実行（ランダムなプレイヤーを対象）
-    private void ExecuteAttack(List<PlayerBase> targets, int baseDamage)
-    {
-        if (targets.Count == 0)
-        {
-            return;
-        }
-
-        // ランダムにターゲットを選択
-        PlayerBase target = targets[Random.Range(0, targets.Count)];
-
-        // ダメージ計算（筋力バフを考慮）
-        int finalDamage = DamageCalculator.CalculateDamage(baseDamage, this, target);
-
-        // ダメージを与える
-        target.TakeDamage(finalDamage);
-
-        Debug.Log(name + " が " + target.name + " に " + finalDamage + " のダメージを与えた");
-    }
 }

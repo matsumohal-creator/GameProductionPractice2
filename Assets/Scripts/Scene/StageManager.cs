@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
-    [SerializeField]// QuestDataBaseをインスペクターで設定するための変数
-    private QuestDataBase questDatabase;
-
     [SerializeField]// StageButtonをインスペクターで設定するための配列
     private StageButton[] stageButtons;
 
@@ -16,6 +13,9 @@ public class StageManager : MonoBehaviour
 
     [SerializeField]// StageMarkerをインスペクターで設定するための変数
     private StageMarker stageMarker;
+
+    [SerializeField]// StageMapDataをインスペクターで設定するための変数
+    private StageMapData stageMap;
 
     // セーブデータを保持する変数
     private SaveData saveData;
@@ -44,55 +44,60 @@ public class StageManager : MonoBehaviour
     // 現在のステージ情報をロードするメソッド
     private void LoadCurrentStage()
     {
-        Debug.Log("現在地点 : " + saveData.currentStageIndex);
+        StageNodeData current = GetCurrentStage();
 
-        if (saveData.currentQuestName != "")
+        Debug.Log("現在地点 : " + current.stageName);
+
+        ShowAvailableStages();
+
+        stageMarker.MoveToStage(current.stageId);
+    }
+
+    // 現在のステージ情報を取得するメソッド
+    private StageNodeData GetCurrentStage()
+    {
+        foreach (StageNodeData stage in stageMap.allStages)
         {
-            Debug.Log("現在クエスト : " + saveData.currentQuestName);
+            if (stage.stageId == saveData.currentStageId)
+            {
+                return stage;
+            }
         }
-        // 選択可能なクエストを表示する
-        ShowAvailableQuests();
-        stageMarker.MoveToStage(saveData.currentStageIndex);
+
+        return stageMap.startStage;
     }
 
     // 選択可能なクエストを表示するメソッド
-    private void ShowAvailableQuests()
+    private void ShowAvailableStages()
     {
-        // クエストデータベースから選択可能なクエストを取得して表示する
-        foreach (QuestData quest in questDatabase.quests)
-        {
-            Debug.Log("選択可能クエスト : " + quest.questName);
-        }
-        // ステージボタンのインタラクティブ状態を更新する
-        for (int i = 0; i < stageButtons.Length; i++)
-        {
-            bool canSelect = i < questDatabase.quests.Length;
+        StageNodeData current = GetCurrentStage();
 
-            stageButtons[i].SetInteractable(canSelect);
+        foreach (StageButton button in stageButtons)
+        {
+            bool canSelect = current.nextStages.Contains(button.StageData);
+
+            button.SetInteractable(canSelect);
         }
     }
 
     // クエストを選択するメソッド
-    public void SelectQuest(int questIndex)
-    {
-        // クエスト情報UIが開いている場合は閉じる
-        QuestData quest = questDatabase.quests[questIndex];
-        // クエスト情報UIを開く
-        saveData.selectedQuestIndex = questIndex;
-        saveData.currentQuestName = quest.questName;
-        // クエスト情報UIを表示する
-        questInfoUI.ShowQuest(quest);
+public void SelectStage(StageNodeData stage)
+{
+    saveData.selectedStageId = stage.stageId;
+    saveData.currentStageName = stage.stageName;
 
-        Debug.Log("選択クエスト : " + quest.questName);
-    }
+    questInfoUI.ShowStage(stage);
+
+    Debug.Log("選択ステージ : " + stage.stageName);
+}
 
     // クエスト情報UIを閉じるメソッド
     public void CloseQuestInfo()
     {
         questInfoUI.Clear();
 
-        saveData.selectedQuestIndex = -1;
-        saveData.currentQuestName = "";
+        saveData.selectedStageId = -1;
+        saveData.currentStageName = "";
 
         isQuestInfoOpen = false;
     }
@@ -100,19 +105,40 @@ public class StageManager : MonoBehaviour
     // クエストを開始するメソッド
     public void StartQuest()
     {
-        if (saveData.selectedQuestIndex < 0)
+        if (saveData.selectedStageId < 0)
         {
             Debug.LogWarning("クエストが選択されていません");
             return;
         }
 
-        saveData.currentBattleQuestIndex = saveData.selectedQuestIndex;
+        saveData.currentBattleStageId = saveData.selectedStageId;
 
-        QuestData quest =
-            questDatabase.quests[saveData.currentBattleQuestIndex];
+        StageNodeData stage = GetStageById(saveData.currentBattleStageId);
 
-        Debug.Log("戦闘開始 : " + quest.questName);
+        if (stage == null)
+        {
+            Debug.LogError("ステージデータが見つかりません");
+            return;
+        }
+
+
+        Debug.Log("戦闘開始 : " + stage.stageName);
+
         SceneLoader.NextSceneName = "BattleScene";
         SceneManager.LoadScene("LoadingScene");
+    }
+
+    // IDからステージ取得
+    private StageNodeData GetStageById(int stageId)
+    {
+        foreach (StageNodeData stage in stageMap.allStages)
+        {
+            if (stage.stageId == stageId)
+            {
+                return stage;
+            }
+        }
+
+        return null;
     }
 }

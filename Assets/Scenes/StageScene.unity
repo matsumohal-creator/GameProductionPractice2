@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9038cc8d9ab70fa4488b33a487e54788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questIndex: 0
+  stageData: {fileID: 11400000, guid: 79a39f76d9ccb1e408b2ec084a88a847, type: 2}
 --- !u!114 &1661188962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1354,11 +1354,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1906847687}
         m_TargetAssemblyTypeName: StageManager, Assembly-CSharp
-        m_MethodName: SelectQuest
-        m_Mode: 3
+        m_MethodName: SelectStage
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: 79a39f76d9ccb1e408b2ec084a88a847, type: 2}
+          m_ObjectArgumentAssemblyTypeName: StageNodeData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1671,11 +1671,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8f1ca6b92c6e74b80e3ecdc45c4dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questDatabase: {fileID: 11400000, guid: 482c0acac9a83384489502c6300f6c21, type: 2}
   stageButtons:
   - {fileID: 1661188961}
   questInfoUI: {fileID: 83822114}
   stageMarker: {fileID: 916676827}
+  stageMap: {fileID: 11400000, guid: 5cf17d35943efbb4eb7e1a7202055a52, type: 2}
 --- !u!4 &1906847688
 Transform:
   m_ObjectHideFlags: 0

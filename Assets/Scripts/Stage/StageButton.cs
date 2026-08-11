@@ -17,9 +17,11 @@ QuestIndex = 1
 public class StageButton : MonoBehaviour
 {
     [SerializeField]
-    private int questIndex;
+    private StageNodeData stageData;
 
     private StageManager stageManager;
+
+    public StageNodeData StageData => stageData;
 
     public void Initialize(StageManager manager)
     {
@@ -35,6 +37,6 @@ public class StageButton : MonoBehaviour
 
     public void OnClick()
     {
-        stageManager.SelectQuest(questIndex);
+        stageManager.SelectStage(stageData);
     }
 }

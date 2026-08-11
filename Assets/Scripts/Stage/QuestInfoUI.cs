@@ -31,15 +31,15 @@ public class QuestInfoUI : MonoBehaviour
         stageManager = manager;
     }
 
-    public void ShowQuest(QuestData quest)
+    public void ShowStage(StageNodeData stage)
     {
         gameObject.SetActive(true);
 
-        questNameText.text = quest.questName;
+        questNameText.text = stage.stageName;
 
         enemyListText.text = "";
 
-        foreach (GameObject enemy in quest.enemyPrefabs)
+        foreach (GameObject enemy in stage.enemyPrefabs)
         {
             if (enemy == null) continue;
 

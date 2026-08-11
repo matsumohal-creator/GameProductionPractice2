@@ -13,12 +13,18 @@ public class StageMarker : MonoBehaviour
     [SerializeField]
     private StageButton[] stageButtons;
 
-    // 指定されたステージインデックスに基づいてマーカーを移動させるメソッド
-    public void MoveToStage(int stageIndex)
+    public void MoveToStage(int stageId)
     {
-        if (stageIndex < 0 || stageIndex >= stageButtons.Length)
-            return;
+        foreach (StageButton button in stageButtons)
+        {
+            if (button.StageData != null &&
+                button.StageData.stageId == stageId)
+            {
+                marker.position = button.transform.position;
+                return;
+            }
+        }
 
-        marker.position = stageButtons[stageIndex].transform.position;
+        Debug.LogWarning($"StageMarker: stageId {stageId} が見つかりません");
     }
 }

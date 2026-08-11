@@ -9,11 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c9956f3449cff842839cb645fdf5b7c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9580f6a13cdf0ca48aca25e302eb6fe2, type: 3}
   m_Name: 1-1
   m_EditorClassIdentifier: 
-  questName: "\u30C7\u30D0\u30C3\u30B0\u306A\u3046"
+  stageId: 1
+  stageName: "\u30C7\u30D0\u30C3\u30B0Now"
+  description: "\u30C7\u30D0\u30C3\u30B0\u306A\u3046"
   enemyPrefabs:
   - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
-  - {fileID: 1456464827486147717, guid: 0f2a00c263807f545b22bbc55b169880, type: 3}
-  - {fileID: 287172984597432225, guid: b02d1daf925113a49b27e007dfb74945, type: 3}
+  - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
+  - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
+  nextStages:
+  - {fileID: 0}
+  - {fileID: 0}

@@ -7,14 +7,14 @@ using System.Collections.Generic;
 [System.Serializable]
 public class SaveData
 {
-    // 現在ステージ
-    public int currentStageIndex;
-    // ステージ画面で選択中のインデックス(-1は未選択)
-    public int selectedQuestIndex = -1;
-    // BattleSceneへ渡すクエスト
-    public int currentBattleQuestIndex = -1;
-    // 現在進行中クエスト
-    public string currentQuestName;
+    // 現在のステージID
+    public int currentStageId = 0;
+    // 選択されたステージID
+    public int selectedStageId = -1;
+    // 現在のバトルステージID
+    public int currentBattleStageId = -1;
+
+    public string currentStageName;
 
     // パーティHP
     public List<int> partyHp = new();

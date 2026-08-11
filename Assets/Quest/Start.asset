@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d839c6003483ee04d82dccebacb9d2a7, type: 3}
-  m_Name: QuestDataBase
+  m_Script: {fileID: 11500000, guid: 9580f6a13cdf0ca48aca25e302eb6fe2, type: 3}
+  m_Name: Start
   m_EditorClassIdentifier: 
-  quests:
-  - {fileID: 11400000, guid: 156cae203e30b044eb879aadb4c3d17b, type: 2}
+  stageId: 0
+  stageName: "\u4F11\u61A9\u6240"
+  description: 
+  enemyPrefabs: []
+  nextStages:
+  - {fileID: 11400000, guid: 79a39f76d9ccb1e408b2ec084a88a847, type: 2}

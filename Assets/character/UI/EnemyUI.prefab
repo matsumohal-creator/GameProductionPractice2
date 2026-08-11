@@ -140,6 +140,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -278,6 +279,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -495,7 +497,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8181324554034971417}
   - component: {fileID: 5739386446468703249}
-  - component: {fileID: 4357382472026600344}
+  - component: {fileID: 5950136368349758990}
+  - component: {fileID: 7561522611493148816}
   m_Layer: 5
   m_Name: EnemyUI
   m_TagString: Untagged
@@ -549,12 +552,13 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &4357382472026600344
+--- !u!114 &5950136368349758990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -563,15 +567,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 7520870935053536867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bde5606f0856654883da403c63cd863, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b65c5007d57c3645aa1df0b8cb5528c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyUIController
+  uiOffset: {x: 0, y: 2, z: 0}
   selectionFrame: {fileID: 8735180138772360125}
   nameText: {fileID: 6159413875300344969}
-  hpBar: {fileID: 7338401319370380614}
+  hpFill: {fileID: 7338401319370380614}
   hpText: {fileID: 2290861633996511979}
-  energyText: {fileID: 5614353961464600997}
   shieldText: {fileID: 2153764767823107510}
+  statusIconRoot: {fileID: 6396920144866686705}
+--- !u!225 &7561522611493148816
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7520870935053536867}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7588007677605987198
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +692,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -813,6 +831,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

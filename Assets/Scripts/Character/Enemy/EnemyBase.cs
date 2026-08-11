@@ -221,11 +221,10 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
         shield = 0;
     }
 
-    // 敵のターン開始時の行動を実行（派生クラスでオーバーライド）
+    //敵のターン行動処理
     public virtual void ExecuteTurn()
-    {
-        // デフォルトでは何もしない（派生クラスで実装）
-    }
+    { }
+
 
     // ターン進行時の状態異常処理を行う
     public void TickStatusEffects()
@@ -266,5 +265,36 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     public void OnClickTarget()
     {
         CardSelectionManager.Instance.UseSelectedCard(this);
+    }
+
+    // 敵の基本攻撃
+    protected void ExecuteAttack(int baseDamage)
+    {
+        // 生存しているプレイヤーを取得
+        List<PlayerBase> alivePlayers = new List<PlayerBase>();
+
+        foreach (PlayerBase player in BattleManager.Instance.Players)
+        {
+            if (player != null && player.CurrentHp > 0)
+            {
+                alivePlayers.Add(player);
+            }
+        }
+
+        // 攻撃対象がいない
+        if (alivePlayers.Count == 0)
+        {
+            return;
+        }
+
+        // ランダムにターゲットを選択
+        PlayerBase target =
+            alivePlayers[UnityEngine.Random.Range(0, alivePlayers.Count)];
+
+        // BattleManager経由で攻撃
+        BattleManager.Instance.EnemyAttack(
+            this,
+            target,
+            baseDamage);
     }
 }

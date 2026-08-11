@@ -325,22 +325,38 @@ public class BattleManager : MonoBehaviour
     }
 
     //敵の攻撃
+    // 敵の攻撃
     public void EnemyAttack(
-    EnemyBase enemy,
-    PlayerBase target)
+        EnemyBase enemy,
+        PlayerBase target,
+        int attackPower)
     {
         if (enemy == null || target == null)
             return;
 
-        target.TakeDamage(enemy.attack, enemy);
+        // 攻撃力を使ってダメージ計算
+        int damage =
+            DamageCalculator.CalculateDamage(
+                attackPower,
+                enemy,
+                target);
 
+        // プレイヤーがダメージを受ける
+        target.ReceiveDamage(damage, enemy);
+
+        // UI更新
         playerUIManager.RefreshAll();
         enemyUIManager.RefreshAll();
 
+        // 戦闘結果確認
         CheckBattleResult();
+
+        //敵の行動のログ確認
+        Debug.Log(
+            $"{enemy.CharacterName} が {target.CharacterName} に {damage} ダメージ");
     }
 
-    
+
     public PlayerBase GetRandomLivingPlayer()
     {
         List<PlayerBase> candidates = new();

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectName: "\u8131\u529B"
   description: "\u4E0E\u3048\u308B\u30C0\u30E1\u30FC\u30B8\u304C\u5C64\u5206\u6E1B\u5C11\u3002\u30BF\u30FC\u30F3\u7D42\u4E86\u6642\u306B0\u306B\u30EA\u30BB\u30C3\u30C8"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: db4a3150c5c7aa542a25f08cdc705e58, type: 3}
   isBuff: 0
   maxStack: 999
   effectType: 4

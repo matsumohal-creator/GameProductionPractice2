@@ -17,7 +17,10 @@ public class StageNodeData : ScriptableObject
     [TextArea]
     public string description;
 
-    [Header("出現する敵")]
+    [Header("ステージ種別")]
+    public StageType stageType = StageType.Battle;
+
+    [Header("出現する敵（Battle/Boss のみ使用）")]
     public List<GameObject> enemyPrefabs = new();
 
     [Header("次に進めるステージ")]

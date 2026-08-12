@@ -19,20 +19,40 @@ public class StageButton : MonoBehaviour
     [SerializeField]
     private StageNodeData stageData;
 
+    [Header("選択表示")]
+    [SerializeField] private GameObject selectedHighlight;
+
     private StageManager stageManager;
 
     public StageNodeData StageData => stageData;
 
+    [SerializeField] private Image iconImage;
+
     public void Initialize(StageManager manager)
     {
         stageManager = manager;
+        SetSelected(false);
     }
 
     // ボタンのインタラクティブ状態を設定するメソッド
     //　例えば、クエストが選択可能かどうかに応じてボタンの状態を変更することができます。
     public void SetInteractable(bool value)
     {
-        GetComponent<Button>().interactable = value;
+        Button button = GetComponent<Button>();
+        button.interactable = value;
+
+        if (iconImage != null)
+        {
+            iconImage.color = value ? Color.white : Color.gray;
+        }
+    }
+
+    public void SetSelected(bool value)
+    {
+        if (selectedHighlight != null)
+        {
+            selectedHighlight.SetActive(value);
+        }
     }
 
     public void OnClick()

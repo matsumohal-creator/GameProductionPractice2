@@ -66,3 +66,12 @@ public enum StatusEffectType
     HealBoost, // 回復量50％増加
     Cover,    // カバー（味方の代わりにダメージを受けるバフ） 
 }
+
+// ステージの種類を定義する列挙型
+public enum StageType
+{
+    Start,   // 初期地・拠点
+    Battle,  // 戦闘
+    Event,   // 会話・宝箱など
+    Boss     // ボス戦
+}

@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Start
   m_EditorClassIdentifier: 
   stageId: 0
-  stageName: "\u4F11\u61A9\u6240"
+  stageName: "\u51FA\u767A\u5730"
   description: 
+  stageType: 0
   enemyPrefabs: []
   nextStages:
   - {fileID: 11400000, guid: 79a39f76d9ccb1e408b2ec084a88a847, type: 2}

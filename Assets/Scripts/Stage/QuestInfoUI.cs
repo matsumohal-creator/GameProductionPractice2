@@ -39,13 +39,22 @@ public class QuestInfoUI : MonoBehaviour
 
         enemyListText.text = "";
 
-        foreach (GameObject enemy in stage.enemyPrefabs)
+        // ステージに敵がいない場合は「戦闘なし」と表示する
+        if (stage.enemyPrefabs.Count == 0)
         {
-            if (enemy == null) continue;
-
-            enemyListText.text += enemy.name + "\n";
+            enemyListText.text = "戦闘なし";
+        }
+        // ステージに敵がいる場合は、敵の名前をリスト表示する
+        else
+        {
+            foreach (GameObject enemy in stage.enemyPrefabs)
+            {
+                if (enemy == null) continue;
+                enemyListText.text += enemy.name + "\n";
+            }
         }
 
+        // スタートボタンを有効化する
         startButton.interactable = true;
     }
 

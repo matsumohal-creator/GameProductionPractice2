@@ -16,6 +16,9 @@ public class SaveData
 
     public string currentStageName;
 
+    // クリア済みステージID一覧
+    public List<int> clearedStageIds = new();
+
     // パーティHP
     public List<int> partyHp = new();
 

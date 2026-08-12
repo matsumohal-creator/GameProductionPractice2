@@ -81,15 +81,24 @@ public class StageManager : MonoBehaviour
     }
 
     // クエストを選択するメソッド
-public void SelectStage(StageNodeData stage)
-{
-    saveData.selectedStageId = stage.stageId;
-    saveData.currentStageName = stage.stageName;
+    public void SelectStage(StageNodeData stage)
+    {
+        saveData.selectedStageId = stage.stageId;
+        saveData.currentStageName = stage.stageName;
 
-    questInfoUI.ShowStage(stage);
+        foreach (StageButton button in stageButtons)
+        {
+            bool selected =
+                button.StageData != null &&
+                button.StageData.stageId == stage.stageId;
 
-    Debug.Log("選択ステージ : " + stage.stageName);
-}
+            button.SetSelected(selected);
+        }
+
+        questInfoUI.ShowStage(stage);
+
+        Debug.Log("選択ステージ : " + stage.stageName);
+    }
 
     // クエスト情報UIを閉じるメソッド
     public void CloseQuestInfo()
@@ -98,6 +107,11 @@ public void SelectStage(StageNodeData stage)
 
         saveData.selectedStageId = -1;
         saveData.currentStageName = "";
+
+        foreach (StageButton button in stageButtons)
+        {
+            button.SetSelected(false);
+        }
 
         isQuestInfoOpen = false;
     }
@@ -115,17 +129,22 @@ public void SelectStage(StageNodeData stage)
 
         StageNodeData stage = GetStageById(saveData.currentBattleStageId);
 
-        if (stage == null)
+        switch (stage.stageType)
         {
-            Debug.LogError("ステージデータが見つかりません");
-            return;
+            case StageType.Battle:
+            case StageType.Boss:
+                Debug.Log("戦闘開始 : " + stage.stageName);
+                SceneLoader.NextSceneName = "BattleScene";
+                SceneManager.LoadScene("LoadingScene");
+                break;
+
+            case StageType.Start:
+            case StageType.Event:
+                Debug.Log("イベント開始 : " + stage.stageName);
+                // 将来 EventScene に遷移
+                // SceneManager.LoadScene("EventScene");
+                break;
         }
-
-
-        Debug.Log("戦闘開始 : " + stage.stageName);
-
-        SceneLoader.NextSceneName = "BattleScene";
-        SceneManager.LoadScene("LoadingScene");
     }
 
     // IDからステージ取得
@@ -140,5 +159,34 @@ public void SelectStage(StageNodeData stage)
         }
 
         return null;
+    }
+
+    // クリア済みか
+    public bool IsStageCleared(int stageId)
+    {
+        return saveData.clearedStageIds.Contains(stageId);
+    }
+
+    // クリア登録
+    public void MarkStageCleared(int stageId)
+    {
+        if (!saveData.clearedStageIds.Contains(stageId))
+        {
+            saveData.clearedStageIds.Add(stageId);
+        }
+    }
+
+    // 将来 BattleScene から呼ばれる
+    public void CompleteCurrentBattleStage()
+    {
+        int clearedId = saveData.currentBattleStageId;
+
+        MarkStageCleared(clearedId);
+
+        saveData.currentStageId = clearedId;
+
+        Debug.Log($"ステージ {clearedId} をクリアしました");
+
+        // SaveManager.Save(); ← 将来追加
     }
 }

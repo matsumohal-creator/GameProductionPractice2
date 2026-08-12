@@ -234,6 +234,14 @@ public class BattleManager : MonoBehaviour
     SkillData skill,
     IStatusEffectTarget singleTarget)
     {
+        //
+       Debug.Log(
+            $"[CardDebug] UseSkill開始 " +
+            $"User={user.CharacterName}, " +
+            $"Skill={skill.skillName}, " +
+            $"Target={singleTarget}"
+        );
+
         // ターゲットを指定
         List<IStatusEffectTarget> enemyTargets =
             new List<IStatusEffectTarget>();
@@ -262,12 +270,26 @@ public class BattleManager : MonoBehaviour
                 enemyTargets,
                 allyTargets);
 
+        //
+            Debug.Log(
+        $"[CardDebug] ターゲット解決完了: {targets.Count}体");
+
+            foreach (IStatusEffectTarget target in targets)
+            {
+                Debug.Log(
+                    $"[CardDebug] Target = {target}"
+                );
+            }
+
         // スキルの実行
         SkillExecution.ExecuteSkill(
             user,
             targets,
             skill);
 
+        //カードの実行
+        Debug.Log(
+    　　　$"[CardDebug] SkillExecution.ExecuteSkill 実行");
         // UI更新
         playerUIManager.RefreshAll();
         enemyUIManager.RefreshAll();
@@ -342,7 +364,7 @@ public class BattleManager : MonoBehaviour
                 target);
 
         // プレイヤーがダメージを受ける
-        target.ReceiveDamage(damage, enemy);
+        target.TakeDamage(damage, enemy);
 
         // UI更新
         playerUIManager.RefreshAll();

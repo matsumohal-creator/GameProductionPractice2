@@ -50,6 +50,7 @@ MonoBehaviour:
   battleBGM: {fileID: 8300000, guid: 9b91c1b0c1500754fbdf9ee7a264de89, type: 3}
   bossBGM: {fileID: 8300000, guid: 1838e9b45eb1cdb4bb043e3c551bcdf5, type: 3}
   exploreBGM: {fileID: 8300000, guid: c68a4ec2927a740468321fc9453a6a7a, type: 3}
+  damageSE: {fileID: 8300000, guid: 4ca37eed62412bb4cb8c51799f85ce63, type: 3}
   masterSlider: {fileID: 0}
   bgmSlider: {fileID: 0}
   seSlider: {fileID: 0}

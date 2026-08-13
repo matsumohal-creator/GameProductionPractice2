@@ -28,6 +28,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioClip exploreBGM;
 
+    [Header("SE Clips")]
+    [SerializeField]
+    private AudioClip damageSE;
+
     [Header("Volume Sliders (Optional)")]
     [SerializeField]
     private Slider masterSlider;
@@ -220,6 +224,11 @@ public class SoundManager : MonoBehaviour
         }
 
         seSource.PlayOneShot(clip);
+    }
+
+    public void PlayDamageSE()
+    {
+        PlaySE(damageSE);
     }
 
     // SE‚Ìƒ{ƒŠƒ…[ƒ€‚ğİ’è

@@ -191,7 +191,13 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
         }
 
         // 残りダメージをHPへ
+        int beforeHp = currentHp;
         currentHp = Mathf.Max(0, currentHp - amount);
+
+        if (currentHp < beforeHp)
+        {
+            GameManager.Sound?.PlayDamageSE();
+        }
 
         OnDamaged(attacker);
     }

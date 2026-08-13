@@ -240,7 +240,13 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
             amount -= blocked;
         }
 
+        int beforeHp = currentHp;
         currentHp = Mathf.Max(0, currentHp - amount);
+
+        if (currentHp < beforeHp)
+        {
+            GameManager.Sound?.PlayDamageSE();
+        }
 
         // ”í’eŽž‚Ìó‘ÔˆÙíˆ—
         OnDamaged(attacker);

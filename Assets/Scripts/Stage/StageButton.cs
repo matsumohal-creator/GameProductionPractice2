@@ -28,6 +28,9 @@ public class StageButton : MonoBehaviour
     [Header("鍵アイコン")]
     [SerializeField] private GameObject lockIcon;
 
+    // Lock状態であれば、ボタンを押せないようにするためのフラグ
+    private bool canSelect = false;
+
     public void Initialize(StageManager manager)
     {
         stageManager = manager;
@@ -37,6 +40,8 @@ public class StageButton : MonoBehaviour
     //　例えば、クエストが選択可能かどうかに応じてボタンの状態を変更することができます。
     public void SetInteractable(bool value)
     {
+        canSelect = value;
+
         Button button = GetComponent<Button>();
         button.interactable = value;
 
@@ -54,6 +59,13 @@ public class StageButton : MonoBehaviour
 
     public void OnClick()
     {
+        // ロック中は何もしない
+        if (!canSelect)
+        {
+            Debug.Log("このステージはまだ開放されていません");
+            return;
+        }
+
         stageManager.SelectStage(stageData);
     }
 }

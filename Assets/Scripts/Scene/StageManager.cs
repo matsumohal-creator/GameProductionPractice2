@@ -41,6 +41,39 @@ public class StageManager : MonoBehaviour
         LoadCurrentStage();
     }
 
+    private void Update()
+    {
+        // F1で現在選択中のステージをクリア扱いにする
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            DebugUnlockSelectedStage();
+        }
+    }
+
+    // デバッグ用：選択中ステージをクリア扱いにする
+    private void DebugUnlockSelectedStage()
+    {
+        if (saveData.selectedStageId < 0)
+        {
+            Debug.LogWarning("デバッグ解除：ステージが選択されていません");
+            return;
+        }
+
+        // 選択中ステージを「戦闘したステージ」として扱う
+        saveData.currentBattleStageId = saveData.selectedStageId;
+
+        // 本来は BattleScene 勝利後に呼ばれる処理
+        CompleteCurrentBattleStage();
+
+        // UIを更新
+        ShowAvailableStages();
+
+        // 現在地マーカーを更新
+        stageMarker.SetPositionImmediate(saveData.currentStageId);
+
+        Debug.Log($"デバッグ解除：ステージ {saveData.currentStageId} をクリア");
+    }
+
     // 現在のステージ情報をロードするメソッド
     private void LoadCurrentStage()
     {
@@ -73,9 +106,13 @@ public class StageManager : MonoBehaviour
     {
         StageNodeData current = GetCurrentStage();
 
+        Debug.Log($"現在地: {current.stageName}");
+
         foreach (StageButton button in stageButtons)
         {
             bool canSelect = current.nextStages.Contains(button.StageData);
+
+            Debug.Log($"{button.StageData.stageName} => {canSelect}");
 
             button.SetInteractable(canSelect);
         }
@@ -186,6 +223,9 @@ public class StageManager : MonoBehaviour
         saveData.currentStageId = clearedId;
 
         Debug.Log($"ステージ {clearedId} をクリアしました");
+
+        ShowAvailableStages();
+        stageMarker.SetPositionImmediate(saveData.currentStageId);
 
         // SaveManager.Save(); ← 将来追加
     }

@@ -19,19 +19,18 @@ public class StageButton : MonoBehaviour
     [SerializeField]
     private StageNodeData stageData;
 
-    [Header("選択表示")]
-    [SerializeField] private GameObject selectedHighlight;
-
     private StageManager stageManager;
 
     public StageNodeData StageData => stageData;
 
     [SerializeField] private Image iconImage;
 
+    [Header("鍵アイコン")]
+    [SerializeField] private GameObject lockIcon;
+
     public void Initialize(StageManager manager)
     {
         stageManager = manager;
-        SetSelected(false);
     }
 
     // ボタンのインタラクティブ状態を設定するメソッド
@@ -45,13 +44,11 @@ public class StageButton : MonoBehaviour
         {
             iconImage.color = value ? Color.white : Color.gray;
         }
-    }
 
-    public void SetSelected(bool value)
-    {
-        if (selectedHighlight != null)
+        // 選択不可なら鍵表示
+        if (lockIcon != null)
         {
-            selectedHighlight.SetActive(value);
+            lockIcon.SetActive(!value);
         }
     }
 

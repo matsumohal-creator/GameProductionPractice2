@@ -50,7 +50,8 @@ public class StageManager : MonoBehaviour
 
         ShowAvailableStages();
 
-        stageMarker.MoveToStage(current.stageId);
+        // ロード時は瞬間移動
+        stageMarker.SetPositionImmediate(current.stageId);
     }
 
     // 現在のステージ情報を取得するメソッド
@@ -91,9 +92,10 @@ public class StageManager : MonoBehaviour
             bool selected =
                 button.StageData != null &&
                 button.StageData.stageId == stage.stageId;
-
-            button.SetSelected(selected);
         }
+
+        // マーカーを移動
+        stageMarker.MoveToStage(stage.stageId);
 
         questInfoUI.ShowStage(stage);
 
@@ -108,10 +110,8 @@ public class StageManager : MonoBehaviour
         saveData.selectedStageId = -1;
         saveData.currentStageName = "";
 
-        foreach (StageButton button in stageButtons)
-        {
-            button.SetSelected(false);
-        }
+        // 現在地へ戻す
+        stageMarker.MoveToStage(saveData.currentStageId);
 
         isQuestInfoOpen = false;
     }

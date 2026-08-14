@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9580f6a13cdf0ca48aca25e302eb6fe2, type: 3}
-  m_Name: 1-1
-  m_EditorClassIdentifier: 
-  stageId: 1
-  stageName: "\u30C7\u30D0\u30C3\u30B0Now"
-  description: "\u30C7\u30D0\u30C3\u30B0\u306A\u3046"
+  m_Name: 1-2
+  m_EditorClassIdentifier: Assembly-CSharp::StageNodeData
+  stageId: 2
+  stageName: abc
+  description: gaubg
   stageType: 1
   enemyPrefabs:
   - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
-  - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
-  - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
   nextStages:
-  - {fileID: 11400000, guid: b295d3cb75602bf4ba49078bcbe8ef46, type: 2}
+  - {fileID: 0}

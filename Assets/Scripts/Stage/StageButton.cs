@@ -25,15 +25,33 @@ public class StageButton : MonoBehaviour
 
     [SerializeField] private Image iconImage;
 
+    [Header("クリアアイコン")]
+    [SerializeField] private GameObject clearIcon;
+
     [Header("鍵アイコン")]
     [SerializeField] private GameObject lockIcon;
 
     // Lock状態であれば、ボタンを押せないようにするためのフラグ
     private bool canSelect = false;
 
+    // ステージがクリア済みかどうかを設定するメソッド
+    public void SetCleared(bool value)
+    {
+        if (clearIcon != null)
+        {
+            clearIcon.SetActive(value);
+        }
+    }
+
+    // StageManagerを設定するメソッド
     public void Initialize(StageManager manager)
     {
         stageManager = manager;
+
+        if (clearIcon != null)
+        {
+            clearIcon.SetActive(false);
+        }
     }
 
     // ボタンのインタラクティブ状態を設定するメソッド

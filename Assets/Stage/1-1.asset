@@ -16,9 +16,8 @@ MonoBehaviour:
   stageName: "\u30C7\u30D0\u30C3\u30B0Now"
   description: "\u30C7\u30D0\u30C3\u30B0\u306A\u3046"
   stageType: 1
+  eventText: 
   enemyPrefabs:
-  - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
-  - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
   - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
   nextStages:
   - {fileID: 11400000, guid: b295d3cb75602bf4ba49078bcbe8ef46, type: 2}

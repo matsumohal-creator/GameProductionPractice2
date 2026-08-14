@@ -17,6 +17,12 @@ public class StageManager : MonoBehaviour
     [SerializeField]// StageMapDataをインスペクターで設定するための変数
     private StageMapData stageMap;
 
+    [SerializeField]// StageLineDrawerをインスペクターで設定するための変数
+    private StageLineDrawer stageLineDrawer;
+
+    [SerializeField]// EventOverlayUIをインスペクターで設定するための変数
+    private EventOverlayUI eventOverlayUI;
+
     // セーブデータを保持する変数
     private SaveData saveData;
     // クエスト情報UIが開いているかどうかを管理するフラグ
@@ -31,12 +37,22 @@ public class StageManager : MonoBehaviour
 
         saveData = SaveManager.CurrentSave;
 
+        // 開始地点をクリア済み扱い
+        if (!saveData.clearedStageIds.Contains(stageMap.startStage.stageId))
+        {
+            saveData.clearedStageIds.Add(stageMap.startStage.stageId);
+        }
+
         foreach (StageButton button in stageButtons)
         {
             button.Initialize(this);
         }
         // クエスト情報UIを初期化する
         questInfoUI.Initialize(this);
+
+        // イベントUIを初期化
+        eventOverlayUI.Initialize(this);
+
         // 現在のステージ情報をロードする
         LoadCurrentStage();
     }
@@ -67,6 +83,12 @@ public class StageManager : MonoBehaviour
 
         // UIを更新
         ShowAvailableStages();
+
+        // ステージ間の線を再描画
+        if (stageLineDrawer != null)
+        {
+            stageLineDrawer.DrawLines();
+        }
 
         // 現在地マーカーを更新
         stageMarker.SetPositionImmediate(saveData.currentStageId);
@@ -115,6 +137,10 @@ public class StageManager : MonoBehaviour
             Debug.Log($"{button.StageData.stageName} => {canSelect}");
 
             button.SetInteractable(canSelect);
+
+            // クリア済みかどうかを確認
+            bool cleared = IsStageCleared(button.StageData.stageId);
+            button.SetCleared(cleared);
         }
     }
 
@@ -178,8 +204,11 @@ public class StageManager : MonoBehaviour
             case StageType.Start:
             case StageType.Event:
                 Debug.Log("イベント開始 : " + stage.stageName);
-                // 将来 EventScene に遷移
-                // SceneManager.LoadScene("EventScene");
+                // クエスト情報を閉じる
+                CloseQuestInfo();
+
+                // オーバーレイ表示
+                eventOverlayUI.ShowEvent(stage);
                 break;
         }
     }
@@ -227,6 +256,21 @@ public class StageManager : MonoBehaviour
         ShowAvailableStages();
         stageMarker.SetPositionImmediate(saveData.currentStageId);
 
+        // ステージ間の線を再描画
+        if (stageLineDrawer != null)
+        {
+            stageLineDrawer.DrawLines();
+        }
+
         // SaveManager.Save(); ← 将来追加
+    }
+
+    public void CompleteEventStage(StageNodeData stage)
+    {
+        saveData.currentBattleStageId = stage.stageId;
+
+        CompleteCurrentBattleStage();
+
+        Debug.Log($"イベント {stage.stageName} を完了");
     }
 }

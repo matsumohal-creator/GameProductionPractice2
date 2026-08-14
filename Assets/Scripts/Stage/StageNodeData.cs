@@ -20,6 +20,10 @@ public class StageNodeData : ScriptableObject
     [Header("ステージ種別")]
     public StageType stageType = StageType.Battle;
 
+    [Header("イベント文章(Event のみ使用)")]
+    [TextArea(3, 10)]
+    public string eventText;
+
     [Header("出現する敵（Battle/Boss のみ使用）")]
     public List<GameObject> enemyPrefabs = new();
 

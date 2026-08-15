@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9580f6a13cdf0ca48aca25e302eb6fe2, type: 3}
-  m_Name: Start
-  m_EditorClassIdentifier: 
-  stageId: 0
-  stageName: "\u51FA\u767A\u5730"
-  description: 
-  stageType: 0
+  m_Name: 1-1-2
+  m_EditorClassIdentifier: Assembly-CSharp::StageNodeData
+  stageId: 20
+  stageName: asf
+  description: asf
+  stageType: 1
   eventText: 
   enemyPrefabs: []
   nextStages:
-  - {fileID: 11400000, guid: 79a39f76d9ccb1e408b2ec084a88a847, type: 2}
-  - {fileID: 11400000, guid: 25c91a2f0afc49f43b5fe62f0d344b39, type: 2}
+  - {fileID: 0}

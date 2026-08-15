@@ -50,7 +50,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
 
     public string CharacterName => characterName;
     public int Speed => speed; // ’Ç‰Á‚µ‚½‚æ
-    public int CurrentHp => currentHp; 
+    public int CurrentHp => currentHp;
     public int MaxHp => maxHp;
     public int CurrentEnergy => currentEnergy;
     public int MaxEnergy => maxEnergy;
@@ -240,13 +240,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
             amount -= blocked;
         }
 
-        int beforeHp = currentHp;
         currentHp = Mathf.Max(0, currentHp - amount);
-
-        if (currentHp < beforeHp)
-        {
-            GameManager.Sound?.PlayDamageSE();
-        }
 
         // ”í’eŽž‚Ìó‘ÔˆÙíˆ—
         OnDamaged(attacker);

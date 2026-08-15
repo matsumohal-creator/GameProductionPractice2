@@ -33,6 +33,11 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private EnemyUIManager enemyUIManager;
 
+    //
+    [Header("Battle Result")]
+    [SerializeField]
+    private BattleResultUI battleResultUI;
+
     //スポーン位置
 
     // プレイヤーのスポーン位置
@@ -89,7 +94,7 @@ public class BattleManager : MonoBehaviour
         //ターンの開始
         turnManager.StartRound();
 
-       
+
 
     }
 
@@ -106,7 +111,7 @@ public class BattleManager : MonoBehaviour
             BattleUIManager.Instance.RefreshUI(newState);
         }
 
-       // Debug.Log("現在の状態：" + newState);
+        // Debug.Log("現在の状態：" + newState);
     }
 
     // プレイヤーとエネミーのリストを取得するプロパティ
@@ -155,7 +160,7 @@ public class BattleManager : MonoBehaviour
 
             // 生成したプレイヤーの位置リセット
             obj.transform.localPosition = Vector3.zero;
-           
+
 
             //playerベースの取得
             PlayerBase player = obj.GetComponent<PlayerBase>();
@@ -174,7 +179,7 @@ public class BattleManager : MonoBehaviour
     private void SpawnEnemies()
     {
         enemies.Clear();
-       // Debug.Log("SpawnEnemies開始");
+        // Debug.Log("SpawnEnemies開始");
 
         if (enemyPrefab == null)
         {
@@ -235,12 +240,12 @@ public class BattleManager : MonoBehaviour
     IStatusEffectTarget singleTarget)
     {
         //
-       Debug.Log(
-            $"[CardDebug] UseSkill開始 " +
-            $"User={user.CharacterName}, " +
-            $"Skill={skill.skillName}, " +
-            $"Target={singleTarget}"
-        );
+        Debug.Log(
+             $"[CardDebug] UseSkill開始 " +
+             $"User={user.CharacterName}, " +
+             $"Skill={skill.skillName}, " +
+             $"Target={singleTarget}"
+         );
 
         // ターゲットを指定
         List<IStatusEffectTarget> enemyTargets =
@@ -271,15 +276,15 @@ public class BattleManager : MonoBehaviour
                 allyTargets);
 
         //
-            Debug.Log(
-        $"[CardDebug] ターゲット解決完了: {targets.Count}体");
+        Debug.Log(
+    $"[CardDebug] ターゲット解決完了: {targets.Count}体");
 
-            foreach (IStatusEffectTarget target in targets)
-            {
-                Debug.Log(
-                    $"[CardDebug] Target = {target}"
-                );
-            }
+        foreach (IStatusEffectTarget target in targets)
+        {
+            Debug.Log(
+                $"[CardDebug] Target = {target}"
+            );
+        }
 
         // スキルの実行
         SkillExecution.ExecuteSkill(
@@ -289,7 +294,7 @@ public class BattleManager : MonoBehaviour
 
         //カードの実行
         Debug.Log(
-    　　　$"[CardDebug] SkillExecution.ExecuteSkill 実行");
+    $"[CardDebug] SkillExecution.ExecuteSkill 実行");
         // UI更新
         playerUIManager.RefreshAll();
         enemyUIManager.RefreshAll();
@@ -320,7 +325,21 @@ public class BattleManager : MonoBehaviour
         if (allEnemiesDead)
         {
             ChangeState(BattleState.Victory);
+
             Debug.Log("Victory");
+
+            // ターン進行を停止
+            if (TurnManager.Instance != null)
+            {
+                TurnManager.Instance.StopBattle();
+            }
+
+            // リザルト表示
+            if (battleResultUI != null)
+            {
+                battleResultUI.ShowVictory();
+            }
+
             return;
         }
 
@@ -342,7 +361,31 @@ public class BattleManager : MonoBehaviour
         if (allPlayersDead)
         {
             ChangeState(BattleState.Defeat);
+
             Debug.Log("Defeat");
+
+            // ターン進行を停止
+            if (TurnManager.Instance != null)
+            {
+                TurnManager.Instance.StopBattle();
+            }
+
+            // リザルト表示
+            if (battleResultUI != null)
+            {
+                battleResultUI.ShowDefeat();
+            }
+        }
+    }
+
+    private void StopBattle()
+    {
+        Debug.Log("=== Battle Stop ===");
+
+        // ターン進行を停止
+        if (turnManager != null)
+        {
+            turnManager.StopBattle();
         }
     }
 
@@ -354,7 +397,18 @@ public class BattleManager : MonoBehaviour
         int attackPower)
     {
         if (enemy == null || target == null)
+        {
+            Debug.LogError("EnemyAttack:enemy か　target が null");
             return;
+        }
+
+        Debug.Log(
+       $"[EnemyAttack開始] " +
+       $"攻撃者={enemy.CharacterName} / " +
+       $"対象={target.CharacterName} / " +
+       $"攻撃力={attackPower} / " +
+       $"対象HP={target.CurrentHp}");
+
 
         // 攻撃力を使ってダメージ計算
         int damage =

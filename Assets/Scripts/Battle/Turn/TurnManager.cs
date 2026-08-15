@@ -16,6 +16,8 @@ public class TurnManager : MonoBehaviour
 
     private TurnUnit currentUnit;
 
+    private bool battleFinished = false;
+
     private void Awake()
     {
         // シングルトンの初期化
@@ -35,8 +37,11 @@ public class TurnManager : MonoBehaviour
     {
         List<TurnUnit> units = new List<TurnUnit>();
 
-        Debug.Log("players = " + players.Count);
-        Debug.Log("enemies = " + enemies.Count);
+        // Debug.Log("players = " + players.Count);
+        // Debug.Log("enemies = " + enemies.Count);
+
+        //
+        battleFinished = false;
 
         foreach (PlayerBase player in players)
         {
@@ -110,6 +115,13 @@ public class TurnManager : MonoBehaviour
     // 次のターンに進む
     public void NextTurn()
     {
+        // バトル終了後はターンを進めない
+        if (battleFinished)
+        {
+            return;
+        }
+
+
         if (turnQueue.Count == 0)
         {
             Debug.Log("ラウンド終了");
@@ -171,6 +183,19 @@ public class TurnManager : MonoBehaviour
         //Coroutine化
         StartCoroutine(EnemyTurnRoutine(enemy));
 
+    }
+
+    //バトルを止める
+    public void StopBattle()
+    {
+        battleFinished = true;
+
+        IsWaitingPlayerInput = false;
+
+        //
+        StopAllCoroutines();
+
+        Debug.Log("TurnManager: Battle Stop");
     }
 
     // 現在のターンのプレイヤーを取得するプロパティ

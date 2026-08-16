@@ -82,6 +82,8 @@ public static class SkillExecution
         IStatusEffectTarget target,
         SkillEffectData effect)
     {
+        user.PlayAttackAnimation();
+
         int damage = DamageCalculator.CalculateDamage(
             effect.value,
             user,
@@ -95,6 +97,8 @@ public static class SkillExecution
         {
             target.TakeDamage(damage, user);
         }
+
+        user.PlayIdleAnimation();
     }
 
     // âÒïúèàóù
@@ -197,6 +201,8 @@ public static class SkillExecution
     PlayerBase user,
     IStatusEffectTarget target)
     {
+        user.PlayAttackAnimation();
+
         int bonusDamage = user.ConsumeHpPercent(20);
 
         if (target is PlayerBase player)
@@ -207,6 +213,8 @@ public static class SkillExecution
         {
             target.TakeDamage(bonusDamage, user);
         }
+
+        user.PlayIdleAnimation();
     }
 
     private static void ApplyBloodCharge(PlayerBase user)
@@ -227,6 +235,8 @@ public static class SkillExecution
     PlayerBase user,
     IStatusEffectTarget target)
     {
+        user.PlayAttackAnimation();
+
         int damage = user.Shield;
 
         if (target is PlayerBase player)
@@ -237,6 +247,8 @@ public static class SkillExecution
         {
             target.TakeDamage(damage, user);
         }
+
+        user.PlayIdleAnimation();
     }
 
     // ÉgÉQÇå§ÇÆÇÃèàóù

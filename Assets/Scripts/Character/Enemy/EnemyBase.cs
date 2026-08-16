@@ -24,6 +24,24 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     [SerializeField]
     private Sprite icon;
 
+    [Header("Animation")]
+    [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
+    private string idleStateName = "Idle";
+
+    [SerializeField]
+    private string attackTriggerName = "Attack";
+
+    [SerializeField]
+    private string hitTriggerName = "Hit";
+
+    [SerializeField]
+    private string deadTriggerName = "Dead";
+
+    private bool isDead;
+
     public Sprite Icon => icon;
 
 
@@ -49,6 +67,18 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     {
         maxHp = Mathf.Max(1, maxHp);
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        isDead = currentHp <= 0;
+
+        if (!isDead)
+        {
+            PlayIdleAnimation();
+        }
 
         BuildStatusEffectLookup();
     }
@@ -182,6 +212,7 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
         amount = Mathf.Max(0, amount);
 
         // シールドで吸収
+        // 1) シールドで先にダメージを吸収
         if (shield > 0)
         {
             int blocked = Mathf.Min(shield, amount);
@@ -191,14 +222,26 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
         }
 
         // 残りダメージをHPへ
+        // 2) 残りダメージをHPへ反映
         int beforeHp = currentHp;
         currentHp = Mathf.Max(0, currentHp - amount);
 
+        // 3) 敵のHPが減った時のみダメージSEを再生
         if (currentHp < beforeHp)
         {
             GameManager.Sound?.PlayDamageSE();
+
+            if (currentHp <= 0)
+            {
+                PlayDeadAnimation();
+            }
+            else
+            {
+                PlayHitAnimation();
+            }
         }
 
+        // 4) 被弾時トリガー（反射など）を実行
         OnDamaged(attacker);
     }
 
@@ -210,16 +253,89 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
     // シールド無視ダメージ
     public virtual void TakeDirectDamage(int amount)
     {
+        int beforeHp = currentHp;
         currentHp = Mathf.Max(0, currentHp - Mathf.Max(0, amount));
+
+        if (currentHp < beforeHp)
+        {
+            if (currentHp <= 0)
+            {
+                PlayDeadAnimation();
+            }
+            else
+            {
+                PlayHitAnimation();
+            }
+        }
     }
 
     // HPを回復する
     public void Heal(int amount)
     {
         currentHp = Mathf.Min(maxHp, currentHp + Mathf.Max(0, amount));
+
+        if (!isDead)
+        {
+            PlayIdleAnimation();
+        }
     }
 
     // ターン終了時処理
+    public virtual void PlayAttackAnimation()
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        SetTrigger(attackTriggerName);
+    }
+
+    public virtual void PlayHitAnimation()
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        SetTrigger(hitTriggerName);
+    }
+
+    public virtual void PlayDeadAnimation()
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
+        SetTrigger(deadTriggerName);
+    }
+
+    public virtual void PlayIdleAnimation()
+    {
+        if (animator == null || isDead)
+        {
+            return;
+        }
+
+        int stateHash = Animator.StringToHash(idleStateName);
+        if (animator.HasState(0, stateHash))
+        {
+            animator.Play(stateHash, 0, 0f);
+        }
+    }
+
+    protected void SetTrigger(string triggerName)
+    {
+        if (animator == null || string.IsNullOrEmpty(triggerName))
+        {
+            return;
+        }
+
+        animator.SetTrigger(triggerName);
+    }
+
     public virtual void OnTurnEnd()
     {
         TickStatusEffects();

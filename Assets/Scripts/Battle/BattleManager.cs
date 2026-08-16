@@ -411,6 +411,8 @@ public class BattleManager : MonoBehaviour
 
 
         // 攻撃力を使ってダメージ計算
+        enemy.PlayAttackAnimation();
+
         int damage =
             DamageCalculator.CalculateDamage(
                 attackPower,
@@ -419,6 +421,8 @@ public class BattleManager : MonoBehaviour
 
         // プレイヤーがダメージを受ける
         target.TakeDamage(damage, enemy);
+
+        enemy.PlayIdleAnimation();
 
         // UI更新
         playerUIManager.RefreshAll();

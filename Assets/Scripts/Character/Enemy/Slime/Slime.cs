@@ -22,6 +22,7 @@ public class Slime : EnemyBase
     public override void ExecuteTurn()
     {
         // ターンカウントに応じた行動
+        // 行動はturnCount(1～3)で分岐し、最後にループ
         switch (turnCount)
         {
             case 1:

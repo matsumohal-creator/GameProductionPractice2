@@ -29,6 +29,7 @@ public class CryingChild : EnemyBase
 
     public override void ExecuteTurn()
     {
+        // 1:疲労付与、2:攻撃、3:疲労付与 の3ターンループ
         List<PlayerBase> alivePlayers = GetAlivePlayers();
 
         if (alivePlayers.Count == 0)

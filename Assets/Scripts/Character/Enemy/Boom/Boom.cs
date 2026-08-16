@@ -18,6 +18,7 @@ public class Boom : EnemyBase
 
     public override void ExecuteTurn()
     {
+        // 通常行動中は1～3ターンループ、カウントダウン中は爆発処理を優先
         List<PlayerBase> players = BattleManager.Instance.Players;
         List<PlayerBase> alivePlayers = new List<PlayerBase>();
 

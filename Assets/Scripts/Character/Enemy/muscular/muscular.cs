@@ -26,6 +26,7 @@ public class muscular : EnemyBase
     public override void ExecuteTurn()
     {
         // 生存プレイヤーを取得
+        // 毎ターン、生存中プレイヤーを抽出してから行動を分岐
         List<PlayerBase> players = BattleManager.Instance.Players;
         List<PlayerBase> alivePlayers = new List<PlayerBase>();
 

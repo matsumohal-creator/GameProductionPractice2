@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7219311338106849494}
   - component: {fileID: 147407652190201465}
   - component: {fileID: 7820150292235808188}
+  - component: {fileID: 8653888244677212374}
   m_Layer: 5
   m_Name: muscular
   m_TagString: Untagged
@@ -36,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -52, y: 30}
-  m_SizeDelta: {x: 50, y: 60}
+  m_SizeDelta: {x: 192, y: 58}
   m_Pivot: {x: 0.5, y: 0.49999997}
 --- !u!222 &7219311338106849494
 CanvasRenderer:
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 77bc2803186d2904993595efe4eaf9fa, type: 3}
+  m_Sprite: {fileID: -47799171, guid: e50b855b62caaa247a0fd9b0fb609196, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -88,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74de45ba820831409b743db77c9815d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterName: 
   maxHp: 34
   currentHp: 34
   shield: 0
@@ -95,6 +97,29 @@ MonoBehaviour:
   attackPower: 0
   statusEffectMaster: []
   skills: []
+  icon: {fileID: 0}
   baseAttackDamage: 5
   strengthStack: 5
   strengthDuration: 999
+--- !u!95 &8653888244677212374
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456464827486147717}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8ddd73e97fafed4292b639b1b9d41ab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

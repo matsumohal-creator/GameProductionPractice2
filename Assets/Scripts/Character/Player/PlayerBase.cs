@@ -45,6 +45,24 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     [SerializeField]
     private Vector3 uiOffset = new Vector3(0, 2.0f, 0);
 
+    [Header("Animation")]
+    [SerializeField]
+    private Animator animator;
+
+    [SerializeField]
+    private string idleStateName = "Idle";
+
+    [SerializeField]
+    private string attackTriggerName = "Attack";
+
+    [SerializeField]
+    private string hitTriggerName = "Hit";
+
+    [SerializeField]
+    private string deadTriggerName = "Dead";
+
+    private bool isDead;
+
     public Vector3 UIOffset => uiOffset;
 
 
@@ -69,6 +87,18 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
 
         maxEnergy = Mathf.Max(0, maxEnergy);
         currentEnergy = Mathf.Clamp(currentEnergy, 0, maxEnergy);
+
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        isDead = currentHp <= 0;
+
+        if (!isDead)
+        {
+            PlayIdleAnimation();
+        }
 
         BuildStatusEffectLookup();
     }
@@ -232,6 +262,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     {
         amount = Mathf.Max(0, amount);
 
+        // 1) シールドで先にダメージを吸収
         if (shield > 0)
         {
             int blocked = Mathf.Min(shield, amount);
@@ -240,9 +271,27 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
             amount -= blocked;
         }
 
+        // 2) HP減少前後を比較して、実ダメージが入ったかを判定
+        int beforeHp = currentHp;
         currentHp = Mathf.Max(0, currentHp - amount);
 
+        // 3) プレイヤーのHPが減った時のみダメージSEを再生
+        if (currentHp < beforeHp)
+        {
+            GameManager.Sound?.PlayDamageSE();
+
+            if (currentHp <= 0)
+            {
+                PlayDeadAnimation();
+            }
+            else
+            {
+                PlayHitAnimation();
+            }
+        }
+
         // 被弾時の状態異常処理
+        // 4) 被弾時トリガー（反射など）を実行
         OnDamaged(attacker);
     }
 
@@ -269,7 +318,20 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     // シールド無視ダメージ
     public void TakeDirectDamage(int amount)
     {
+        int beforeHp = currentHp;
         currentHp = Mathf.Max(0, currentHp - Mathf.Max(0, amount));
+
+        if (currentHp < beforeHp)
+        {
+            if (currentHp <= 0)
+            {
+                PlayDeadAnimation();
+            }
+            else
+            {
+                PlayHitAnimation();
+            }
+        }
     }
 
     // 自身のHPを消費する（最低1HPは残す）
@@ -309,9 +371,69 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         }
         // 回復量を最大HPを超えないように補正
         currentHp = Mathf.Min(maxHp, currentHp + amount);
+
+        if (!isDead)
+        {
+            PlayIdleAnimation();
+        }
     }
 
     // ターン終了時処理
+    public void PlayAttackAnimation()
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        SetTrigger(attackTriggerName);
+    }
+
+    public void PlayHitAnimation()
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        SetTrigger(hitTriggerName);
+    }
+
+    public void PlayDeadAnimation()
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
+        SetTrigger(deadTriggerName);
+    }
+
+    public void PlayIdleAnimation()
+    {
+        if (animator == null || isDead)
+        {
+            return;
+        }
+
+        int stateHash = Animator.StringToHash(idleStateName);
+        if (animator.HasState(0, stateHash))
+        {
+            animator.Play(stateHash, 0, 0f);
+        }
+    }
+
+    private void SetTrigger(string triggerName)
+    {
+        if (animator == null || string.IsNullOrEmpty(triggerName))
+        {
+            return;
+        }
+
+        animator.SetTrigger(triggerName);
+    }
+
     public void OnTurnEnd()
     {
         TickStatusEffects();

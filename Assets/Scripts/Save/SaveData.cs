@@ -19,9 +19,6 @@ public class SaveData
     // クリア済みステージID一覧
     public List<int> clearedStageIds = new();
 
-    // パーティHP
-    public List<int> partyHp = new();
-
-    // デッキ
-    public List<string> deckCardNames = new();
+    // 現在編成されている4人
+    public List<PartyMemberData> partyMembers = new();
 }

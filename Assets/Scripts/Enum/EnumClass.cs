@@ -75,3 +75,16 @@ public enum StageType
     Event,   // 会話・宝箱など
     Boss     // ボス戦
 }
+
+// イベントの効果タイプを定義する列挙型
+public enum EventEffectType
+{
+    HealParty,// パーティ全体のHPを回復する効果
+    DamageParty,// パーティ全体にダメージを与える効果
+
+    HealSingle,// パーティの単体のHPを回復する効果
+    DamageSingle,// パーティの単体にダメージを与える効果
+
+    AddCard,// デッキにカードを追加する効果
+    RemoveCard// デッキからカードを削除する効果
+}

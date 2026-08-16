@@ -16,4 +16,7 @@ public class EventData : ScriptableObject
 
     [Header("選択肢")]
     public List<EventChoiceData> choices = new();
+
+    [Header("イベント効果")]
+    public List<EventEffectData> effects = new();
 }

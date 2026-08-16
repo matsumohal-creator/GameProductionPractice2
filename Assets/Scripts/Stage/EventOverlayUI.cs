@@ -15,9 +15,12 @@ public class EventOverlayUI : MonoBehaviour
     [SerializeField] private GameObject resultRoot;
     [SerializeField] private TMP_Text resultText;
 
+    [SerializeField] private EventEffectManager eventEffectManager;
+
     private StageManager stageManager;
     private StageNodeData currentStage;
     private EventData currentEvent;
+    private EventChoiceData currentChoice;
 
     private void Awake()
     {
@@ -125,6 +128,8 @@ public class EventOverlayUI : MonoBehaviour
             return;
         }
 
+        currentChoice = choice;
+
         Debug.Log(
             $"選択肢を選択: {choice.choiceText}");
 
@@ -139,6 +144,14 @@ public class EventOverlayUI : MonoBehaviour
 
     public void OnClickConfirm()
     {
+        // 選択肢の効果を適用
+        if (currentChoice != null)
+        {
+            eventEffectManager.ApplyEffects(
+                currentChoice.effects,
+                currentStage);
+        }
+
         gameObject.SetActive(false);
 
         if (currentStage != null)
@@ -150,5 +163,6 @@ public class EventOverlayUI : MonoBehaviour
 
         currentStage = null;
         currentEvent = null;
+        currentChoice = null;
     }
 }

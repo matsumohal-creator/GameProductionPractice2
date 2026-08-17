@@ -120,7 +120,7 @@ MonoBehaviour:
   statusEffectMaster: []
   skills: []
   icon: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 7206681637852809667}
   idleStateName: Idle
   attackTriggerName: Attack
   hitTriggerName: Hit

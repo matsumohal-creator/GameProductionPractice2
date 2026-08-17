@@ -365,13 +365,13 @@ public class EnemyBase : MonoBehaviour, IStatusEffectTarget
             return;
         }
 
-        // アニメーターを完全に停止
+        if (stateInfo.normalizedTime < 1f)
+        {
+            return;
+        }
+
         animator.speed = 0f;
-
-        // 全てのトリガーをリセット
         ResetAnimatorParameters();
-
-        // アニメーション状態を最後のフレームに確実に固定
         animator.Play(stateInfo.shortNameHash, 0, 1f);
 
         hasFrozenDeadAnimation = true;

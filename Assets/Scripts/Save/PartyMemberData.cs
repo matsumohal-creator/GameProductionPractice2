@@ -6,6 +6,9 @@ public class PartyMemberData
     // キャラクターの識別用
     public int characterIndex;
 
+    // キャラクタークラス
+    public CharacterClass characterClass;
+
     // 現在HP
     public int currentHp;
 
@@ -13,5 +16,5 @@ public class PartyMemberData
     public int maxHp;
 
     // デッキ
-    public List<string> deckCardNames = new();
+    public List<SkillData> deck = new();
 }

@@ -11,7 +11,4 @@ public class EventEffectData
 
     [Header("対象キャラクター")]
     public int targetCharacterIndex = -1;
-
-    [Header("カード")]
-    public SkillData card;
 }

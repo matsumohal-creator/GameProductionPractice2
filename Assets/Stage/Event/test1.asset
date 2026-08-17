@@ -18,5 +18,11 @@ MonoBehaviour:
   choices:
   - choiceText: "\u958B\u3051\u3066\u307F\u308B"
     resultText: "\u30B9\u30AD\u30EB\u304C\u4E00\u679A\u5165\u3063\u3066\u3044\u305F\u3002"
+    effects:
+    - effectType: 4
+      value: 0
+      targetCharacterIndex: 0
   - choiceText: "\u958B\u3051\u305A\u306B\u3059\u3059\u3080"
     resultText: "\u4F55\u304C\u3042\u308B\u304B\u308F\u304B\u3089\u306A\u3044\u305F\u3081\u3001\u958B\u3051\u305A\u306B\u9032\u3093\u3060\u3002\n\u4F55\u3082\u8D77\u3053\u3089\u306A\u304B\u3063\u305F"
+    effects: []
+  effects: []

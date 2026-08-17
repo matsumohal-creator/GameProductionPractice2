@@ -422,7 +422,6 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         }
 
         isDead = true;
-        hasFrozenDeadAnimation = false;
 
         if (animator != null)
         {
@@ -440,7 +439,6 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         }
 
         animator.speed = 1f;
-        hasFrozenDeadAnimation = false;
 
         int stateHash = Animator.StringToHash(idleStateName);
         if (animator.HasState(0, stateHash))
@@ -460,14 +458,49 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         int deadStateHash = Animator.StringToHash(deadStateName);
         bool isDeadState = stateInfo.shortNameHash == deadStateHash || stateInfo.IsName(deadStateName);
 
-        if (!isDeadState || stateInfo.normalizedTime < 1f)
+        if (!isDeadState)
         {
             return;
         }
 
-        animator.Play(stateInfo.shortNameHash, 0, 1f);
+        // アニメーターを完全に停止
         animator.speed = 0f;
+
+        // 全てのトリガーをリセット
+        ResetAnimatorParameters();
+
+        // アニメーション状態を最後のフレームに確実に固定
+        animator.Play(stateInfo.shortNameHash, 0, 1f);
+
         hasFrozenDeadAnimation = true;
+    }
+
+    private void ResetAnimatorParameters()
+    {
+        if (animator == null)
+        {
+            return;
+        }
+
+        // 全てのパラメータをリセット
+        foreach (AnimatorControllerParameter param in animator.parameters)
+        {
+            switch (param.type)
+            {
+                case AnimatorControllerParameterType.Bool:
+                    animator.SetBool(param.name, false);
+                    break;
+                case AnimatorControllerParameterType.Int:
+                    animator.SetInteger(param.name, 0);
+                    break;
+                case AnimatorControllerParameterType.Float:
+                    animator.SetFloat(param.name, 0f);
+                    break;
+                case AnimatorControllerParameterType.Trigger:
+                    animator.ResetTrigger(param.name);
+                    break;
+            }
+        }
     }
 
     private void SetTrigger(string triggerName)

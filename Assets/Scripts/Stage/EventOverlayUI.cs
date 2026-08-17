@@ -15,7 +15,13 @@ public class EventOverlayUI : MonoBehaviour
     [SerializeField] private GameObject resultRoot;
     [SerializeField] private TMP_Text resultText;
 
-    [SerializeField] private EventEffectManager eventEffectManager;
+    [Header("イベント効果")]
+    [SerializeField]
+    private EventEffectManager eventEffectManager;
+
+    [Header("カード削除UI")]
+    [SerializeField]
+    private EventCardRemoveUI cardRemoveUI;
 
     private StageManager stageManager;
     private StageNodeData currentStage;
@@ -27,9 +33,19 @@ public class EventOverlayUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Initialize(StageManager manager)
+    public void Initialize(
+        StageManager manager,
+        EventEffectManager effectManager)
     {
         stageManager = manager;
+        eventEffectManager = effectManager;
+
+        if (cardRemoveUI != null)
+        {
+            cardRemoveUI.Initialize(
+                eventEffectManager,
+                OnCardRemoveCompleted);
+        }
     }
 
     public void ShowEvent(StageNodeData stage)
@@ -135,23 +151,70 @@ public class EventOverlayUI : MonoBehaviour
 
         choiceRoot.gameObject.SetActive(false);
 
+        // -----------------------------------------
+        // イベント効果を実行
+        // -----------------------------------------
+
+        bool requiresCardRemoval = false;
+
+        if (eventEffectManager != null)
+        {
+            requiresCardRemoval =
+                eventEffectManager.ApplyEffects(
+                    choice.effects,
+                    currentStage);
+        }
+
+        // -----------------------------------------
+        // カード削除が必要
+        // -----------------------------------------
+
+        if (requiresCardRemoval)
+        {
+            if (cardRemoveUI != null)
+            {
+                cardRemoveUI.Show();
+                return;
+            }
+
+            Debug.LogWarning(
+                "RemoveCard効果がありますが、" +
+                "EventCardRemoveUIが設定されていません");
+        }
+
+        // -----------------------------------------
+        // 通常の結果表示
+        // -----------------------------------------
+
+        ShowResult(choice);
+    }
+
+    // 結果を表示
+    private void ShowResult(EventChoiceData choice)
+    {
         resultRoot.SetActive(true);
 
-        resultText.text = string.IsNullOrEmpty(choice.resultText)
-            ? "何も起こらなかった……"
-            : choice.resultText;
+        resultText.text =
+            string.IsNullOrEmpty(choice.resultText)
+                ? "何も起こらなかった……"
+                : choice.resultText;
+    }
+
+    private void OnCardRemoveCompleted()
+    {
+        Debug.Log(
+            "[EventEffect] カード削除処理が完了しました");
+
+        if (currentChoice == null)
+        {
+            return;
+        }
+
+        ShowResult(currentChoice);
     }
 
     public void OnClickConfirm()
     {
-        // 選択肢の効果を適用
-        if (currentChoice != null)
-        {
-            eventEffectManager.ApplyEffects(
-                currentChoice.effects,
-                currentStage);
-        }
-
         gameObject.SetActive(false);
 
         if (currentStage != null)

@@ -23,6 +23,9 @@ public class StageManager : MonoBehaviour
     [SerializeField]// EventOverlayUIをインスペクターで設定するための変数
     private EventOverlayUI eventOverlayUI;
 
+    [SerializeField]
+    private EventEffectManager eventEffectManager;
+
     // セーブデータを保持する変数
     private SaveData saveData;
     // クエスト情報UIが開いているかどうかを管理するフラグ
@@ -51,7 +54,7 @@ public class StageManager : MonoBehaviour
         questInfoUI.Initialize(this);
 
         // イベントUIを初期化
-        eventOverlayUI.Initialize(this);
+        eventOverlayUI.Initialize(this, eventEffectManager);
 
         // 現在のステージ情報をロードする
         LoadCurrentStage();

@@ -4,4 +4,15 @@
 public static class SaveManager
 {
     public static SaveData CurrentSave;
+
+    public static void Initialize()
+    {
+        if (CurrentSave != null)
+        {
+            return;
+        }
+
+        CurrentSave = new SaveData();
+
+    }
 }

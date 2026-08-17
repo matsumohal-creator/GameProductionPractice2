@@ -86,14 +86,30 @@ public class EditScene : MonoBehaviour
             return;
         }
 
-        // GameManagerに戦闘情報を保存
-        GameManager.SetupBattle(selectedPlayers);
+        // セーブデータが存在するか確認
+        if (SaveManager.CurrentSave == null)
+        {
+            Debug.LogError(
+                "SaveManager.CurrentSave が存在しません");
+            return;
+        }
 
-        //Debug.Log($"[EditScene] パーティ編成完了: {selectedPlayers.Count}人");
+        // 現在のパーティを一度クリア
+        SaveManager.CurrentSave.partyMembers.Clear();
 
+        // 選択したキャラクターを保存
         foreach (int index in selectedPlayers)
         {
-            Debug.Log( $"[EditScene] Selected Player Index = {index}");
+            PartyMemberData member = new PartyMemberData();
+
+            // キャラクターの識別番号
+            member.characterIndex = index;
+
+            // パーティに追加
+            SaveManager.CurrentSave.partyMembers.Add(member);
+
+            Debug.Log(
+                $"[EditScene] パーティ保存: CharacterIndex = {index}");
         }
 
         //ステージシーンへ移行

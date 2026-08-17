@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // セーブデータを初期化
+        SaveManager.Initialize();
     }
 
     //パーティ編成
@@ -42,9 +45,8 @@ public class GameManager : MonoBehaviour
     public static List<int> selectedEnemyFlags =
         new List<int>();
 
-    // 戦闘を開始するための情報を設定
-    public static void SetupBattle(
-        List<int> playerFlags)
+    // 戦闘設定
+    public static void SetupBattle(List<int> playerFlags)
     {
         selectedFlgs.Clear();
 
@@ -56,8 +58,18 @@ public class GameManager : MonoBehaviour
         IsBattleSetup = true;
 
         Debug.Log(
-            $"[BattleSetup] Player={selectedFlgs.Count}");
+            $"[GameManager] Battle Setup 完了\n" +
+            $"Player Count = {selectedFlgs.Count}"
+        );
+
+        for (int i = 0; i < selectedFlgs.Count; i++)
+        {
+            Debug.Log(
+                $"[GameManager] Player[{i}] Index = {selectedFlgs[i]}"
+            );
+        }
     }
+
     // 戦闘設定を解除
     public static void ClearBattleSetup()
     {
@@ -66,8 +78,26 @@ public class GameManager : MonoBehaviour
 
         IsBattleSetup = false;
 
-        Debug.Log("BattleSetupをクリアしました");
+        Debug.Log("[GameManager] BattleSetupをクリアしました");
     }
 
+    // デバッグ用
+    public static void DebugBattleSetup()
+    {
+        Debug.Log(
+            $"[GameManager] IsBattleSetup = {IsBattleSetup}"
+        );
+
+        Debug.Log(
+            $"[GameManager] selectedFlgs.Count = {selectedFlgs.Count}"
+        );
+
+        for (int i = 0; i < selectedFlgs.Count; i++)
+        {
+            Debug.Log(
+                $"[GameManager] selectedFlgs[{i}] = {selectedFlgs[i]}"
+            );
+        }
+    }
 }
 

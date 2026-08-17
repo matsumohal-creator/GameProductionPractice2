@@ -159,16 +159,51 @@ public class BattleManager : MonoBehaviour
     //通常プレイ用
     private void SpawnSelectedPlayers()
     {
-        for (int i = 0; i < GameManager.selectedFlgs.Count; i++)
+        // セーブデータ確認
+        if (SaveManager.CurrentSave == null)
         {
+            Debug.LogError(
+                "SaveManager.CurrentSave が存在しません");
+            return;
+        }
+
+        // パーティ編成確認
+        if (SaveManager.CurrentSave.partyMembers == null ||
+            SaveManager.CurrentSave.partyMembers.Count == 0)
+        {
+            Debug.LogError(
+                "現在のパーティメンバーが存在しません");
+            return;
+        }
+
+        // パーティメンバーを順番に生成
+        for (int i = 0;
+             i < SaveManager.CurrentSave.partyMembers.Count;
+             i++)
+        {
+            // スポーンポイント確認
             if (i >= playerSpawnPoints.Length)
             {
-                Debug.LogError("プレイヤーのスポーンポイントが足りません");
+                Debug.LogError(
+                    "プレイヤーのスポーンポイントが足りません");
                 break;
             }
 
-            int index = GameManager.selectedFlgs[i];
+            // パーティデータ取得
+            PartyMemberData member =
+                SaveManager.CurrentSave.partyMembers[i];
 
+            if (member == null)
+            {
+                Debug.LogWarning(
+                    $"PartyMember[{i}] がnullです");
+                continue;
+            }
+
+            // キャラクター番号
+            int index = member.characterIndex;
+
+            // インデックス確認
             if (index < 0 || index >= playerPrefabs.Count)
             {
                 Debug.LogError(
@@ -176,8 +211,9 @@ public class BattleManager : MonoBehaviour
                 continue;
             }
 
-            //プレハブの取得
-            PlayerBase prefab = playerPrefabs[index];
+            // プレハブ取得
+            PlayerBase prefab =
+                playerPrefabs[index];
 
             if (prefab == null)
             {
@@ -186,29 +222,35 @@ public class BattleManager : MonoBehaviour
                 continue;
             }
 
-            //playerの生成
+            // プレイヤー生成
             GameObject obj = Instantiate(
                 prefab.gameObject,
                 playerSpawnPoints[i],
                 false);
 
-            // 生成したプレイヤーの位置をリセット
+            // 位置をリセット
             obj.transform.localPosition = Vector3.zero;
 
-            //playerベースの取得
-            PlayerBase player = obj.GetComponent<PlayerBase>();
+            // PlayerBase取得
+            PlayerBase player =
+                obj.GetComponent<PlayerBase>();
 
             if (player == null)
             {
                 Debug.LogError(
                     "生成したオブジェクトにPlayerBaseがありません");
+
+                Destroy(obj);
                 continue;
             }
 
+            // BattleManagerのプレイヤーリストへ追加
             players.Add(player);
 
             Debug.Log(
-                $"Player生成: {player.CharacterName}");
+                $"[Battle] Player生成: " +
+                $"Index={index}, " +
+                $"Name={player.CharacterName}");
         }
     }
 
@@ -418,21 +460,28 @@ public class BattleManager : MonoBehaviour
             //デッキの有無の確認
             if (deck == null)
             {
-                Debug.LogError("DeckManagerがありません");
+                Debug.LogError("{player.CharacterName} にDeckManagerがありません");
                 continue;
             }
 
             //プレイヤーのデッキ
             Debug.Log("DefaultDeck = " + player.DefaultDeck);
 
-            if (player.DefaultDeck != null)
+            if (player.DefaultDeck == null)
             {
-                Debug.Log("デッキ枚数 = " + player.DefaultDeck.startDeck.Count);
+                Debug.LogError(
+                    $"{player.CharacterName} のDefaultDeckが設定されていません"
+                );
+
+                continue;
             }
 
             deck.SetDeck(player.DefaultDeck.startDeck);
 
-            Debug.Log("DrawPile枚数 = " + deck.DrawPile.Count);
+            Debug.Log(
+             $"{player.CharacterName} : " +
+             $"DrawPile枚数 = {deck.DrawPile.Count}"
+         );
 
 
         }

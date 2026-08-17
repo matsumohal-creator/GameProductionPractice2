@@ -11,14 +11,16 @@ public class EventEffectManager : MonoBehaviour
     // 外部からイベント効果を実行
     // =========================================================
 
-    public void ApplyEffects(
+    public bool ApplyEffects(
         List<EventEffectData> effects,
         StageNodeData stage)
     {
         if (effects == null)
         {
-            return;
+            return false;
         }
+
+        bool requiresCardRemoval = false;
 
         foreach (EventEffectData effect in effects)
         {
@@ -27,8 +29,17 @@ public class EventEffectManager : MonoBehaviour
                 continue;
             }
 
+            if (effect.effectType == EventEffectType.RemoveCard)
+            {
+                // カード削除はUIから行う
+                requiresCardRemoval = true;
+                continue;
+            }
+
             ApplyEffect(effect);
         }
+
+        return requiresCardRemoval;
     }
 
     // =========================================================
@@ -61,12 +72,6 @@ public class EventEffectManager : MonoBehaviour
 
             case EventEffectType.AddCard:
                 AddRandomCardToParty();
-                break;
-
-            case EventEffectType.RemoveCard:
-                // カード削除は後ほどUI選択式で実装
-                Debug.Log(
-                    "RemoveCardはカード選択UIから実行します");
                 break;
         }
     }

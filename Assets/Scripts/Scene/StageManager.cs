@@ -196,9 +196,16 @@ public class StageManager : MonoBehaviour
         {
             case StageType.Battle:
             case StageType.Boss:
+
                 Debug.Log("戦闘開始 : " + stage.stageName);
+
+                // BattleSceneへ移動する準備
+                GameManager.SetupBattle(GameManager.selectedFlgs);
+
+                // LoadingSceneを経由してBattleSceneへ
                 SceneLoader.NextSceneName = "BattleScene";
                 SceneManager.LoadScene("LoadingScene");
+
                 break;
 
             case StageType.Start:

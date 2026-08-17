@@ -57,13 +57,28 @@ public class BattleManager : MonoBehaviour
 
     //デバック用・後で消す
 
+    [Header("Debug")]
+    [SerializeField]
+    private bool debugMode = false;
+
+    [Header("Player Prefabs")]
+    [SerializeField]
+    private List<PlayerBase> debugPlayerPrefabs = new();
 
     [Header("Debug Enemy")]
     [SerializeField]
-    private EnemyBase enemyPrefab;
+    private EnemyBase debugEnemyPrefab;
 
 
+    //データ関連
 
+    //ステージデータの参照
+    private StageNodeData currentBattleStage;
+
+    //ステージ検索
+    [Header("Stage Data")]
+    [SerializeField]
+    private StageMapData stageMap;
 
     //シングルトンの初期化
     private void Awake()
@@ -122,81 +137,273 @@ public class BattleManager : MonoBehaviour
     private void SpawnPlayers()
     {
         players.Clear();
-        // Debug.Log("SpawnPlayers開始");
 
-        // デバッグ用
-        if (GameManager.selectedFlgs.Count == 0)
+        // デバッグモード
+        if (debugMode)
         {
-            GameManager.selectedFlgs.Add(0);
-            GameManager.selectedFlgs.Add(1);
-            GameManager.selectedFlgs.Add(2);
-            GameManager.selectedFlgs.Add(3);
-
+            SpawnDebugPlayers();
+            return;
         }
 
+        // 通常プレイ
+        if (GameManager.IsBattleSetup)
+        {
+            SpawnSelectedPlayers();
+            return;
+        }
 
+        Debug.LogError(
+            "Battle準備がされていません");
+    }
+
+    //通常プレイ用
+    private void SpawnSelectedPlayers()
+    {
         for (int i = 0; i < GameManager.selectedFlgs.Count; i++)
         {
-            //
-            int index = GameManager.selectedFlgs[i];
-            if (index < 0 || index >= playerPrefabs.Count)
-            {
-                continue;
-            }
-
-            //
-            PlayerBase prefab = playerPrefabs[index];
-
-            //プレイヤーの生成
-            GameObject obj = Instantiate(
-           prefab.gameObject,
-           playerSpawnPoints[i],
-           false);
             if (i >= playerSpawnPoints.Length)
             {
-                Debug.LogError("スポーンポイントが足りません");
+                Debug.LogError("プレイヤーのスポーンポイントが足りません");
                 break;
             }
 
-            // 生成したプレイヤーの位置リセット
-            obj.transform.localPosition = Vector3.zero;
+            int index = GameManager.selectedFlgs[i];
 
+            if (index < 0 || index >= playerPrefabs.Count)
+            {
+                Debug.LogError(
+                    $"Player index が不正です: {index}");
+                continue;
+            }
+
+            //プレハブの取得
+            PlayerBase prefab = playerPrefabs[index];
+
+            if (prefab == null)
+            {
+                Debug.LogError(
+                    $"PlayerPrefab[{index}] がnullです");
+                continue;
+            }
+
+            //playerの生成
+            GameObject obj = Instantiate(
+                prefab.gameObject,
+                playerSpawnPoints[i],
+                false);
+
+            // 生成したプレイヤーの位置をリセット
+            obj.transform.localPosition = Vector3.zero;
 
             //playerベースの取得
             PlayerBase player = obj.GetComponent<PlayerBase>();
-            if (obj == null)
+
+            if (player == null)
             {
-                Debug.LogError("InstantiateしたPlayerがnull");
+                Debug.LogError(
+                    "生成したオブジェクトにPlayerBaseがありません");
+                continue;
             }
 
-            // 生成したプレイヤーをリストに追加
             players.Add(player);
-        }
 
+            Debug.Log(
+                $"Player生成: {player.CharacterName}");
+        }
+    }
+
+    // デバッグ用
+    private void SpawnDebugPlayers()
+    {
+        Debug.Log("===== DEBUG PLAYER SPAWN =====");
+
+        for (int i = 0; i < debugPlayerPrefabs.Count; i++)
+        {
+            if (i >= playerSpawnPoints.Length)
+            {
+                Debug.LogError(
+                    "デバッグ用プレイヤーのスポーンポイントが足りません");
+                break;
+            }
+
+            PlayerBase prefab = debugPlayerPrefabs[i];
+
+            if (prefab == null)
+            {
+                Debug.LogWarning(
+                    $"DebugPlayerPrefabs[{i}] が設定されていません");
+                continue;
+            }
+
+            GameObject obj = Instantiate(
+                prefab.gameObject,
+                playerSpawnPoints[i],
+                false);
+
+            obj.transform.localPosition = Vector3.zero;
+
+            PlayerBase player =
+                obj.GetComponent<PlayerBase>();
+
+            if (player == null)
+            {
+                Debug.LogError(
+                    "Debug PlayerにPlayerBaseがありません");
+                continue;
+            }
+
+            players.Add(player);
+
+            Debug.Log(
+                $"DEBUG Player生成: {player.CharacterName}");
+        }
     }
 
     // エネミーを生成
     private void SpawnEnemies()
     {
         enemies.Clear();
-        // Debug.Log("SpawnEnemies開始");
 
-        if (enemyPrefab == null)
+        // デバッグ
+        if (debugMode)
         {
-            Debug.LogError("EnemyPrefabが設定されていません");
+            SpawnDebugEnemies();
+            return;
+        }
+
+        // 通常プレイ
+        if (GameManager.IsBattleSetup)
+        {
+            SpawnSelectedEnemies();
+            return;
+        }
+
+        Debug.LogError(
+            "Battle準備がされていません");
+    }
+
+    private void SpawnSelectedEnemies()
+    {
+        if (SaveManager.CurrentSave == null)
+        {
+            Debug.LogError("SaveManager.CurrentSave がありません");
+            return;
+        }
+
+        int stageId =
+            SaveManager.CurrentSave.currentBattleStageId;
+
+        currentBattleStage = GetStageById(stageId);
+
+        if (currentBattleStage == null)
+        {
+            Debug.LogError(
+                $"戦闘ステージが取得できません。ID={stageId}");
+            return;
+        }
+
+        Debug.Log(
+            $"===== Battle Stage =====\n" +
+            $"ID : {currentBattleStage.stageId}\n" +
+            $"Name : {currentBattleStage.stageName}");
+
+        if (currentBattleStage.enemyPrefabs == null ||
+            currentBattleStage.enemyPrefabs.Count == 0)
+        {
+            Debug.LogWarning(
+                $"ステージ {currentBattleStage.stageName} に敵が設定されていません");
+
+            return;
+        }
+
+        for (int i = 0;
+             i < currentBattleStage.enemyPrefabs.Count;
+             i++)
+        {
+            if (i >= enemySpawnPoints.Length)
+            {
+                Debug.LogError(
+                    "敵のスポーンポイントが足りません");
+                break;
+            }
+
+            GameObject prefab =
+                currentBattleStage.enemyPrefabs[i];
+
+            if (prefab == null)
+            {
+                Debug.LogWarning(
+                    $"EnemyPrefab[{i}] がnullです");
+                continue;
+            }
+
+            GameObject obj = Instantiate(
+                prefab,
+                enemySpawnPoints[i],
+                false);
+
+            obj.transform.localPosition = Vector3.zero;
+
+            EnemyBase enemy =
+                obj.GetComponent<EnemyBase>();
+
+            if (enemy == null)
+            {
+                Debug.LogError(
+                    $"生成した敵 {obj.name} にEnemyBaseがありません");
+
+                Destroy(obj);
+                continue;
+            }
+
+            enemies.Add(enemy);
+
+            Debug.Log(
+                $"敵生成: {enemy.CharacterName}");
+        }
+    }
+
+    private void SpawnDebugEnemies()
+    {
+        Debug.Log("===== DEBUG ENEMY SPAWN =====");
+
+        if (debugEnemyPrefab == null)
+        {
+            Debug.LogError(
+                "Debug Enemy Prefabが設定されていません");
+            return;
+        }
+
+        if (enemySpawnPoints.Length == 0)
+        {
+            Debug.LogError(
+                "Enemy Spawn Pointがありません");
             return;
         }
 
         GameObject obj = Instantiate(
-      enemyPrefab.gameObject,
-      enemySpawnPoints[0],   // ← Enemy側の1P(敵スロット)を親にする
-      false                  // ローカル座標を使用
-      );
+            debugEnemyPrefab.gameObject,
+            enemySpawnPoints[0],
+            false);
 
-        // Debug.Log("Enemy生成完了: " + obj.name);
-        enemies.Add(obj.GetComponent<EnemyBase>());
-        //Debug.Log("enemies数 = " + enemies.Count);
+        obj.transform.localPosition = Vector3.zero;
+
+        EnemyBase enemy =
+            obj.GetComponent<EnemyBase>();
+
+        if (enemy == null)
+        {
+            Debug.LogError(
+                "Debug EnemyにEnemyBaseがありません");
+            return;
+        }
+
+        enemies.Add(enemy);
+
+        Debug.Log(
+            $"DEBUG Enemy生成: {enemy.CharacterName}");
     }
+
 
     // プレイヤーのデッキを初期化
     private void InitializePlayerDecks()
@@ -455,6 +662,40 @@ public class BattleManager : MonoBehaviour
         return candidates[
             Random.Range(0, candidates.Count)];
     }
+
+    ///セーブデータ関連
+
+    // ステージIDからStageNodeDataを取得する
+    private StageNodeData GetStageById(int stageId)
+    {
+        if (stageMap == null)
+        {
+            Debug.LogError("BattleManagerにStageMapDataが設定されていません");
+            return null;
+        }
+
+        foreach (StageNodeData stage in stageMap.allStages)
+        {
+            if (stage == null)
+            {
+                continue;
+            }
+
+            if (stage.stageId == stageId)
+            {
+                return stage;
+            }
+        }
+
+        Debug.LogError(
+            $"stageId={stageId} のStageNodeDataが見つかりません");
+
+        return null;
+    }
+
+
+
+
 
     // 指定したプレイヤー以外の生存している味方をランダムで返す
     // 今は味方にダメージをそらすときに使用する

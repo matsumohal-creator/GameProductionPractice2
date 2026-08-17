@@ -2219,7 +2219,14 @@ MonoBehaviour:
   - {fileID: 8541219358920493068, guid: 380d95d43304f0342ba8684b44ddf624, type: 3}
   - {fileID: 6023370701667122395, guid: 661706a4c7b10a543adbf521cd0f351b, type: 3}
   - {fileID: 1015632791882434457, guid: b1345e2fdf36c8546bdc50d507d928f3, type: 3}
-  enemyPrefab: {fileID: 9177570379734201288, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
+  debugMode: 0
+  debugPlayerPrefabs:
+  - {fileID: 5041121176397087142, guid: fb48dd51a10b3b947a52c46c29400e60, type: 3}
+  - {fileID: 6023370701667122395, guid: 661706a4c7b10a543adbf521cd0f351b, type: 3}
+  - {fileID: 8541219358920493068, guid: 380d95d43304f0342ba8684b44ddf624, type: 3}
+  - {fileID: 1015632791882434457, guid: b1345e2fdf36c8546bdc50d507d928f3, type: 3}
+  debugEnemyPrefab: {fileID: 9177570379734201288, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
+  stageMap: {fileID: 11400000, guid: 5cf17d35943efbb4eb7e1a7202055a52, type: 2}
 --- !u!1 &1126799027
 GameObject:
   m_ObjectHideFlags: 0
@@ -3881,7 +3888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ff4307bcee6bc4cb9d24c86b584f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleResultUI
-  resultWindow: {fileID: 171864003}
+  resultWindow: {fileID: 192184598}
   resultText: {fileID: 2133843104}
 --- !u!1 &1780861370
 GameObject:

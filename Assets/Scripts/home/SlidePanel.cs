@@ -7,32 +7,58 @@ public class SlidePanel : MonoBehaviour
 
     [SerializeField] private Vector2 hiddenPos;
     [SerializeField] private Vector2 showPos;
-
     [SerializeField] private float speed = 10f;
 
     private bool isOpen = false;
 
+    public bool IsOpen => isOpen;
+
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
-
         rect.anchoredPosition = hiddenPos;
+        isOpen = false;
     }
 
     public void Toggle()
     {
-        StopAllCoroutines();
-
         if (isOpen)
         {
-            StartCoroutine(MovePanel(hiddenPos));
+            Close();
         }
         else
         {
-            StartCoroutine(MovePanel(showPos));
+            Open();
+        }
+    }
+
+    public void Open()
+    {
+        if (isOpen)
+        {
+            return;
         }
 
-        isOpen = !isOpen;
+        if (!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
+
+        StopAllCoroutines();
+        StartCoroutine(MovePanel(showPos));
+        isOpen = true;
+    }
+
+    public void Close()
+    {
+        if (!isOpen)
+        {
+            return;
+        }
+
+        StopAllCoroutines();
+        StartCoroutine(MovePanel(hiddenPos));
+        isOpen = false;
     }
 
     IEnumerator MovePanel(Vector2 target)

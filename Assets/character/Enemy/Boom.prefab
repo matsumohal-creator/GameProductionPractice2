@@ -111,15 +111,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b9cd9f08db73848b52347782b860c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boom
-  characterName: 
-  maxHp: 100
-  currentHp: 100
+  characterName: "\u30DC\u30E0"
+  maxHp: 61
+  currentHp: 61
   shield: 0
   speed: 0
   attackPower: 0
   statusEffectMaster: []
   skills: []
   icon: {fileID: 0}
+  animator: {fileID: 0}
+  idleStateName: Idle
+  attackTriggerName: Attack
+  hitTriggerName: Hit
+  deadTriggerName: Dead
+  deadStateName: Dead
   attackDamage: 7
   explosionDamage: 14
   reviveCountdownTurns: 2

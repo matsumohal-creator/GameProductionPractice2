@@ -111,14 +111,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b63c69263263b0f4eb621a6c1d4651d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slime
-  characterName: 
-  maxHp: 100
-  currentHp: 100
+  characterName: "\u30B9\u30E9\u30A4\u30E0"
+  maxHp: 48
+  currentHp: 48
   shield: 0
   speed: 0
   attackPower: 0
   statusEffectMaster: []
   skills: []
   icon: {fileID: 0}
+  animator: {fileID: 0}
+  idleStateName: Idle
+  attackTriggerName: Attack
+  hitTriggerName: Hit
+  deadTriggerName: Dead
+  deadStateName: Dead
   baseAttackDamage: 10
   strengthStack: 5

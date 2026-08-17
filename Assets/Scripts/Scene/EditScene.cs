@@ -96,7 +96,8 @@ public class EditScene : MonoBehaviour
             Debug.Log( $"[EditScene] Selected Player Index = {index}");
         }
 
-        //バトルシーンへ移行
-        SceneManager.LoadScene("HomeScene");
+        //ステージシーンへ移行
+        SceneLoader.NextSceneName = "StageScene";
+        SceneManager.LoadScene("LoadingScene");
     }
 }

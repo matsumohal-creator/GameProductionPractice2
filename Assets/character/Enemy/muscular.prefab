@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74de45ba820831409b743db77c9815d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: 
+  characterName: "\u30DE\u30B9\u30AD\u30E5\u30E9\u30FC"
   maxHp: 34
   currentHp: 34
   shield: 0
@@ -98,6 +98,12 @@ MonoBehaviour:
   statusEffectMaster: []
   skills: []
   icon: {fileID: 0}
+  animator: {fileID: 0}
+  idleStateName: Idle
+  attackTriggerName: Attack
+  hitTriggerName: Hit
+  deadTriggerName: Dead
+  deadStateName: Dead
   baseAttackDamage: 5
   strengthStack: 5
   strengthDuration: 999

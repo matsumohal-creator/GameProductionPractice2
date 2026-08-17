@@ -11,7 +11,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     [SerializeField] private int maxEnergy = 3;
     [SerializeField] private int currentEnergy = 3;
     [SerializeField] private int shield = 0;
-    [SerializeField] private int speed = 0; //’Ç‰Á‚µ‚½‚æ
+    [SerializeField] private int speed = 0; //ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 
@@ -24,16 +24,16 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     private readonly Dictionary<StatusEffectType, StatusEffectData> statusEffectLookup = new Dictionary<StatusEffectType, StatusEffectData>();
     private readonly Dictionary<StatusEffectType, StatusEffectInstance> activeStatusEffects = new Dictionary<StatusEffectType, StatusEffectInstance>();
 
-    // ˆÈ‰º‚ğ’Ç‰Á‚µ‚Ü‚µ‚½
+    // ï¿½È‰ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½
     [Header("Character Class")]
     [SerializeField]
-    private CharacterClass characterClass;// ŠeƒvƒŒƒCƒ„[‚ÌƒNƒ‰ƒX‚ğw’è‚·‚éƒtƒB[ƒ‹ƒh
-    public CharacterClass CharacterClass => characterClass;// ƒLƒƒƒ‰ƒNƒ^[ƒNƒ‰ƒX‚ÍAƒvƒŒƒCƒ„[‚Ì–ğŠ„‚âƒXƒLƒ‹ƒZƒbƒg‚ğ’è‹`‚·‚é‚½‚ß‚Ì‚à‚Ì‚Å‚·B
+    private CharacterClass characterClass;// ï¿½eï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒNï¿½ï¿½ï¿½Xï¿½ï¿½wï¿½è‚·ï¿½ï¿½tï¿½Bï¿½[ï¿½ï¿½ï¿½h
+    public CharacterClass CharacterClass => characterClass;// ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½^ï¿½[ï¿½Nï¿½ï¿½ï¿½Xï¿½ÍAï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì–ï¿½ï¿½ï¿½ï¿½Xï¿½Lï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½é‚½ï¿½ß‚Ì‚ï¿½Ì‚Å‚ï¿½ï¿½B
 
     [Header("Default Deck")]
     [SerializeField]
-    private CharacterDeckData defaultDeck;// ŠeƒvƒŒƒCƒ„[‚ÌƒfƒtƒHƒ‹ƒgƒfƒbƒL‚ğw’è‚·‚éƒtƒB[ƒ‹ƒh
-    public CharacterDeckData DefaultDeck => defaultDeck;// ƒfƒtƒHƒ‹ƒgƒfƒbƒL‚ÍAƒvƒŒƒCƒ„[‚ÌƒNƒ‰ƒX‚É‰‚¶‚½‰ŠúƒJ[ƒhƒZƒbƒg‚ğ’ñ‹Ÿ‚·‚é‚½‚ß‚Ì‚à‚Ì‚Å‚·B
+    private CharacterDeckData defaultDeck;// ï¿½eï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½fï¿½bï¿½Lï¿½ï¿½wï¿½è‚·ï¿½ï¿½tï¿½Bï¿½[ï¿½ï¿½ï¿½h
+    public CharacterDeckData DefaultDeck => defaultDeck;// ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½fï¿½bï¿½Lï¿½ÍAï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒNï¿½ï¿½ï¿½Xï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½[ï¿½hï¿½Zï¿½bï¿½gï¿½ï¿½ñ‹Ÿ‚ï¿½ï¿½é‚½ï¿½ß‚Ì‚ï¿½Ì‚Å‚ï¿½ï¿½B
 
     [Header("Icon")]
     [SerializeField]
@@ -61,13 +61,17 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     [SerializeField]
     private string deadTriggerName = "Dead";
 
+    [SerializeField]
+    private string deadStateName = "Dead";
+
     private bool isDead;
+    private bool hasFrozenDeadAnimation;
 
     public Vector3 UIOffset => uiOffset;
 
 
     public string CharacterName => characterName;
-    public int Speed => speed; // ’Ç‰Á‚µ‚½‚æ
+    public int Speed => speed; // ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public int CurrentHp => currentHp;
     public int MaxHp => maxHp;
     public int CurrentEnergy => currentEnergy;
@@ -79,7 +83,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     public event Action<StatusEffectInstance> StatusEffectApplied;
     public event Action<StatusEffectInstance> StatusEffectRemoved;
 
-    // ‰Šú’l‚ğ•â³‚µAó‘ÔˆÙíƒ}ƒXƒ^[‚ğQÆƒe[ƒuƒ‹‰»‚·‚é
+    // ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½â³ï¿½ï¿½ï¿½Aï¿½ï¿½ÔˆÙï¿½}ï¿½Xï¿½^ï¿½[ï¿½ï¿½Qï¿½Æƒeï¿½[ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     protected virtual void Awake()
     {
         maxHp = Mathf.Max(1, maxHp);
@@ -93,6 +97,12 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
             animator = GetComponent<Animator>();
         }
 
+        if (animator != null)
+        {
+            animator.speed = 1f;
+        }
+
+        hasFrozenDeadAnimation = false;
         isDead = currentHp <= 0;
 
         if (!isDead)
@@ -103,7 +113,12 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         BuildStatusEffectLookup();
     }
 
-    // Enum‚Æó‘ÔˆÙíƒf[ƒ^‚Ì‘Î‰•\‚ğì¬‚·‚é
+    private void Update()
+    {
+        FreezeDeadAnimationIfFinished();
+    }
+
+    // Enumï¿½Æï¿½ÔˆÙï¿½fï¿½[ï¿½^ï¿½Ì‘Î‰ï¿½ï¿½\ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ï¿½
     public void BuildStatusEffectLookup()
     {
         statusEffectLookup.Clear();
@@ -119,13 +134,13 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         }
     }
 
-    // Enum‚©‚çó‘ÔˆÙíƒf[ƒ^‚ğæ“¾‚·‚é
+    // Enumï¿½ï¿½ï¿½ï¿½ï¿½ÔˆÙï¿½fï¿½[ï¿½^ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
     public bool TryGetStatusEffectData(StatusEffectType type, out StatusEffectData data)
     {
         return statusEffectLookup.TryGetValue(type, out data);
     }
 
-    // Enumw’è‚Åó‘ÔˆÙí‚ğ•t—^‚·‚é
+    // Enumï¿½wï¿½ï¿½Åï¿½ÔˆÙï¿½ï¿½tï¿½^ï¿½ï¿½ï¿½ï¿½
     public void ApplyStatusEffect(StatusEffectType type, int duration, int stack = 1)
     {
         if (!TryGetStatusEffectData(type, out StatusEffectData data))
@@ -136,7 +151,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         ApplyStatusEffect(data, duration, stack);
     }
 
-    // ó‘ÔˆÙíƒf[ƒ^‚ğ’¼Úw’è‚µ‚Ä•t—^‚·‚é
+    // ï¿½ï¿½ÔˆÙï¿½fï¿½[ï¿½^ï¿½ğ’¼Úwï¿½è‚µï¿½Ä•tï¿½^ï¿½ï¿½ï¿½ï¿½
     public void ApplyStatusEffect(StatusEffectData statusData, int duration, int stack = 1)
     {
         if (statusData == null)
@@ -167,13 +182,13 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         OnStatusEffectApplied(newInstance);
     }
 
-    // w’èó‘ÔˆÙí‚ğ•Û‚µ‚Ä‚¢‚é‚©Šm”F‚·‚é
+    // ï¿½wï¿½ï¿½ï¿½ÔˆÙï¿½ï¿½Ûï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½mï¿½Fï¿½ï¿½ï¿½ï¿½
     public bool HasStatusEffect(StatusEffectType type)
     {
         return activeStatusEffects.ContainsKey(type);
     }
 
-    // w’èó‘ÔˆÙí‚ÌƒXƒ^ƒbƒN”‚ğ•Ô‚·
+    // ï¿½wï¿½ï¿½ï¿½ÔˆÙï¿½ÌƒXï¿½^ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½Ô‚ï¿½
     public int GetStatusStack(StatusEffectType type)
     {
         if (!activeStatusEffects.TryGetValue(type, out StatusEffectInstance instance))
@@ -184,7 +199,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         return instance.stack;
     }
 
-    // w’èó‘ÔˆÙí‚ğæ“¾‚·‚éB‘¶İ‚µ‚È‚¢ê‡‚Ífalse‚ğ•Ô‚·B
+    // ï¿½wï¿½ï¿½ï¿½ÔˆÙï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½Bï¿½ï¿½ï¿½İ‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ï¿½falseï¿½ï¿½Ô‚ï¿½ï¿½B
     public bool TryGetStatusEffect(
     StatusEffectType type,
     out StatusEffectInstance instance)
@@ -192,7 +207,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         return activeStatusEffects.TryGetValue(type, out instance);
     }
 
-    // w’èó‘ÔˆÙí‚ğ‰ğœ‚·‚é
+    // ï¿½wï¿½ï¿½ï¿½ÔˆÙï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void RemoveStatusEffect(StatusEffectType type)
     {
         if (!activeStatusEffects.TryGetValue(type, out StatusEffectInstance instance))
@@ -204,7 +219,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         OnStatusEffectRemoved(instance);
     }
 
-    // ‘Só‘ÔˆÙí‚ğ‰ğœ‚·‚é
+    // ï¿½Sï¿½ï¿½ÔˆÙï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void ClearStatusEffects()
     {
         List<StatusEffectType> keys = new List<StatusEffectType>(activeStatusEffects.Keys);
@@ -214,25 +229,25 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         }
     }
 
-    // HP‚ğ’¼Úİ’è‚·‚é
+    // HPï¿½ğ’¼Úİ’è‚·ï¿½ï¿½
     public void SetHp(int value)
     {
         currentHp = Mathf.Clamp(value, 0, maxHp);
     }
 
-    // ƒGƒiƒW[‚ğ’¼Úİ’è‚·‚é
+    // ï¿½Gï¿½iï¿½Wï¿½[ï¿½ğ’¼Úİ’è‚·ï¿½ï¿½
     public void SetEnergy(int value)
     {
         currentEnergy = Mathf.Clamp(value, 0, maxEnergy);
     }
 
-    // ƒGƒiƒW[‚ğÅ‘å‚Ü‚Å‰ñ•œ‚·‚é
+    // ï¿½Gï¿½iï¿½Wï¿½[ï¿½ï¿½Å‘ï¿½Ü‚Å‰ñ•œ‚ï¿½ï¿½ï¿½
     public void RefillEnergy()
     {
         currentEnergy = maxEnergy;
     }
 
-    // ƒGƒiƒW[Á”ï‚ğ‚İA¬Œ÷‰Â”Û‚ğ•Ô‚·
+    // ï¿½Gï¿½iï¿½Wï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İAï¿½ï¿½ï¿½ï¿½ï¿½Â”Û‚ï¿½Ô‚ï¿½
     public bool TryUseEnergy(int cost)
     {
         int clampedCost = Mathf.Max(0, cost);
@@ -245,24 +260,24 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         return true;
     }
 
-    // ƒGƒiƒW[‚ğ‰ÁZ‚·‚é
+    // ï¿½Gï¿½iï¿½Wï¿½[ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½
     public void GainEnergy(int amount)
     {
         currentEnergy = Mathf.Clamp(currentEnergy + Mathf.Max(0, amount), 0, maxEnergy);
     }
 
-    // ƒV[ƒ‹ƒh‚ğ‰ÁZ‚·‚é
+    // ï¿½Vï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½
     public void GainShield(int amount)
     {
         shield += Mathf.Max(0, amount);
     }
 
-    // ƒ_ƒ[ƒW‚ğó‚¯‚é
+    // ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ó‚¯‚ï¿½
     public void TakeDamage(int amount, IStatusEffectTarget attacker = null)
     {
         amount = Mathf.Max(0, amount);
 
-        // 1) ƒV[ƒ‹ƒh‚Åæ‚Éƒ_ƒ[ƒW‚ğ‹zû
+        // 1) ï¿½Vï¿½[ï¿½ï¿½ï¿½hï¿½Åï¿½Éƒ_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½zï¿½ï¿½
         if (shield > 0)
         {
             int blocked = Mathf.Min(shield, amount);
@@ -271,11 +286,11 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
             amount -= blocked;
         }
 
-        // 2) HPŒ¸­‘OŒã‚ğ”äŠr‚µ‚ÄAÀƒ_ƒ[ƒW‚ª“ü‚Á‚½‚©‚ğ”»’è
+        // 2) HPï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½rï¿½ï¿½ï¿½ÄAï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ğ”»’ï¿½
         int beforeHp = currentHp;
         currentHp = Mathf.Max(0, currentHp - amount);
 
-        // 3) ƒvƒŒƒCƒ„[‚ÌHP‚ªŒ¸‚Á‚½‚Ì‚İƒ_ƒ[ƒWSE‚ğÄ¶
+        // 3) ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½HPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚İƒ_ï¿½ï¿½ï¿½[ï¿½WSEï¿½ï¿½Äï¿½
         if (currentHp < beforeHp)
         {
             GameManager.Sound?.PlayDamageSE();
@@ -290,12 +305,12 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
             }
         }
 
-        // ”í’e‚Ìó‘ÔˆÙíˆ—
-        // 4) ”í’eƒgƒŠƒK[i”½Ë‚È‚Çj‚ğÀs
+        // ï¿½ï¿½eï¿½ï¿½ï¿½Ìï¿½ÔˆÙíˆï¿½ï¿½
+        // 4) ï¿½ï¿½eï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Kï¿½[ï¿½iï¿½ï¿½ï¿½Ë‚È‚Çjï¿½ï¿½ï¿½ï¿½s
         OnDamaged(attacker);
     }
 
-    // ó‘ÔˆÙí‚É‚æ‚éƒ_ƒ[ƒW‚Ì‚»‚ç‚µ‚ğl—¶‚µ‚Äƒ_ƒ[ƒW‚ğó‚¯‚é
+    // ï¿½ï¿½ÔˆÙï¿½É‚ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½Ì‚ï¿½ï¿½ç‚µï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½Äƒ_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ó‚¯‚ï¿½
     public void ReceiveDamage(int amount, IStatusEffectTarget attacker = null)
     {
         PlayerBase redirect =
@@ -315,7 +330,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         StatusEffectManager.OnDamaged(this, attacker);
     }
 
-    // ƒV[ƒ‹ƒh–³‹ƒ_ƒ[ƒW
+    // ï¿½Vï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½[ï¿½W
     public void TakeDirectDamage(int amount)
     {
         int beforeHp = currentHp;
@@ -334,18 +349,18 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         }
     }
 
-    // ©g‚ÌHP‚ğÁ”ï‚·‚éiÅ’á1HP‚Íc‚·j
+    // ï¿½ï¿½ï¿½gï¿½ï¿½HPï¿½ï¿½ï¿½ï¿½ï‚·ï¿½ï¿½iï¿½Å’ï¿½1HPï¿½Ícï¿½ï¿½ï¿½j
     public int ConsumeHpPercent(int percent)
     {
         percent = Mathf.Clamp(percent, 0, 100);
 
-        // Á”ï—Ê
+        // ï¿½ï¿½ï¿½ï¿½ï¿½
         int consume = maxHp * percent / 100;
 
-        // Œ»İHP-1‚Ü‚Å‚µ‚©Œ¸‚ç‚¹‚È‚¢
+        // ï¿½ï¿½ï¿½ï¿½HP-1ï¿½Ü‚Å‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç‚¹ï¿½È‚ï¿½
         consume = Mathf.Min(consume, currentHp - 1);
 
-        // HP1‚È‚çÁ”ï‚Å‚«‚È‚¢
+        // HP1ï¿½È‚ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½È‚ï¿½
         if (consume <= 0)
         {
             return 0;
@@ -353,23 +368,23 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
 
         currentHp -= consume;
 
-        // ÀÛ‚ÉŒ¸‚Á‚½’l‚ğ•Ô‚·
+        // ï¿½ï¿½ï¿½Û‚ÉŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½Ô‚ï¿½
         return consume;
     }
 
-    // HP‚ğ‰ñ•œ‚·‚é
+    // HPï¿½ï¿½ñ•œ‚ï¿½ï¿½ï¿½
     public void Heal(int amount)
     {
-        // ‰ñ•œ—Ê‚Í0ˆÈã‚É•â³
+        // ï¿½ñ•œ—Ê‚ï¿½0ï¿½Èï¿½É•â³
         amount = Mathf.Max(0, amount);
-        // HealBoostó‘ÔˆÙí‚ª‚ ‚éê‡A‰ñ•œ—Ê‚ğ1.5”{‚É‚·‚é
+        // HealBoostï¿½ï¿½ÔˆÙí‚ªï¿½ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½ñ•œ—Ê‚ï¿½1.5ï¿½{ï¿½É‚ï¿½ï¿½ï¿½
         int healBoost = GetStatusStack(StatusEffectType.HealBoost);
 
         if (healBoost > 0)
         {
             amount = Mathf.RoundToInt(amount * 1.5f);
         }
-        // ‰ñ•œ—Ê‚ğÅ‘åHP‚ğ’´‚¦‚È‚¢‚æ‚¤‚É•â³
+        // ï¿½ñ•œ—Ê‚ï¿½Å‘ï¿½HPï¿½ğ’´‚ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É•â³
         currentHp = Mathf.Min(maxHp, currentHp + amount);
 
         if (!isDead)
@@ -378,7 +393,7 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         }
     }
 
-    // ƒ^[ƒ“I—¹ˆ—
+    // ï¿½^ï¿½[ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void PlayAttackAnimation()
     {
         if (isDead)
@@ -407,6 +422,13 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         }
 
         isDead = true;
+        hasFrozenDeadAnimation = false;
+
+        if (animator != null)
+        {
+            animator.speed = 1f;
+        }
+
         SetTrigger(deadTriggerName);
     }
 
@@ -417,11 +439,35 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
             return;
         }
 
+        animator.speed = 1f;
+        hasFrozenDeadAnimation = false;
+
         int stateHash = Animator.StringToHash(idleStateName);
         if (animator.HasState(0, stateHash))
         {
             animator.Play(stateHash, 0, 0f);
         }
+    }
+
+    private void FreezeDeadAnimationIfFinished()
+    {
+        if (animator == null || !isDead || hasFrozenDeadAnimation || string.IsNullOrEmpty(deadStateName))
+        {
+            return;
+        }
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        int deadStateHash = Animator.StringToHash(deadStateName);
+        bool isDeadState = stateInfo.shortNameHash == deadStateHash || stateInfo.IsName(deadStateName);
+
+        if (!isDeadState || stateInfo.normalizedTime < 1f)
+        {
+            return;
+        }
+
+        animator.Play(stateInfo.shortNameHash, 0, 1f);
+        animator.speed = 0f;
+        hasFrozenDeadAnimation = true;
     }
 
     private void SetTrigger(string triggerName)
@@ -438,11 +484,11 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
     {
         TickStatusEffects();
 
-        // ƒ^[ƒ“I—¹‚ÉƒV[ƒ‹ƒh‚ğƒŠƒZƒbƒg
+        // ï¿½^ï¿½[ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ÉƒVï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
         shield = 0;
     }
 
-    // ó‘ÔˆÙí‚Ìƒ^[ƒ“Œo‰ßˆ—‚ğs‚¤
+    // ï¿½ï¿½ÔˆÙï¿½Ìƒ^ï¿½[ï¿½ï¿½ï¿½oï¿½ßï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
     public void TickStatusEffects()
     {
         List<StatusEffectType> expired = new List<StatusEffectType>();
@@ -464,13 +510,13 @@ public class PlayerBase : MonoBehaviour, IStatusEffectTarget
         }
     }
 
-    // ó‘ÔˆÙí•t—^‚Ì’Ê’mƒtƒbƒN
+    // ï¿½ï¿½ÔˆÙï¿½tï¿½^ï¿½ï¿½ï¿½Ì’Ê’mï¿½tï¿½bï¿½N
     protected virtual void OnStatusEffectApplied(StatusEffectInstance instance)
     {
         StatusEffectApplied?.Invoke(instance);
     }
 
-    // ó‘ÔˆÙí‰ğœ‚Ì’Ê’mƒtƒbƒN
+    // ï¿½ï¿½ÔˆÙï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì’Ê’mï¿½tï¿½bï¿½N
     protected virtual void OnStatusEffectRemoved(StatusEffectInstance instance)
     {
         StatusEffectRemoved?.Invoke(instance);

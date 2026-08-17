@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9517bea7fa3b6094ea652cf750864a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterName: "\u30CA\u30A4\u30C8"
   maxHp: 100
   currentHp: 100
   maxEnergy: 3
@@ -123,6 +124,14 @@ MonoBehaviour:
   skills: []
   characterClass: 3
   defaultDeck: {fileID: 11400000, guid: 68e83f8b55f02cf43821a6565cab3afc, type: 2}
+  icon: {fileID: 0}
+  uiOffset: {x: 0, y: 2, z: 0}
+  animator: {fileID: 0}
+  idleStateName: Idle
+  attackTriggerName: Attack
+  hitTriggerName: Hit
+  deadTriggerName: Dead
+  deadStateName: Dead
 --- !u!114 &624371190594571422
 MonoBehaviour:
   m_ObjectHideFlags: 0

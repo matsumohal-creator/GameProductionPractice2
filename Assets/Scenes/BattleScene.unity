@@ -2219,7 +2219,7 @@ MonoBehaviour:
   - {fileID: 8541219358920493068, guid: 380d95d43304f0342ba8684b44ddf624, type: 3}
   - {fileID: 6023370701667122395, guid: 661706a4c7b10a543adbf521cd0f351b, type: 3}
   - {fileID: 1015632791882434457, guid: b1345e2fdf36c8546bdc50d507d928f3, type: 3}
-  debugMode: 0
+  debugMode: 1
   debugPlayerPrefabs:
   - {fileID: 5041121176397087142, guid: fb48dd51a10b3b947a52c46c29400e60, type: 3}
   - {fileID: 6023370701667122395, guid: 661706a4c7b10a543adbf521cd0f351b, type: 3}

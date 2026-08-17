@@ -111,9 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91fba1ebe7416774bb36b0a2c639e6cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CryingChild
-  characterName: 
-  maxHp: 100
-  currentHp: 100
+  characterName: "\u6CE3\u304F\u5B50"
+  maxHp: 32
+  currentHp: 32
   shield: 0
   speed: 0
   attackPower: 0
@@ -125,6 +125,7 @@ MonoBehaviour:
   attackTriggerName: Attack
   hitTriggerName: Hit
   deadTriggerName: Dead
+  deadStateName: Dead
   baseAttackDamage: 12
   weaknessStack: 2
   weaknessDuration: 1

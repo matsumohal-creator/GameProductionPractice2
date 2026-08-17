@@ -1089,7 +1089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &498387544
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5224,6 +5224,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 498387544}
     m_Modifications:
+    - target: {fileID: 524230037005789893, guid: 0ac0bb9f81e699e4b8abfd64ea08db45, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 07a988598deb7fe4eb3f9950d1735ade, type: 3}
     - target: {fileID: 701334732526757045, guid: 0ac0bb9f81e699e4b8abfd64ea08db45, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -5260,6 +5264,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Character4Click
       objectReference: {fileID: 0}
+    - target: {fileID: 5326192094439461421, guid: 0ac0bb9f81e699e4b8abfd64ea08db45, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 07a988598deb7fe4eb3f9950d1735ade, type: 3}
     - target: {fileID: 5980788289280379067, guid: 0ac0bb9f81e699e4b8abfd64ea08db45, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

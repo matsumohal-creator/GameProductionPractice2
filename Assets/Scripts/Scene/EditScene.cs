@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EditScene : MonoBehaviour
@@ -67,14 +68,35 @@ public class EditScene : MonoBehaviour
 
     public void GoToBattle()
     {
-        // 選択されたキャラクターのインデックスをGameManagerに保存
-        GameManager.selectedFlgs.Clear();
+        // 選択されたキャラクターのインデックスを作成
+        List<int> selectedPlayers = new List<int>();
+
         for (int i = 0; i < characterCards.Count; i++)
         {
             if (characterCards[i].selectedFlg == 1)
             {
-                GameManager.selectedFlgs.Add(i);
+                selectedPlayers.Add(i);
             }
         }
+
+        // 選択キャラクターがいない場合
+        if (selectedPlayers.Count == 0)
+        {
+            Debug.LogWarning("キャラクターが1人も選択されていません");
+            return;
+        }
+
+        // GameManagerに戦闘情報を保存
+        GameManager.SetupBattle(selectedPlayers);
+
+        //Debug.Log($"[EditScene] パーティ編成完了: {selectedPlayers.Count}人");
+
+        foreach (int index in selectedPlayers)
+        {
+            Debug.Log( $"[EditScene] Selected Player Index = {index}");
+        }
+
+        //バトルシーンへ移行
+        SceneManager.LoadScene("HomeScene");
     }
 }

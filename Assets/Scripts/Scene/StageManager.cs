@@ -1,46 +1,42 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// ‚©‚È‚è“K“–‚Å‚·‚Ì‚ÅA•K—v‚É‰‚¶‚ÄC³‚µ‚Ä‚­‚¾‚³‚¢B
+// ã‹ãªã‚Šé©å½“ã§ã™ã®ã§ã€å¿…è¦ã«å¿œã˜ã¦ä¿®æ­£ã—ã¦ãã ã•ã„ã€‚
 
 public class StageManager : MonoBehaviour
 {
-    [SerializeField]// StageButton‚ğƒCƒ“ƒXƒyƒNƒ^[‚Åİ’è‚·‚é‚½‚ß‚Ì”z—ñ
+    [SerializeField]// StageButtonã‚’ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã§è¨­å®šã™ã‚‹ãŸã‚ã®é…åˆ—
     private StageButton[] stageButtons;
 
-    [SerializeField]// QuestInfoUI‚ğƒCƒ“ƒXƒyƒNƒ^[‚Åİ’è‚·‚é‚½‚ß‚Ì•Ï”
+    [SerializeField]// QuestInfoUIã‚’ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã§è¨­å®šã™ã‚‹ãŸã‚ã®å¤‰æ•°
     private QuestInfoUI questInfoUI;
 
-    [SerializeField]// StageMarker‚ğƒCƒ“ƒXƒyƒNƒ^[‚Åİ’è‚·‚é‚½‚ß‚Ì•Ï”
+    [SerializeField]// StageMarkerã‚’ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã§è¨­å®šã™ã‚‹ãŸã‚ã®å¤‰æ•°
     private StageMarker stageMarker;
 
-    [SerializeField]// StageMapData‚ğƒCƒ“ƒXƒyƒNƒ^[‚Åİ’è‚·‚é‚½‚ß‚Ì•Ï”
+    [SerializeField]// StageMapDataã‚’ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã§è¨­å®šã™ã‚‹ãŸã‚ã®å¤‰æ•°
     private StageMapData stageMap;
 
-    [SerializeField]// StageLineDrawer‚ğƒCƒ“ƒXƒyƒNƒ^[‚Åİ’è‚·‚é‚½‚ß‚Ì•Ï”
+    [SerializeField]// StageLineDrawerã‚’ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã§è¨­å®šã™ã‚‹ãŸã‚ã®å¤‰æ•°
     private StageLineDrawer stageLineDrawer;
 
-    [SerializeField]// EventOverlayUI‚ğƒCƒ“ƒXƒyƒNƒ^[‚Åİ’è‚·‚é‚½‚ß‚Ì•Ï”
+    [SerializeField]// EventOverlayUIã‚’ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã§è¨­å®šã™ã‚‹ãŸã‚ã®å¤‰æ•°
     private EventOverlayUI eventOverlayUI;
 
     [SerializeField]
     private EventEffectManager eventEffectManager;
 
-    // ƒZ[ƒuƒf[ƒ^‚ğ•Û‚·‚é•Ï”
+    // ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã‚’ä¿æŒã™ã‚‹å¤‰æ•°
     private SaveData saveData;
-    // ƒNƒGƒXƒgî•ñUI‚ªŠJ‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğŠÇ—‚·‚éƒtƒ‰ƒO
+    // ã‚¯ã‚¨ã‚¹ãƒˆæƒ…å ±UIãŒé–‹ã„ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ç®¡ç†ã™ã‚‹ãƒ•ãƒ©ã‚°
     private bool isQuestInfoOpen = false;
 
     private void Start()
     {
-        if (SaveManager.CurrentSave == null)
-        {
-            SaveManager.CurrentSave = new SaveData();
-        }
-
+        // CurrentSaveã‚’ãã®ã¾ã¾å‚ç…§ã—ã¦ã€ã‚¹ãƒ†ãƒ¼ã‚¸é€²è¡Œãƒ‡ãƒ¼ã‚¿ã‚’å…±æœ‰ã—ã¾ã™ã€‚
         saveData = SaveManager.CurrentSave;
 
-        // ŠJn’n“_‚ğƒNƒŠƒAÏ‚İˆµ‚¢
+        // é–‹å§‹åœ°ç‚¹ã‚’ã‚¯ãƒªã‚¢æ¸ˆã¿æ‰±ã„
         if (!saveData.clearedStageIds.Contains(stageMap.startStage.stageId))
         {
             saveData.clearedStageIds.Add(stageMap.startStage.stageId);
@@ -50,69 +46,69 @@ public class StageManager : MonoBehaviour
         {
             button.Initialize(this);
         }
-        // ƒNƒGƒXƒgî•ñUI‚ğ‰Šú‰»‚·‚é
+        // ã‚¯ã‚¨ã‚¹ãƒˆæƒ…å ±UIã‚’åˆæœŸåŒ–ã™ã‚‹
         questInfoUI.Initialize(this);
 
-        // ƒCƒxƒ“ƒgUI‚ğ‰Šú‰»
+        // ã‚¤ãƒ™ãƒ³ãƒˆUIã‚’åˆæœŸåŒ–
         eventOverlayUI.Initialize(this, eventEffectManager);
 
-        // Œ»İ‚ÌƒXƒe[ƒWî•ñ‚ğƒ[ƒh‚·‚é
+        // ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ã‚¸æƒ…å ±ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
         LoadCurrentStage();
     }
 
     private void Update()
     {
-        // F1‚ÅŒ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW‚ğƒNƒŠƒAˆµ‚¢‚É‚·‚é
+        // F1ã§ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢æ‰±ã„ã«ã™ã‚‹
         if (Input.GetKeyDown(KeyCode.F1))
         {
             DebugUnlockSelectedStage();
         }
     }
 
-    // ƒfƒoƒbƒO—pF‘I‘ğ’†ƒXƒe[ƒW‚ğƒNƒŠƒAˆµ‚¢‚É‚·‚é
+    // ãƒ‡ãƒãƒƒã‚°ç”¨ï¼šé¸æŠä¸­ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢æ‰±ã„ã«ã™ã‚‹
     private void DebugUnlockSelectedStage()
     {
         if (saveData.selectedStageId < 0)
         {
-            Debug.LogWarning("ƒfƒoƒbƒO‰ğœFƒXƒe[ƒW‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            Debug.LogWarning("ãƒ‡ãƒãƒƒã‚°è§£é™¤ï¼šã‚¹ãƒ†ãƒ¼ã‚¸ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“");
             return;
         }
 
-        // ‘I‘ğ’†ƒXƒe[ƒW‚ğuí“¬‚µ‚½ƒXƒe[ƒWv‚Æ‚µ‚Äˆµ‚¤
+        // é¸æŠä¸­ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã€Œæˆ¦é—˜ã—ãŸã‚¹ãƒ†ãƒ¼ã‚¸ã€ã¨ã—ã¦æ‰±ã†
         saveData.currentBattleStageId = saveData.selectedStageId;
 
-        // –{—ˆ‚Í BattleScene Ÿ—˜Œã‚ÉŒÄ‚Î‚ê‚éˆ—
+        // æœ¬æ¥ã¯ BattleScene å‹åˆ©å¾Œã«å‘¼ã°ã‚Œã‚‹å‡¦ç†
         CompleteCurrentBattleStage();
 
-        // UI‚ğXV
+        // UIã‚’æ›´æ–°
         ShowAvailableStages();
 
-        // ƒXƒe[ƒWŠÔ‚Ìü‚ğÄ•`‰æ
+        // ã‚¹ãƒ†ãƒ¼ã‚¸é–“ã®ç·šã‚’å†æç”»
         if (stageLineDrawer != null)
         {
             stageLineDrawer.DrawLines();
         }
 
-        // Œ»İ’nƒ}[ƒJ[‚ğXV
+        // ç¾åœ¨åœ°ãƒãƒ¼ã‚«ãƒ¼ã‚’æ›´æ–°
         stageMarker.SetPositionImmediate(saveData.currentStageId);
 
-        Debug.Log($"ƒfƒoƒbƒO‰ğœFƒXƒe[ƒW {saveData.currentStageId} ‚ğƒNƒŠƒA");
+        Debug.Log($"ãƒ‡ãƒãƒƒã‚°è§£é™¤ï¼šã‚¹ãƒ†ãƒ¼ã‚¸ {saveData.currentStageId} ã‚’ã‚¯ãƒªã‚¢");
     }
 
-    // Œ»İ‚ÌƒXƒe[ƒWî•ñ‚ğƒ[ƒh‚·‚éƒƒ\ƒbƒh
+    // ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ã‚¸æƒ…å ±ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     private void LoadCurrentStage()
     {
         StageNodeData current = GetCurrentStage();
 
-        Debug.Log("Œ»İ’n“_ : " + current.stageName);
+        Debug.Log("ç¾åœ¨åœ°ç‚¹ : " + current.stageName);
 
         ShowAvailableStages();
 
-        // ƒ[ƒh‚ÍuŠÔˆÚ“®
+        // ãƒ­ãƒ¼ãƒ‰æ™‚ã¯ç¬é–“ç§»å‹•
         stageMarker.SetPositionImmediate(current.stageId);
     }
 
-    // Œ»İ‚ÌƒXƒe[ƒWî•ñ‚ğæ“¾‚·‚éƒƒ\ƒbƒh
+    // ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ã‚¸æƒ…å ±ã‚’å–å¾—ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     private StageNodeData GetCurrentStage()
     {
         foreach (StageNodeData stage in stageMap.allStages)
@@ -126,12 +122,12 @@ public class StageManager : MonoBehaviour
         return stageMap.startStage;
     }
 
-    // ‘I‘ğ‰Â”\‚ÈƒNƒGƒXƒg‚ğ•\¦‚·‚éƒƒ\ƒbƒh
+    // é¸æŠå¯èƒ½ãªã‚¯ã‚¨ã‚¹ãƒˆã‚’è¡¨ç¤ºã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     private void ShowAvailableStages()
     {
         StageNodeData current = GetCurrentStage();
 
-        Debug.Log($"Œ»İ’n: {current.stageName}");
+        Debug.Log($"ç¾åœ¨åœ°: {current.stageName}");
 
         foreach (StageButton button in stageButtons)
         {
@@ -141,13 +137,13 @@ public class StageManager : MonoBehaviour
 
             button.SetInteractable(canSelect);
 
-            // ƒNƒŠƒAÏ‚İ‚©‚Ç‚¤‚©‚ğŠm”F
+            // ã‚¯ãƒªã‚¢æ¸ˆã¿ã‹ã©ã†ã‹ã‚’ç¢ºèª
             bool cleared = IsStageCleared(button.StageData.stageId);
             button.SetCleared(cleared);
         }
     }
 
-    // ƒNƒGƒXƒg‚ğ‘I‘ğ‚·‚éƒƒ\ƒbƒh
+    // ã‚¯ã‚¨ã‚¹ãƒˆã‚’é¸æŠã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     public void SelectStage(StageNodeData stage)
     {
         saveData.selectedStageId = stage.stageId;
@@ -160,15 +156,15 @@ public class StageManager : MonoBehaviour
                 button.StageData.stageId == stage.stageId;
         }
 
-        // ƒ}[ƒJ[‚ğˆÚ“®
+        // ãƒãƒ¼ã‚«ãƒ¼ã‚’ç§»å‹•
         stageMarker.MoveToStage(stage.stageId);
 
         questInfoUI.ShowStage(stage);
 
-        Debug.Log("‘I‘ğƒXƒe[ƒW : " + stage.stageName);
+        Debug.Log("é¸æŠã‚¹ãƒ†ãƒ¼ã‚¸ : " + stage.stageName);
     }
 
-    // ƒNƒGƒXƒgî•ñUI‚ğ•Â‚¶‚éƒƒ\ƒbƒh
+    // ã‚¯ã‚¨ã‚¹ãƒˆæƒ…å ±UIã‚’é–‰ã˜ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     public void CloseQuestInfo()
     {
         questInfoUI.Clear();
@@ -176,18 +172,18 @@ public class StageManager : MonoBehaviour
         saveData.selectedStageId = -1;
         saveData.currentStageName = "";
 
-        // Œ»İ’n‚Ö–ß‚·
+        // ç¾åœ¨åœ°ã¸æˆ»ã™
         stageMarker.MoveToStage(saveData.currentStageId);
 
         isQuestInfoOpen = false;
     }
 
-    // ƒNƒGƒXƒg‚ğŠJn‚·‚éƒƒ\ƒbƒh
+    // ã‚¯ã‚¨ã‚¹ãƒˆã‚’é–‹å§‹ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     public void StartQuest()
     {
         if (saveData.selectedStageId < 0)
         {
-            Debug.LogWarning("ƒNƒGƒXƒg‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            Debug.LogWarning("ã‚¯ã‚¨ã‚¹ãƒˆãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“");
             return;
         }
 
@@ -200,12 +196,12 @@ public class StageManager : MonoBehaviour
             case StageType.Battle:
             case StageType.Boss:
 
-                Debug.Log("í“¬ŠJn : " + stage.stageName);
+                Debug.Log("æˆ¦é—˜é–‹å§‹ : " + stage.stageName);
 
-                // BattleScene‚ÖˆÚ“®‚·‚é€”õ
+                // BattleSceneã¸ç§»å‹•ã™ã‚‹æº–å‚™
                 GameManager.SetupBattle(GameManager.selectedFlgs);
 
-                // LoadingScene‚ğŒo—R‚µ‚ÄBattleScene‚Ö
+                // LoadingSceneã‚’çµŒç”±ã—ã¦BattleSceneã¸
                 SceneLoader.NextSceneName = "BattleScene";
                 SceneManager.LoadScene("LoadingScene");
 
@@ -213,17 +209,17 @@ public class StageManager : MonoBehaviour
 
             case StageType.Start:
             case StageType.Event:
-                Debug.Log("ƒCƒxƒ“ƒgŠJn : " + stage.stageName);
-                // ƒNƒGƒXƒgî•ñ‚ğ•Â‚¶‚é
+                Debug.Log("ã‚¤ãƒ™ãƒ³ãƒˆé–‹å§‹ : " + stage.stageName);
+                // ã‚¯ã‚¨ã‚¹ãƒˆæƒ…å ±ã‚’é–‰ã˜ã‚‹
                 CloseQuestInfo();
 
-                // ƒI[ƒo[ƒŒƒC•\¦
+                // ã‚ªãƒ¼ãƒãƒ¼ãƒ¬ã‚¤è¡¨ç¤º
                 eventOverlayUI.ShowEvent(stage);
                 break;
         }
     }
 
-    // ID‚©‚çƒXƒe[ƒWæ“¾
+    // IDã‹ã‚‰ã‚¹ãƒ†ãƒ¼ã‚¸å–å¾—
     private StageNodeData GetStageById(int stageId)
     {
         foreach (StageNodeData stage in stageMap.allStages)
@@ -237,13 +233,13 @@ public class StageManager : MonoBehaviour
         return null;
     }
 
-    // ƒNƒŠƒAÏ‚İ‚©
+    // ã‚¯ãƒªã‚¢æ¸ˆã¿ã‹
     public bool IsStageCleared(int stageId)
     {
         return saveData.clearedStageIds.Contains(stageId);
     }
 
-    // ƒNƒŠƒA“o˜^
+    // ã‚¯ãƒªã‚¢ç™»éŒ²
     public void MarkStageCleared(int stageId)
     {
         if (!saveData.clearedStageIds.Contains(stageId))
@@ -252,7 +248,7 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    // «—ˆ BattleScene ‚©‚çŒÄ‚Î‚ê‚é
+    // å°†æ¥ BattleScene ã‹ã‚‰å‘¼ã°ã‚Œã‚‹
     public void CompleteCurrentBattleStage()
     {
         int clearedId = saveData.currentBattleStageId;
@@ -261,18 +257,18 @@ public class StageManager : MonoBehaviour
 
         saveData.currentStageId = clearedId;
 
-        Debug.Log($"ƒXƒe[ƒW {clearedId} ‚ğƒNƒŠƒA‚µ‚Ü‚µ‚½");
+        Debug.Log($"ã‚¹ãƒ†ãƒ¼ã‚¸ {clearedId} ã‚’ã‚¯ãƒªã‚¢ã—ã¾ã—ãŸ");
 
         ShowAvailableStages();
         stageMarker.SetPositionImmediate(saveData.currentStageId);
 
-        // ƒXƒe[ƒWŠÔ‚Ìü‚ğÄ•`‰æ
+        // ã‚¹ãƒ†ãƒ¼ã‚¸é–“ã®ç·šã‚’å†æç”»
         if (stageLineDrawer != null)
         {
             stageLineDrawer.DrawLines();
         }
 
-        // SaveManager.Save(); © «—ˆ’Ç‰Á
+        // SaveManager.Save(); â† å°†æ¥è¿½åŠ 
     }
 
     public void CompleteEventStage(StageNodeData stage)
@@ -281,6 +277,6 @@ public class StageManager : MonoBehaviour
 
         CompleteCurrentBattleStage();
 
-        Debug.Log($"ƒCƒxƒ“ƒg {stage.stageName} ‚ğŠ®—¹");
+        Debug.Log($"ã‚¤ãƒ™ãƒ³ãƒˆ {stage.stageName} ã‚’å®Œäº†");
     }
 }

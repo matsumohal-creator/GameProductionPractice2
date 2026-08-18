@@ -6,25 +6,25 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance;
 
-    //ƒvƒŒƒCƒ„[ƒx[ƒX
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ™ãƒ¼ã‚¹
     [Header("Players Base")]
     [SerializeField]
     private List<PlayerBase> players = new();
 
-    //ƒGƒlƒ~[ƒx[ƒX
+    //ã‚¨ãƒãƒŸãƒ¼ãƒ™ãƒ¼ã‚¹
     [Header("Enemies Base")]
     [SerializeField]
     private List<EnemyBase> enemies = new();
 
-    //script‚Ìæ“¾
+    //scriptã®å–å¾—
 
-    //ƒ^[ƒ“ƒ}ƒl[ƒWƒƒ[
+    //ã‚¿ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
     [Header("TurnManager")]
     [SerializeField]
     private TurnManager turnManager;
 
 
-    //ƒvƒŒƒCƒ„[UIƒ}ƒl[ƒWƒƒ[
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼UIãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
     [SerializeField]
     private PlayerUIManager playerUIManager;
 
@@ -38,24 +38,24 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private BattleResultUI battleResultUI;
 
-    //ƒXƒ|[ƒ“ˆÊ’u
+    //ã‚¹ãƒãƒ¼ãƒ³ä½ç½®
 
-    // ƒvƒŒƒCƒ„[‚ÌƒXƒ|[ƒ“ˆÊ’u
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ãƒãƒ¼ãƒ³ä½ç½®
     [Header("Player Spawn Points")]
     [SerializeField]
     private Transform[] playerSpawnPoints;
 
-    // ƒGƒlƒ~[‚ÌƒXƒ|[ƒ“ˆÊ’u
+    // ã‚¨ãƒãƒŸãƒ¼ã®ã‚¹ãƒãƒ¼ãƒ³ä½ç½®
     [Header("Enemy Spawn Points")]
     [SerializeField]
     private Transform[] enemySpawnPoints;
 
-    // ƒvƒŒƒCƒ„[‚ÌƒvƒŒƒnƒu
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ—ãƒ¬ãƒãƒ–
     [Header("Player Prefabs")]
     [SerializeField]
     private List<PlayerBase> playerPrefabs = new();
 
-    //ƒfƒoƒbƒN—pEŒã‚ÅÁ‚·
+    //ãƒ‡ãƒãƒƒã‚¯ç”¨ãƒ»å¾Œã§æ¶ˆã™
 
     [Header("Debug")]
     [SerializeField]
@@ -70,51 +70,52 @@ public class BattleManager : MonoBehaviour
     private EnemyBase debugEnemyPrefab;
 
 
-    //ƒf[ƒ^ŠÖ˜A
+    //ãƒ‡ãƒ¼ã‚¿é–¢é€£
 
-    //ƒXƒe[ƒWƒf[ƒ^‚ÌQÆ
+    //ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®å‚ç…§
     private StageNodeData currentBattleStage;
 
-    //ƒXƒe[ƒWŒŸõ
+    //ã‚¹ãƒ†ãƒ¼ã‚¸æ¤œç´¢
     [Header("Stage Data")]
     [SerializeField]
     private StageMapData stageMap;
 
-    //ƒVƒ“ƒOƒ‹ƒgƒ“‚Ì‰Šú‰»
+    //ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã®åˆæœŸåŒ–
     private void Awake()
     {
         Instance = this;
 
     }
 
-    // ‰Šú‰»
+    // åˆæœŸåŒ–
     private void Start()
     {
         SpawnPlayers();
         SpawnEnemies();
 
-        // partyMembers = GameManager.Instance.partyMembers;
+        // ç·¨æˆæ¸ˆã¿ãƒ‘ãƒ¼ãƒ†ã‚£ã¯ CurrentSave ã‚’ä½¿ã£ã¦ç”Ÿæˆã—ã¾ã™ã€‚
 
-        //
-        //ƒfƒbƒL‚Ì‰Šú‰»
+        // ç”Ÿæˆã—ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«åˆæœŸãƒ‡ãƒƒã‚­ã‚’åæ˜ ã—ã¾ã™ã€‚
         InitializePlayerDecks();
 
-        //UIManager‚Ì‰Šú‰»
+
+
+        //UIManagerã®åˆæœŸåŒ–
         playerUIManager.CreateUI(players);
         enemyUIManager.CreateUI(enemies);
 
-        //BattleState‚ğBattleStart‚ÉˆÚs
+        //BattleStateã‚’BattleStartã«ç§»è¡Œ
         ChangeState(BattleState.BattleStart);
 
-        //ƒ^[ƒ“‚ÌŠJn
+        //ã‚¿ãƒ¼ãƒ³ã®é–‹å§‹
         turnManager.StartRound();
 
 
 
     }
 
-    //Battle‚Ìi—ß“ƒ
-    // ƒoƒgƒ‹‚Ìó‘Ô‚ğŠÇ—‚·‚éƒvƒƒpƒeƒB
+    //Battleã®å¸ä»¤å¡”
+    // ãƒãƒˆãƒ«ã®çŠ¶æ…‹ã‚’ç®¡ç†ã™ã‚‹ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
     public BattleState CurrentState { get; private set; }
 
     public void ChangeState(BattleState newState)
@@ -126,26 +127,26 @@ public class BattleManager : MonoBehaviour
             BattleUIManager.Instance.RefreshUI(newState);
         }
 
-        // Debug.Log("Œ»İ‚Ìó‘ÔF" + newState);
+        // Debug.Log("ç¾åœ¨ã®çŠ¶æ…‹ï¼š" + newState);
     }
 
-    // ƒvƒŒƒCƒ„[‚ÆƒGƒlƒ~[‚ÌƒŠƒXƒg‚ğæ“¾‚·‚éƒvƒƒpƒeƒB
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã‚¨ãƒãƒŸãƒ¼ã®ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
     public List<PlayerBase> Players => players;
     public List<EnemyBase> Enemies => enemies;
 
-    // ƒvƒŒƒCƒ„[‚ğ¶¬
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ç”Ÿæˆ
     private void SpawnPlayers()
     {
         players.Clear();
 
-        // ƒfƒoƒbƒOƒ‚[ƒh
+        // ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰
         if (debugMode)
         {
             SpawnDebugPlayers();
             return;
         }
 
-        // ’ÊíƒvƒŒƒC
+        // é€šå¸¸ãƒ—ãƒ¬ã‚¤
         if (GameManager.IsBattleSetup)
         {
             SpawnSelectedPlayers();
@@ -153,108 +154,108 @@ public class BattleManager : MonoBehaviour
         }
 
         Debug.LogError(
-            "Battle€”õ‚ª‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            "Battleæº–å‚™ãŒã•ã‚Œã¦ã„ã¾ã›ã‚“");
     }
 
-    //’ÊíƒvƒŒƒC—p
+    //é€šå¸¸ãƒ—ãƒ¬ã‚¤ç”¨
     private void SpawnSelectedPlayers()
     {
-        // ƒZ[ƒuƒf[ƒ^Šm”F
+        // ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ç¢ºèª
         if (SaveManager.CurrentSave == null)
         {
             Debug.LogError(
-                "SaveManager.CurrentSave ‚ª‘¶İ‚µ‚Ü‚¹‚ñ");
+                "SaveManager.CurrentSave ãŒå­˜åœ¨ã—ã¾ã›ã‚“");
             return;
         }
 
-        // ƒp[ƒeƒB•Ò¬Šm”F
+        // ãƒ‘ãƒ¼ãƒ†ã‚£ç·¨æˆç¢ºèª
         if (SaveManager.CurrentSave.partyMembers == null ||
             SaveManager.CurrentSave.partyMembers.Count == 0)
         {
             Debug.LogError(
-                "Œ»İ‚Ìƒp[ƒeƒBƒƒ“ƒo[‚ª‘¶İ‚µ‚Ü‚¹‚ñ");
+                "ç¾åœ¨ã®ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¡ãƒ³ãƒãƒ¼ãŒå­˜åœ¨ã—ã¾ã›ã‚“");
             return;
         }
 
-        // ƒp[ƒeƒBƒƒ“ƒo[‚ğ‡”Ô‚É¶¬
+        // ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¡ãƒ³ãƒãƒ¼ã‚’é †ç•ªã«ç”Ÿæˆ
         for (int i = 0;
              i < SaveManager.CurrentSave.partyMembers.Count;
              i++)
         {
-            // ƒXƒ|[ƒ“ƒ|ƒCƒ“ƒgŠm”F
+            // ã‚¹ãƒãƒ¼ãƒ³ãƒã‚¤ãƒ³ãƒˆç¢ºèª
             if (i >= playerSpawnPoints.Length)
             {
                 Debug.LogError(
-                    "ƒvƒŒƒCƒ„[‚ÌƒXƒ|[ƒ“ƒ|ƒCƒ“ƒg‚ª‘«‚è‚Ü‚¹‚ñ");
+                    "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ãƒãƒ¼ãƒ³ãƒã‚¤ãƒ³ãƒˆãŒè¶³ã‚Šã¾ã›ã‚“");
                 break;
             }
 
-            // ƒp[ƒeƒBƒf[ƒ^æ“¾
+            // ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ‡ãƒ¼ã‚¿å–å¾—
             PartyMemberData member =
                 SaveManager.CurrentSave.partyMembers[i];
 
             if (member == null)
             {
                 Debug.LogWarning(
-                    $"PartyMember[{i}] ‚ªnull‚Å‚·");
+                    $"PartyMember[{i}] ãŒnullã§ã™");
                 continue;
             }
 
-            // ƒLƒƒƒ‰ƒNƒ^[”Ô†
+            // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ç•ªå·
             int index = member.characterIndex;
 
-            // ƒCƒ“ƒfƒbƒNƒXŠm”F
+            // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç¢ºèª
             if (index < 0 || index >= playerPrefabs.Count)
             {
                 Debug.LogError(
-                    $"Player index ‚ª•s³‚Å‚·: {index}");
+                    $"Player index ãŒä¸æ­£ã§ã™: {index}");
                 continue;
             }
 
-            // ƒvƒŒƒnƒuæ“¾
+            // ãƒ—ãƒ¬ãƒãƒ–å–å¾—
             PlayerBase prefab =
                 playerPrefabs[index];
 
             if (prefab == null)
             {
                 Debug.LogError(
-                    $"PlayerPrefab[{index}] ‚ªnull‚Å‚·");
+                    $"PlayerPrefab[{index}] ãŒnullã§ã™");
                 continue;
             }
 
-            // ƒvƒŒƒCƒ„[¶¬
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç”Ÿæˆ
             GameObject obj = Instantiate(
                 prefab.gameObject,
                 playerSpawnPoints[i],
                 false);
 
-            // ˆÊ’u‚ğƒŠƒZƒbƒg
+            // ä½ç½®ã‚’ãƒªã‚»ãƒƒãƒˆ
             obj.transform.localPosition = Vector3.zero;
 
-            // PlayerBaseæ“¾
+            // PlayerBaseå–å¾—
             PlayerBase player =
                 obj.GetComponent<PlayerBase>();
 
             if (player == null)
             {
                 Debug.LogError(
-                    "¶¬‚µ‚½ƒIƒuƒWƒFƒNƒg‚ÉPlayerBase‚ª‚ ‚è‚Ü‚¹‚ñ");
+                    "ç”Ÿæˆã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«PlayerBaseãŒã‚ã‚Šã¾ã›ã‚“");
 
                 Destroy(obj);
                 continue;
             }
 
-            // BattleManager‚ÌƒvƒŒƒCƒ„[ƒŠƒXƒg‚Ö’Ç‰Á
+            // BattleManagerã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒªã‚¹ãƒˆã¸è¿½åŠ 
             players.Add(player);
 
             Debug.Log(
-                $"[Battle] Player¶¬: " +
+                $"[Battle] Playerç”Ÿæˆ: " +
                 $"Index={index}, " +
                 $"Name={player.CharacterName}");
         }
     }
 
-    // ƒfƒoƒbƒO—p
+    // ãƒ‡ãƒãƒƒã‚°ç”¨
     private void SpawnDebugPlayers()
     {
         Debug.Log("===== DEBUG PLAYER SPAWN =====");
@@ -264,7 +265,7 @@ public class BattleManager : MonoBehaviour
             if (i >= playerSpawnPoints.Length)
             {
                 Debug.LogError(
-                    "ƒfƒoƒbƒO—pƒvƒŒƒCƒ„[‚ÌƒXƒ|[ƒ“ƒ|ƒCƒ“ƒg‚ª‘«‚è‚Ü‚¹‚ñ");
+                    "ãƒ‡ãƒãƒƒã‚°ç”¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ãƒãƒ¼ãƒ³ãƒã‚¤ãƒ³ãƒˆãŒè¶³ã‚Šã¾ã›ã‚“");
                 break;
             }
 
@@ -273,7 +274,7 @@ public class BattleManager : MonoBehaviour
             if (prefab == null)
             {
                 Debug.LogWarning(
-                    $"DebugPlayerPrefabs[{i}] ‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+                    $"DebugPlayerPrefabs[{i}] ãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“");
                 continue;
             }
 
@@ -290,30 +291,30 @@ public class BattleManager : MonoBehaviour
             if (player == null)
             {
                 Debug.LogError(
-                    "Debug Player‚ÉPlayerBase‚ª‚ ‚è‚Ü‚¹‚ñ");
+                    "Debug Playerã«PlayerBaseãŒã‚ã‚Šã¾ã›ã‚“");
                 continue;
             }
 
             players.Add(player);
 
             Debug.Log(
-                $"DEBUG Player¶¬: {player.CharacterName}");
+                $"DEBUG Playerç”Ÿæˆ: {player.CharacterName}");
         }
     }
 
-    // ƒGƒlƒ~[‚ğ¶¬
+    // ã‚¨ãƒãƒŸãƒ¼ã‚’ç”Ÿæˆ
     private void SpawnEnemies()
     {
         enemies.Clear();
 
-        // ƒfƒoƒbƒO
+        // ãƒ‡ãƒãƒƒã‚°
         if (debugMode)
         {
             SpawnDebugEnemies();
             return;
         }
 
-        // ’ÊíƒvƒŒƒC
+        // é€šå¸¸ãƒ—ãƒ¬ã‚¤
         if (GameManager.IsBattleSetup)
         {
             SpawnSelectedEnemies();
@@ -321,14 +322,14 @@ public class BattleManager : MonoBehaviour
         }
 
         Debug.LogError(
-            "Battle€”õ‚ª‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            "Battleæº–å‚™ãŒã•ã‚Œã¦ã„ã¾ã›ã‚“");
     }
 
     private void SpawnSelectedEnemies()
     {
         if (SaveManager.CurrentSave == null)
         {
-            Debug.LogError("SaveManager.CurrentSave ‚ª‚ ‚è‚Ü‚¹‚ñ");
+            Debug.LogError("SaveManager.CurrentSave ãŒã‚ã‚Šã¾ã›ã‚“");
             return;
         }
 
@@ -340,7 +341,7 @@ public class BattleManager : MonoBehaviour
         if (currentBattleStage == null)
         {
             Debug.LogError(
-                $"í“¬ƒXƒe[ƒW‚ªæ“¾‚Å‚«‚Ü‚¹‚ñBID={stageId}");
+                $"æˆ¦é—˜ã‚¹ãƒ†ãƒ¼ã‚¸ãŒå–å¾—ã§ãã¾ã›ã‚“ã€‚ID={stageId}");
             return;
         }
 
@@ -353,7 +354,7 @@ public class BattleManager : MonoBehaviour
             currentBattleStage.enemyPrefabs.Count == 0)
         {
             Debug.LogWarning(
-                $"ƒXƒe[ƒW {currentBattleStage.stageName} ‚É“G‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+                $"ã‚¹ãƒ†ãƒ¼ã‚¸ {currentBattleStage.stageName} ã«æ•µãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“");
 
             return;
         }
@@ -365,7 +366,7 @@ public class BattleManager : MonoBehaviour
             if (i >= enemySpawnPoints.Length)
             {
                 Debug.LogError(
-                    "“G‚ÌƒXƒ|[ƒ“ƒ|ƒCƒ“ƒg‚ª‘«‚è‚Ü‚¹‚ñ");
+                    "æ•µã®ã‚¹ãƒãƒ¼ãƒ³ãƒã‚¤ãƒ³ãƒˆãŒè¶³ã‚Šã¾ã›ã‚“");
                 break;
             }
 
@@ -375,7 +376,7 @@ public class BattleManager : MonoBehaviour
             if (prefab == null)
             {
                 Debug.LogWarning(
-                    $"EnemyPrefab[{i}] ‚ªnull‚Å‚·");
+                    $"EnemyPrefab[{i}] ãŒnullã§ã™");
                 continue;
             }
 
@@ -392,7 +393,7 @@ public class BattleManager : MonoBehaviour
             if (enemy == null)
             {
                 Debug.LogError(
-                    $"¶¬‚µ‚½“G {obj.name} ‚ÉEnemyBase‚ª‚ ‚è‚Ü‚¹‚ñ");
+                    $"ç”Ÿæˆã—ãŸæ•µ {obj.name} ã«EnemyBaseãŒã‚ã‚Šã¾ã›ã‚“");
 
                 Destroy(obj);
                 continue;
@@ -401,7 +402,7 @@ public class BattleManager : MonoBehaviour
             enemies.Add(enemy);
 
             Debug.Log(
-                $"“G¶¬: {enemy.CharacterName}");
+                $"æ•µç”Ÿæˆ: {enemy.CharacterName}");
         }
     }
 
@@ -412,14 +413,14 @@ public class BattleManager : MonoBehaviour
         if (debugEnemyPrefab == null)
         {
             Debug.LogError(
-                "Debug Enemy Prefab‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+                "Debug Enemy PrefabãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“");
             return;
         }
 
         if (enemySpawnPoints.Length == 0)
         {
             Debug.LogError(
-                "Enemy Spawn Point‚ª‚ ‚è‚Ü‚¹‚ñ");
+                "Enemy Spawn PointãŒã‚ã‚Šã¾ã›ã‚“");
             return;
         }
 
@@ -436,41 +437,41 @@ public class BattleManager : MonoBehaviour
         if (enemy == null)
         {
             Debug.LogError(
-                "Debug Enemy‚ÉEnemyBase‚ª‚ ‚è‚Ü‚¹‚ñ");
+                "Debug Enemyã«EnemyBaseãŒã‚ã‚Šã¾ã›ã‚“");
             return;
         }
 
         enemies.Add(enemy);
 
         Debug.Log(
-            $"DEBUG Enemy¶¬: {enemy.CharacterName}");
+            $"DEBUG Enemyç”Ÿæˆ: {enemy.CharacterName}");
     }
 
 
-    // ƒvƒŒƒCƒ„[‚ÌƒfƒbƒL‚ğ‰Šú‰»
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ‡ãƒƒã‚­ã‚’åˆæœŸåŒ–
     private void InitializePlayerDecks()
     {
 
         foreach (PlayerBase player in players)
         {
-            //ƒfƒbƒLƒ}ƒl[ƒWƒƒ[‚ÌƒfƒbƒL
+            //ãƒ‡ãƒƒã‚­ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒ‡ãƒƒã‚­
             DeckManager deck =
                 player.GetComponent<DeckManager>();
 
-            //ƒfƒbƒL‚Ì—L–³‚ÌŠm”F
+            //ãƒ‡ãƒƒã‚­ã®æœ‰ç„¡ã®ç¢ºèª
             if (deck == null)
             {
-                Debug.LogError("{player.CharacterName} ‚ÉDeckManager‚ª‚ ‚è‚Ü‚¹‚ñ");
+                Debug.LogError("{player.CharacterName} ã«DeckManagerãŒã‚ã‚Šã¾ã›ã‚“");
                 continue;
             }
 
-            //ƒvƒŒƒCƒ„[‚ÌƒfƒbƒL
+            //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ‡ãƒƒã‚­
             Debug.Log("DefaultDeck = " + player.DefaultDeck);
 
             if (player.DefaultDeck == null)
             {
                 Debug.LogError(
-                    $"{player.CharacterName} ‚ÌDefaultDeck‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ"
+                    $"{player.CharacterName} ã®DefaultDeckãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“"
                 );
 
                 continue;
@@ -480,7 +481,7 @@ public class BattleManager : MonoBehaviour
 
             Debug.Log(
              $"{player.CharacterName} : " +
-             $"DrawPile–‡” = {deck.DrawPile.Count}"
+             $"DrawPileæšæ•° = {deck.DrawPile.Count}"
          );
 
 
@@ -489,7 +490,7 @@ public class BattleManager : MonoBehaviour
 
 
 
-    //ƒXƒLƒ‹‚Ìg—p
+    //ã‚¹ã‚­ãƒ«ã®ä½¿ç”¨
     public void UseSkill(
     PlayerBase user,
     SkillData skill,
@@ -497,21 +498,21 @@ public class BattleManager : MonoBehaviour
     {
         //
         Debug.Log(
-             $"[CardDebug] UseSkillŠJn " +
+             $"[CardDebug] UseSkillé–‹å§‹ " +
              $"User={user.CharacterName}, " +
              $"Skill={skill.skillName}, " +
              $"Target={singleTarget}"
          );
 
-        // ƒ^[ƒQƒbƒg‚ğw’è
+        // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’æŒ‡å®š
         List<IStatusEffectTarget> enemyTargets =
             new List<IStatusEffectTarget>();
 
-        // ƒ^[ƒQƒbƒg‚ÌƒxƒNƒgƒ‹
+        // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒ™ã‚¯ãƒˆãƒ«
         List<IStatusEffectTarget> allyTargets =
             new List<IStatusEffectTarget>();
 
-        // “G‚Æ–¡•û‚Ìƒ^[ƒQƒbƒg‚ğ’Ç‰Á
+        // æ•µã¨å‘³æ–¹ã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’è¿½åŠ 
         foreach (EnemyBase enemy in enemies)
         {
             enemyTargets.Add(enemy);
@@ -522,7 +523,7 @@ public class BattleManager : MonoBehaviour
             allyTargets.Add(player);
         }
 
-        // ƒ^[ƒQƒbƒg‚Ì‰ğŒˆ
+        // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®è§£æ±º
         List<IStatusEffectTarget> targets =
             TargetResolver.Resolve(
                 skill.targetType,
@@ -533,7 +534,7 @@ public class BattleManager : MonoBehaviour
 
         //
         Debug.Log(
-    $"[CardDebug] ƒ^[ƒQƒbƒg‰ğŒˆŠ®—¹: {targets.Count}‘Ì");
+    $"[CardDebug] ã‚¿ãƒ¼ã‚²ãƒƒãƒˆè§£æ±ºå®Œäº†: {targets.Count}ä½“");
 
         foreach (IStatusEffectTarget target in targets)
         {
@@ -542,34 +543,34 @@ public class BattleManager : MonoBehaviour
             );
         }
 
-        // ƒXƒLƒ‹‚ÌÀs
+        // ã‚¹ã‚­ãƒ«ã®å®Ÿè¡Œ
         SkillExecution.ExecuteSkill(
             user,
             targets,
             skill);
 
-        //ƒJ[ƒh‚ÌÀs
+        //ã‚«ãƒ¼ãƒ‰ã®å®Ÿè¡Œ
         Debug.Log(
-    $"[CardDebug] SkillExecution.ExecuteSkill Às");
-        // UIXV
+    $"[CardDebug] SkillExecution.ExecuteSkill å®Ÿè¡Œ");
+        // UIæ›´æ–°
         playerUIManager.RefreshAll();
         enemyUIManager.RefreshAll();
 
 
-        // í“¬Œ‹‰Ê‚ÌŠm”F
+        // æˆ¦é—˜çµæœã®ç¢ºèª
         CheckBattleResult();
     }
 
-    // í“¬Œ‹‰Ê‚ÌŠm”F
+    // æˆ¦é—˜çµæœã®ç¢ºèª
     private void CheckBattleResult()
     {
-        // ‘S‚Ä‚Ì“G‚ª“|‚³‚ê‚Ä‚¢‚é‚©Šm”F
+        // å…¨ã¦ã®æ•µãŒå€’ã•ã‚Œã¦ã„ã‚‹ã‹ç¢ºèª
         bool allEnemiesDead = true;
 
-        // “G‚ÌHP‚ğŠm”F
+        // æ•µã®HPã‚’ç¢ºèª
         foreach (EnemyBase enemy in enemies)
         {
-            // “G‚ÌHP‚ª0‚æ‚è‘å‚«‚¢ê‡A‘S‚Ä‚Ì“G‚ª“|‚³‚ê‚Ä‚¢‚È‚¢‚Æ”»’f
+            // æ•µã®HPãŒ0ã‚ˆã‚Šå¤§ãã„å ´åˆã€å…¨ã¦ã®æ•µãŒå€’ã•ã‚Œã¦ã„ãªã„ã¨åˆ¤æ–­
             if (enemy.CurrentHp > 0)
             {
                 allEnemiesDead = false;
@@ -577,20 +578,20 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        // ‘S‚Ä‚Ì“G‚ª“|‚³‚ê‚Ä‚¢‚éê‡AŸ—˜‚Æ”»’f
+        // å…¨ã¦ã®æ•µãŒå€’ã•ã‚Œã¦ã„ã‚‹å ´åˆã€å‹åˆ©ã¨åˆ¤æ–­
         if (allEnemiesDead)
         {
             ChangeState(BattleState.Victory);
 
             Debug.Log("Victory");
 
-            // ƒ^[ƒ“is‚ğ’â~
+            // ã‚¿ãƒ¼ãƒ³é€²è¡Œã‚’åœæ­¢
             if (TurnManager.Instance != null)
             {
                 TurnManager.Instance.StopBattle();
             }
 
-            // ƒŠƒUƒ‹ƒg•\¦
+            // ãƒªã‚¶ãƒ«ãƒˆè¡¨ç¤º
             if (battleResultUI != null)
             {
                 battleResultUI.ShowVictory();
@@ -599,13 +600,13 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        // ‘S‚Ä‚ÌƒvƒŒƒCƒ„[‚ª“|‚³‚ê‚Ä‚¢‚é‚©Šm”F
+        // å…¨ã¦ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå€’ã•ã‚Œã¦ã„ã‚‹ã‹ç¢ºèª
         bool allPlayersDead = true;
 
-        // ƒvƒŒƒCƒ„[‚ÌHP‚ğŠm”F
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã‚’ç¢ºèª
         foreach (PlayerBase player in players)
         {
-            // ƒvƒŒƒCƒ„[‚ÌHP‚ª0‚æ‚è‘å‚«‚¢ê‡A‘S‚Ä‚ÌƒvƒŒƒCƒ„[‚ª“|‚³‚ê‚Ä‚¢‚È‚¢‚Æ”»’f
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPãŒ0ã‚ˆã‚Šå¤§ãã„å ´åˆã€å…¨ã¦ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå€’ã•ã‚Œã¦ã„ãªã„ã¨åˆ¤æ–­
             if (player.CurrentHp > 0)
             {
                 allPlayersDead = false;
@@ -613,20 +614,20 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        // ‘S‚Ä‚ÌƒvƒŒƒCƒ„[‚ª“|‚³‚ê‚Ä‚¢‚éê‡A”s–k‚Æ”»’f
+        // å…¨ã¦ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå€’ã•ã‚Œã¦ã„ã‚‹å ´åˆã€æ•—åŒ—ã¨åˆ¤æ–­
         if (allPlayersDead)
         {
             ChangeState(BattleState.Defeat);
 
             Debug.Log("Defeat");
 
-            // ƒ^[ƒ“is‚ğ’â~
+            // ã‚¿ãƒ¼ãƒ³é€²è¡Œã‚’åœæ­¢
             if (TurnManager.Instance != null)
             {
                 TurnManager.Instance.StopBattle();
             }
 
-            // ƒŠƒUƒ‹ƒg•\¦
+            // ãƒªã‚¶ãƒ«ãƒˆè¡¨ç¤º
             if (battleResultUI != null)
             {
                 battleResultUI.ShowDefeat();
@@ -638,15 +639,15 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("=== Battle Stop ===");
 
-        // ƒ^[ƒ“is‚ğ’â~
+        // ã‚¿ãƒ¼ãƒ³é€²è¡Œã‚’åœæ­¢
         if (turnManager != null)
         {
             turnManager.StopBattle();
         }
     }
 
-    //“G‚ÌUŒ‚
-    // “G‚ÌUŒ‚
+    //æ•µã®æ”»æ’ƒ
+    // æ•µã®æ”»æ’ƒ
     public void EnemyAttack(
         EnemyBase enemy,
         PlayerBase target,
@@ -654,19 +655,19 @@ public class BattleManager : MonoBehaviour
     {
         if (enemy == null || target == null)
         {
-            Debug.LogError("EnemyAttack:enemy ‚©@target ‚ª null");
+            Debug.LogError("EnemyAttack:enemy ã‹ã€€target ãŒ null");
             return;
         }
 
         Debug.Log(
-       $"[EnemyAttackŠJn] " +
-       $"UŒ‚Ò={enemy.CharacterName} / " +
-       $"‘ÎÛ={target.CharacterName} / " +
-       $"UŒ‚—Í={attackPower} / " +
-       $"‘ÎÛHP={target.CurrentHp}");
+       $"[EnemyAttacké–‹å§‹] " +
+       $"æ”»æ’ƒè€…={enemy.CharacterName} / " +
+       $"å¯¾è±¡={target.CharacterName} / " +
+       $"æ”»æ’ƒåŠ›={attackPower} / " +
+       $"å¯¾è±¡HP={target.CurrentHp}");
 
 
-        // UŒ‚—Í‚ğg‚Á‚Äƒ_ƒ[ƒWŒvZ
+        // æ”»æ’ƒåŠ›ã‚’ä½¿ã£ã¦ãƒ€ãƒ¡ãƒ¼ã‚¸è¨ˆç®—
         enemy.PlayAttackAnimation();
 
         int damage =
@@ -675,21 +676,21 @@ public class BattleManager : MonoBehaviour
                 enemy,
                 target);
 
-        // ƒvƒŒƒCƒ„[‚ªƒ_ƒ[ƒW‚ğó‚¯‚é
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹
         target.TakeDamage(damage, enemy);
 
         enemy.PlayIdleAnimation();
 
-        // UIXV
+        // UIæ›´æ–°
         playerUIManager.RefreshAll();
         enemyUIManager.RefreshAll();
 
-        // í“¬Œ‹‰ÊŠm”F
+        // æˆ¦é—˜çµæœç¢ºèª
         CheckBattleResult();
 
-        //“G‚Ìs“®‚ÌƒƒOŠm”F
+        //æ•µã®è¡Œå‹•ã®ãƒ­ã‚°ç¢ºèª
         Debug.Log(
-            $"{enemy.CharacterName} ‚ª {target.CharacterName} ‚É {damage} ƒ_ƒ[ƒW");
+            $"{enemy.CharacterName} ãŒ {target.CharacterName} ã« {damage} ãƒ€ãƒ¡ãƒ¼ã‚¸");
     }
 
 
@@ -712,14 +713,14 @@ public class BattleManager : MonoBehaviour
             Random.Range(0, candidates.Count)];
     }
 
-    ///ƒZ[ƒuƒf[ƒ^ŠÖ˜A
+    ///ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿é–¢é€£
 
-    // ƒXƒe[ƒWID‚©‚çStageNodeData‚ğæ“¾‚·‚é
+    // ã‚¹ãƒ†ãƒ¼ã‚¸IDã‹ã‚‰StageNodeDataã‚’å–å¾—ã™ã‚‹
     private StageNodeData GetStageById(int stageId)
     {
         if (stageMap == null)
         {
-            Debug.LogError("BattleManager‚ÉStageMapData‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            Debug.LogError("BattleManagerã«StageMapDataãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“");
             return null;
         }
 
@@ -737,7 +738,7 @@ public class BattleManager : MonoBehaviour
         }
 
         Debug.LogError(
-            $"stageId={stageId} ‚ÌStageNodeData‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
+            $"stageId={stageId} ã®StageNodeDataãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“");
 
         return null;
     }
@@ -746,21 +747,21 @@ public class BattleManager : MonoBehaviour
 
 
 
-    // w’è‚µ‚½ƒvƒŒƒCƒ„[ˆÈŠO‚Ì¶‘¶‚µ‚Ä‚¢‚é–¡•û‚ğƒ‰ƒ“ƒ_ƒ€‚Å•Ô‚·
-    // ¡‚Í–¡•û‚Éƒ_ƒ[ƒW‚ğ‚»‚ç‚·‚Æ‚«‚Ég—p‚·‚é
+    // æŒ‡å®šã—ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä»¥å¤–ã®ç”Ÿå­˜ã—ã¦ã„ã‚‹å‘³æ–¹ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã§è¿”ã™
+    // ä»Šã¯å‘³æ–¹ã«ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ãã‚‰ã™ã¨ãã«ä½¿ç”¨ã™ã‚‹
     public PlayerBase GetRandomLivingPlayerExcept(PlayerBase target)
     {
         List<PlayerBase> candidates = new();
 
         foreach (PlayerBase player in players)
         {
-            // ©•ª©g‚ÍœŠO
+            // è‡ªåˆ†è‡ªèº«ã¯é™¤å¤–
             if (player == target)
             {
                 continue;
             }
 
-            // í“¬•s”\‚ÍœŠO
+            // æˆ¦é—˜ä¸èƒ½ã¯é™¤å¤–
             if (player.CurrentHp <= 0)
             {
                 continue;
@@ -769,7 +770,7 @@ public class BattleManager : MonoBehaviour
             candidates.Add(player);
         }
 
-        // Œó•â‚ª‚¢‚È‚¯‚ê‚Înull
+        // å€™è£œãŒã„ãªã‘ã‚Œã°null
         if (candidates.Count == 0)
         {
             return null;

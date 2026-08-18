@@ -1,18 +1,29 @@
-// ‚±‚ÌƒNƒ‰ƒX‚ÍAƒQ[ƒ€‚ÌƒZ[ƒuƒf[ƒ^‚ğŠÇ—‚·‚é‚½‚ß‚ÌƒVƒ“ƒOƒ‹ƒgƒ““I‚ÈƒNƒ‰ƒX‚Å‚·B
-// SaveDataƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Û‚µAƒQ[ƒ€‚Ìisó‹µ‚ğ•Û‘¶‚¨‚æ‚Ñ“Ç‚İ‚Ş‚½‚ß‚Ég—p‚³‚ê‚Ü‚·B
+ï»¿// ã‚²ãƒ¼ãƒ å…¨ä½“ã§ä½¿ã†ã‚»ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
+// å„ã‚·ãƒ¼ãƒ³ã‹ã‚‰åŒã˜ SaveData ã‚’å‚ç…§ã§ãã‚‹ã‚ˆã†ã«ã—ã¾ã™ã€‚
 
 public static class SaveManager
 {
-    public static SaveData CurrentSave;
+    // CurrentSave ã®å®Ÿä½“ã‚’ä¿æŒã—ã¾ã™ã€‚
+    private static SaveData currentSave;
+
+    public static SaveData CurrentSave
+    {
+        get
+        {
+            // æœªä½œæˆãªã‚‰ã“ã“ã§ç”Ÿæˆã—ã€null å‚ç…§ã‚’é˜²ãã¾ã™ã€‚
+            if (currentSave == null)
+            {
+                currentSave = new SaveData();
+            }
+
+            return currentSave;
+        }
+        set => currentSave = value;
+    }
 
     public static void Initialize()
     {
-        if (CurrentSave != null)
-        {
-            return;
-        }
-
-        CurrentSave = new SaveData();
-
+        // ã‚²ãƒ¼ãƒ é–‹å§‹æ™‚ã« CurrentSave ã‚’ç”Ÿæˆã—ã¦ãŠãã¾ã™ã€‚
+        _ = CurrentSave;
     }
 }

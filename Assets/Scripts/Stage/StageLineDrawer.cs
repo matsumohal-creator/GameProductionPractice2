@@ -1,26 +1,26 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-// ƒXƒe[ƒW‚ÆƒXƒe[ƒW‚ğŒ‹‚Ôü‚ğ•`‰æ‚·‚éƒNƒ‰ƒX
+// ã‚¹ãƒ†ãƒ¼ã‚¸ã¨ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’çµã¶ç·šã‚’æç”»ã™ã‚‹ã‚¯ãƒ©ã‚¹
 
 public class StageLineDrawer : MonoBehaviour
 {
-    [Header("ü‚Ìe")]
+    [Header("ç·šã®è¦ª")]
     [SerializeField] private RectTransform lineRoot;
 
-    [Header("üƒvƒŒƒnƒu(Image)")]
+    [Header("ç·šãƒ—ãƒ¬ãƒãƒ–(Image)")]
     [SerializeField] private Image linePrefab;
 
-    [Header("ƒXƒe[ƒWƒ{ƒ^ƒ“ˆê——")]
+    [Header("ã‚¹ãƒ†ãƒ¼ã‚¸ãƒœã‚¿ãƒ³ä¸€è¦§")]
     [SerializeField] private StageButton[] stageButtons;
 
-    [Header("ƒ}ƒbƒvƒf[ƒ^")]
+    [Header("ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿")]
     [SerializeField] private StageMapData stageMap;
 
-    [Header("ü‚Ì‘¾‚³")]
+    [Header("ç·šã®å¤ªã•")]
     [SerializeField] private float lineWidth = 6f;
 
-    [Header("ü‚ÌF")]
+    [Header("ç·šã®è‰²")]
     [SerializeField] private Color clearedColor = new Color(1f, 0.75f, 0.2f);
     [SerializeField] private Color availableColor = Color.white;
     [SerializeField] private Color lockedColor = new Color(0.45f, 0.45f, 0.45f);
@@ -29,11 +29,7 @@ public class StageLineDrawer : MonoBehaviour
 
     private void Start()
     {
-        if (SaveManager.CurrentSave == null)
-        {
-            SaveManager.CurrentSave = new SaveData();
-        }
-
+        // CurrentSave ã‚’å‚ç…§ã—ã¦åŒã˜ã‚¹ãƒ†ãƒ¼ã‚¸æƒ…å ±ã‚’ä½¿ã„ã¾ã™ã€‚
         saveData = SaveManager.CurrentSave;
 
         DrawLines();
@@ -41,7 +37,7 @@ public class StageLineDrawer : MonoBehaviour
 
     public void DrawLines()
     {
-        // Šù‘¶ƒ‰ƒCƒ“íœ
+        // æ—¢å­˜ãƒ©ã‚¤ãƒ³å‰Šé™¤
         for (int i = lineRoot.childCount - 1; i >= 0; i--)
         {
             Destroy(lineRoot.GetChild(i).gameObject);
@@ -67,25 +63,25 @@ public class StageLineDrawer : MonoBehaviour
         }
     }
 
-    // ƒXƒe[ƒWŠÔ‚Ìü‚ÌF‚ğŒˆ’è‚·‚éƒƒ\ƒbƒh
+    // ã‚¹ãƒ†ãƒ¼ã‚¸é–“ã®ç·šã®è‰²ã‚’æ±ºå®šã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     private Color GetLineColor(StageNodeData fromStage, StageNodeData toStage)
     {
         bool fromCleared = saveData.clearedStageIds.Contains(fromStage.stageId);
         bool toCleared = saveData.clearedStageIds.Contains(toStage.stageId);
 
-        // ’Ê‰ßÏ‚İƒ‹[ƒg
+        // é€šéæ¸ˆã¿ãƒ«ãƒ¼ãƒˆ
         if (fromCleared && toCleared)
         {
             return clearedColor;
         }
 
-        // Œ»İ’n‚©‚çi‚ß‚éƒ‹[ƒg
+        // ç¾åœ¨åœ°ã‹ã‚‰é€²ã‚ã‚‹ãƒ«ãƒ¼ãƒˆ
         if (fromStage.stageId == saveData.currentStageId)
         {
             return availableColor;
         }
 
-        // –¢ŠJ•ú
+        // æœªé–‹æ”¾
         return lockedColor;
     }
 

@@ -24,4 +24,4 @@ MonoBehaviour:
     statusEffect: {fileID: 11400000, guid: 293c9aa356d16f449a0727ab1e993295, type: 2}
     duration: 1
     stack: 5
-  exclusiveClass: 0
+  exclusiveClass: 4

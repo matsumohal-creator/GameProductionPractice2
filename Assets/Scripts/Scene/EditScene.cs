@@ -7,6 +7,11 @@ public class EditScene : MonoBehaviour
 {
     [SerializeField]
     private List<EditSceneCard> characterCards;
+
+    [Header("キャラクター初期デッキ")]
+    [SerializeField]
+    private List<CharacterDeckData> characterDecks;
+
     // 編成可能な最大人数
     [SerializeField]
     private int maxSelectedCount = 4;
@@ -97,13 +102,37 @@ public class EditScene : MonoBehaviour
         // 現在のパーティを一度クリア
         SaveManager.CurrentSave.partyMembers.Clear();
 
-        // 選択したキャラクターを保存
+        // =====================================================
+        // 選択したキャラクターをPartyMemberDataへ保存
+        // =====================================================
         foreach (int index in selectedPlayers)
         {
-            PartyMemberData member = new PartyMemberData();
+            CharacterDeckData deckData =
+                characterDecks[index];
 
-            // キャラクターの識別番号
+            if (deckData == null)
+            {
+                Debug.LogError(
+                    $"CharacterIndex={index} のCharacterDeckDataが設定されていません");
+
+                continue;
+            }
+
+            PartyMemberData member =
+                new PartyMemberData();
+
+            // キャラクター識別番号
             member.characterIndex = index;
+
+            // キャラクタークラス
+            member.characterClass =
+                deckData.characterClass;
+
+            // 初期デッキをコピー
+            member.deck =
+                deckData.startDeck != null
+                    ? new List<SkillData>(deckData.startDeck)
+                    : new List<SkillData>();
 
             // パーティに追加
             SaveManager.CurrentSave.partyMembers.Add(member);

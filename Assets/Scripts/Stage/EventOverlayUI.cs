@@ -21,6 +21,9 @@ public class EventOverlayUI : MonoBehaviour
 
     [Header("カード削除UI")]
     [SerializeField]
+    private GameObject cardRemoveRoot;
+
+    [SerializeField]
     private EventCardRemoveUI cardRemoveUI;
 
     private StageManager stageManager;
@@ -31,6 +34,16 @@ public class EventOverlayUI : MonoBehaviour
     private void Awake()
     {
         gameObject.SetActive(false);
+
+        if (cardRemoveRoot != null)
+        {
+            cardRemoveRoot.SetActive(false);
+        }
+
+        if (resultRoot != null)
+        {
+            resultRoot.SetActive(false);
+        }
     }
 
     public void Initialize(
@@ -86,6 +99,16 @@ public class EventOverlayUI : MonoBehaviour
 
         gameObject.SetActive(true);
 
+        if (cardRemoveRoot != null)
+        {
+            cardRemoveRoot.SetActive(false);
+        }
+
+        if (resultRoot != null)
+        {
+            resultRoot.SetActive(false);
+        }
+
         titleText.text = currentEvent.eventTitle;
 
         bodyText.text = string.IsNullOrEmpty(currentEvent.eventText)
@@ -102,7 +125,10 @@ public class EventOverlayUI : MonoBehaviour
     {
         ClearChoices();
 
-        resultRoot.SetActive(false);
+        if (resultRoot != null)
+        {
+            resultRoot.SetActive(false);
+        }
         choiceRoot.gameObject.SetActive(true);
 
         if (currentEvent.choices == null ||
@@ -130,6 +156,11 @@ public class EventOverlayUI : MonoBehaviour
 
     private void ClearChoices()
     {
+        if (choiceRoot == null)
+        {
+            return;
+        }
+
         for (int i = choiceRoot.childCount - 1; i >= 0; i--)
         {
             Destroy(choiceRoot.GetChild(i).gameObject);
@@ -171,15 +202,21 @@ public class EventOverlayUI : MonoBehaviour
 
         if (requiresCardRemoval)
         {
-            if (cardRemoveUI != null)
+            if (cardRemoveRoot != null &&
+                cardRemoveUI != null)
             {
+                // カード削除UIを表示
+                cardRemoveRoot.SetActive(true);
+
+                // カード一覧を生成
                 cardRemoveUI.Show();
+
                 return;
             }
 
             Debug.LogWarning(
                 "RemoveCard効果がありますが、" +
-                "EventCardRemoveUIが設定されていません");
+                "CardRemoveRoot または EventCardRemoveUI が設定されていません");
         }
 
         // -----------------------------------------
@@ -204,6 +241,11 @@ public class EventOverlayUI : MonoBehaviour
     {
         Debug.Log(
             "[EventEffect] カード削除処理が完了しました");
+
+        if (cardRemoveRoot != null)
+        {
+            cardRemoveRoot.SetActive(false);
+        }
 
         if (currentChoice == null)
         {

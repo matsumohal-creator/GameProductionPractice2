@@ -30,12 +30,6 @@ public class EventCardRemoveUI : MonoBehaviour
     // =========================================================
     // èâä˙âª
     // =========================================================
-
-    private void Awake()
-    {
-        gameObject.SetActive(false);
-    }
-
     public void Initialize(
         EventEffectManager manager,
         Action onRemoveCompleted = null)

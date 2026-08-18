@@ -269,14 +269,7 @@ public class EventEffectManager : MonoBehaviour
                 continue;
             }
 
-            // 全クラス共通カード
-            if (skill.exclusiveClass == CharacterClass.None)
-            {
-                candidates.Add(skill);
-                continue;
-            }
-
-            // キャラクター専用カード
+            // キャラクターのクラス専用カードのみ候補にする
             if (skill.exclusiveClass == characterClass)
             {
                 candidates.Add(skill);
@@ -286,7 +279,7 @@ public class EventEffectManager : MonoBehaviour
         if (candidates.Count == 0)
         {
             Debug.LogWarning(
-                $"CharacterClass={characterClass} が取得できるカードがありません");
+                $"CharacterClass={characterClass} の専用カードがありません");
 
             return null;
         }

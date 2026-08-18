@@ -80,6 +80,11 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private StageMapData stageMap;
 
+    //バトルシーンで使うフラグ
+
+    //バトル終了フラグ
+    private bool battleEnded = false;
+
     //シングルトンの初期化
     private void Awake()
     {
@@ -90,6 +95,9 @@ public class BattleManager : MonoBehaviour
     // 初期化
     private void Start()
     {
+        //フラグ関係
+        battleEnded = false;
+
         SpawnPlayers();
         SpawnEnemies();
 
@@ -564,85 +572,91 @@ public class BattleManager : MonoBehaviour
     // 戦闘結果の確認
     private void CheckBattleResult()
     {
-        // 全ての敵が倒されているか確認
+        // すでに終了しているなら何もしない
+        if (battleEnded)
+        {
+            return;
+        }
+
+        // 敵が全滅しているか
         bool allEnemiesDead = true;
 
-        // 敵のHPを確認
         foreach (EnemyBase enemy in enemies)
         {
-            // 敵のHPが0より大きい場合、全ての敵が倒されていないと判断
-            if (enemy.CurrentHp > 0)
+            if (enemy != null && enemy.CurrentHp > 0)
             {
                 allEnemiesDead = false;
                 break;
             }
         }
 
-        // 全ての敵が倒されている場合、勝利と判断
         if (allEnemiesDead)
         {
-            ChangeState(BattleState.Victory);
-
-            Debug.Log("Victory");
-
-            // ターン進行を停止
-            if (TurnManager.Instance != null)
-            {
-                TurnManager.Instance.StopBattle();
-            }
-
-            // リザルト表示
-            if (battleResultUI != null)
-            {
-                battleResultUI.ShowVictory();
-            }
-
+            EndBattle(true);
             return;
         }
 
-        // 全てのプレイヤーが倒されているか確認
+        // プレイヤーが全滅しているか
         bool allPlayersDead = true;
 
-        // プレイヤーのHPを確認
         foreach (PlayerBase player in players)
         {
-            // プレイヤーのHPが0より大きい場合、全てのプレイヤーが倒されていないと判断
-            if (player.CurrentHp > 0)
+            if (player != null && player.CurrentHp > 0)
             {
                 allPlayersDead = false;
                 break;
             }
         }
 
-        // 全てのプレイヤーが倒されている場合、敗北と判断
         if (allPlayersDead)
+        {
+            EndBattle(false);
+        }
+    }
+
+    private void EndBattle(bool victory)
+    {
+        if (battleEnded)
+        {
+            return;
+        }
+
+        battleEnded = true;
+
+        Debug.Log(
+            victory
+            ? "===== BATTLE VICTORY ====="
+            : "===== BATTLE DEFEAT ====="
+        );
+
+        // ターン停止
+        if (turnManager != null)
+        {
+            turnManager.StopBattle();
+        }
+
+        // 状態変更
+        if (victory)
+        {
+            ChangeState(BattleState.Victory);
+
+            Debug.Log("Victory");
+
+            if (battleResultUI != null)
+            {
+                battleResultUI.ShowVictory();
+            }
+        }
+        else
         {
             ChangeState(BattleState.Defeat);
 
             Debug.Log("Defeat");
 
-            // ターン進行を停止
-            if (TurnManager.Instance != null)
-            {
-                TurnManager.Instance.StopBattle();
-            }
-
-            // リザルト表示
             if (battleResultUI != null)
             {
                 battleResultUI.ShowDefeat();
             }
-        }
-    }
-
-    private void StopBattle()
-    {
-        Debug.Log("=== Battle Stop ===");
-
-        // ターン進行を停止
-        if (turnManager != null)
-        {
-            turnManager.StopBattle();
         }
     }
 

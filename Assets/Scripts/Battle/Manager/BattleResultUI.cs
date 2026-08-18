@@ -32,7 +32,7 @@ public class BattleResultUI : MonoBehaviour
     /// </summary>
     public void ShowVictory()
     {
-        if (resultWindow = null)
+        if (resultWindow == null)
         {
             Debug.LogError("ResultPanelが設定されていません");
             return;
@@ -51,7 +51,7 @@ public class BattleResultUI : MonoBehaviour
     /// </summary>
     public void ShowDefeat()
     {
-        if (resultWindow = null)
+        if (resultWindow == null)
         {
             Debug.LogError("ResultPanelが設定されていません");
             return;

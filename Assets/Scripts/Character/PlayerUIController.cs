@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,71 +7,88 @@ public class PlayerUIController : MonoBehaviour
     private RectTransform rectTransform;
     private Camera mainCamera;
 
-    // UI Elements
+    [Header("UI Elements")]
     [SerializeField]
-    private Vector3 uiOffset = new Vector3(0, 0, 0);
+    private Vector3 uiOffset = new Vector3(0, 2, 0);
 
-    //アイコン
-    // [SerializeField]
-    // private Image icon;
-
-    //選択フレーム
+    // 選択フレーム
     [SerializeField]
     private GameObject selectionFrame;
 
-    //名前
+    // 名前
     [SerializeField]
     private TMP_Text nameText;
 
-    //HPバー
+    // HPバー
     [SerializeField]
     private Image hpBar;
 
-    //HPテキスト
+    // HPテキスト
     [SerializeField]
     private TMP_Text hpText;
 
-    //エネルギー
+    // エネルギー
     [SerializeField]
     private TMP_Text energyText;
 
-    //シールドテキスト
+    // シールド
     [SerializeField]
     private TMP_Text shieldText;
 
-    //状態異常
-    //[SerializeField]
-    //private Transform statusIconRoot;
-
-
-    // Target Player
+    // 対象プレイヤー
     private PlayerBase player;
+
     public PlayerBase Target => player;
 
-    //
+    // UIを置くCanvas
+    private Canvas canvas;
+
     public void Initialize(PlayerBase target)
     {
         player = target;
 
         rectTransform = GetComponent<RectTransform>();
+
         mainCamera = Camera.main;
+
+        canvas = GetComponentInParent<Canvas>();
+
+        if (canvas == null)
+        {
+            Debug.LogError(
+                "PlayerUIController: 親Canvasが見つかりません"
+            );
+
+            return;
+        }
 
         nameText.text = player.CharacterName;
 
-        //icon.sprite = player.Icon;
-
-
         UIRefresh();
+
+        FollowTarget();
     }
 
-    //UIの更新
+    // UI更新
     public void UIRefresh()
     {
-        //HPバーとテキストの更新
-        hpBar.fillAmount =
-      (float)player.CurrentHp / player.MaxHp;
+        if (player == null)
+        {
+            return;
+        }
 
-        hpText.text = $"{player.CurrentHp}/{player.MaxHp}";
+        // HP
+        if (hpBar != null)
+        {
+            hpBar.fillAmount =
+                (float)player.CurrentHp / player.MaxHp;
+        }
+
+        if (hpText != null)
+        {
+            hpText.text =
+                $"{player.CurrentHp}/{player.MaxHp}";
+        }
 
         RefreshEnergy();
         RefreshShield();
@@ -81,54 +97,86 @@ public class PlayerUIController : MonoBehaviour
     private void LateUpdate()
     {
         if (player == null)
+        {
             return;
-
-        Vector3 screenPos =
-         mainCamera.WorldToScreenPoint(
-             player.transform.position + uiOffset);
+        }
 
         FollowTarget();
     }
 
-    //キャラクターの選択状態
-    public void SetSelected(bool value)
+    // キャラクターの位置にUIを追従
+    private void FollowTarget()
     {
-        selectionFrame.SetActive(value);
+        if (player == null ||
+            mainCamera == null ||
+            canvas == null)
+        {
+            return;
+        }
+
+        Vector3 worldPos =
+            player.transform.position +
+            player.UIOffset;
+
+        Vector3 screenPos =
+            mainCamera.WorldToScreenPoint(worldPos);
+
+        RectTransform canvasRect =
+            canvas.GetComponent<RectTransform>();
+
+        Camera canvasCamera =
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay
+            ? null
+            : canvas.worldCamera;
+
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            screenPos,
+            canvasCamera,
+            out Vector2 localPos))
+        {
+            rectTransform.localPosition = localPos;
+        }
     }
 
-    //エネルギーの更新
+    // 選択状態
+    public void SetSelected(bool value)
+    {
+        if (selectionFrame != null)
+        {
+            selectionFrame.SetActive(value);
+        }
+    }
+
+    // エネルギー
     private void RefreshEnergy()
     {
+        if (energyText == null)
+        {
+            return;
+        }
+
         energyText.text =
             $"{player.CurrentEnergy}/{player.MaxEnergy}";
     }
 
-
-    //シールドの更新
+    // シールド
     private void RefreshShield()
     {
-        bool hasShield = player.Shield > 0;
+        if (shieldText == null)
+        {
+            return;
+        }
+
+        bool hasShield =
+            player.Shield > 0;
 
         shieldText.gameObject.SetActive(hasShield);
 
         if (hasShield)
         {
-            shieldText.text = player.Shield.ToString();
+            shieldText.text =
+                player.Shield.ToString();
         }
     }
-
-    private void FollowTarget()
-    {
-        if (player == null)
-            return;
-
-        Vector3 worldPos =
-            player.transform.position + player.UIOffset;
-
-        Vector3 screenPos =
-            mainCamera.WorldToScreenPoint(worldPos);
-
-        rectTransform.position = screenPos;
-    }
 }
-

@@ -7,25 +7,38 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     private PlayerUIController playerUIPrefab;
 
-    //UIリスト
+    [Header("UI生成先")]
+    [SerializeField]
+    private RectTransform uiRoot;
+
+    // UIリスト
     private readonly List<PlayerUIController> playerUIs = new();
 
-    //UI生成
+    // UI生成
     public void CreateUI(List<PlayerBase> players)
     {
         foreach (PlayerUIController ui in playerUIs)
         {
-            Destroy(ui.gameObject);
+            if (ui != null)
+            {
+                Destroy(ui.gameObject);
+            }
         }
 
         playerUIs.Clear();
 
         foreach (PlayerBase player in players)
         {
+            if (player == null)
+            {
+                continue;
+            }
+
             PlayerUIController ui =
-          Instantiate(
-          playerUIPrefab,
-          player.transform);
+                Instantiate(
+                    playerUIPrefab,
+                    uiRoot
+                );
 
             ui.Initialize(player);
 
@@ -33,13 +46,15 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-    //更新
+    // 更新
     public void RefreshAll()
     {
         foreach (PlayerUIController ui in playerUIs)
         {
-            ui.UIRefresh();
+            if (ui != null)
+            {
+                ui.UIRefresh();
+            }
         }
     }
 }
-

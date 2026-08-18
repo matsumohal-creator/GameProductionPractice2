@@ -635,9 +635,46 @@ public class BattleManager : MonoBehaviour
             turnManager.StopBattle();
         }
 
-        // 状態変更
+        // 勝利した場合
         if (victory)
         {
+            // ==============================
+            // クリア済みステージとして登録
+            // ==============================
+
+            if (SaveManager.CurrentSave == null)
+            {
+                Debug.LogError(
+                    "勝利処理：SaveManager.CurrentSave が存在しません"
+                );
+            }
+            else
+            {
+                //セーブ
+                int clearedStageId =
+                    SaveManager.CurrentSave.currentBattleStageId;
+
+                // 二重登録を防止
+                if (!SaveManager.CurrentSave.clearedStageIds.Contains(clearedStageId))
+                {
+                    SaveManager.CurrentSave.clearedStageIds.Add(clearedStageId);
+
+                    Debug.Log(
+                        $"[Battle] ステージクリア登録: ID={clearedStageId}"
+                    );
+                }
+                else
+                {
+                    Debug.Log(
+                        $"[Battle] ステージID={clearedStageId} は既にクリア済みです"
+                    );
+                }
+
+                // 現在地点をクリアしたステージへ移動
+                SaveManager.CurrentSave.currentStageId =
+                    clearedStageId;
+            }
+
             ChangeState(BattleState.Victory);
 
             Debug.Log("Victory");
@@ -647,6 +684,7 @@ public class BattleManager : MonoBehaviour
                 battleResultUI.ShowVictory();
             }
         }
+        //負け
         else
         {
             ChangeState(BattleState.Defeat);

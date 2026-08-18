@@ -16,6 +16,11 @@ public class BattleResultUI : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text resultText;
 
+    //報酬テキスト
+    [Header("Reward Text")]
+    [SerializeField]
+    private TMPro.TMP_Text rewardText;
+
     private void Awake()
     {
         Instance = this;
@@ -40,9 +45,16 @@ public class BattleResultUI : MonoBehaviour
 
         resultWindow.SetActive(true);
 
+        //勝利表示
         if (resultText != null)
         {
             resultText.text = "VICTORY";
+        }
+
+        // 報酬表示
+        if (rewardText != null)
+        {
+            rewardText.text = "カード × 1\nコイン × 100";
         }
     }
 
@@ -72,6 +84,8 @@ public class BattleResultUI : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        SceneManager.LoadScene("StageScene");
+        //β版
+        //今後（マスター版）はオーバーレイ表示に変更
+      SceneManager.LoadScene("StageScene");
     }
 }

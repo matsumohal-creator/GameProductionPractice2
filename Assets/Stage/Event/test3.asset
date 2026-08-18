@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9bc32f29e0c2ab49914fd650e56a8e7, type: 3}
-  m_Name: Event Table Data
-  m_EditorClassIdentifier: Assembly-CSharp::EventTableData
-  events:
-  - {fileID: 11400000, guid: 5bdb09e1c0d29304183a5b7a54f82604, type: 2}
+  m_Script: {fileID: 11500000, guid: df6c85d4f9c81b14991d75d189632d2f, type: 3}
+  m_Name: test3
+  m_EditorClassIdentifier: Assembly-CSharp::EventData
+  eventId: 4
+  eventTitle: 
+  eventText: 
+  choices: []
+  effects: []

@@ -4,17 +4,21 @@ using UnityEngine.UI;
 
 public class EventCardRemoveButtonUI : MonoBehaviour
 {
-    [Header("UI")]
-    [SerializeField] private TMP_Text characterNameText;
-    [SerializeField] private TMP_Text cardNameText;
-    [SerializeField] private TMP_Text descriptionText;
-    [SerializeField] private Image iconImage;
+    [Header("既存Card UI")]
+    [SerializeField] private Image cardImage;
+    [SerializeField] private TMP_Text nameText;
+    [SerializeField] private TMP_Text costText;
+    [SerializeField] private TMP_Text explanationText;
 
     private EventCardRemoveUI owner;
 
     private SkillData card;
     private int characterIndex;
     private CharacterClass characterClass;
+
+    // =========================================================
+    // 初期化
+    // =========================================================
 
     public void Initialize(
         EventCardRemoveUI owner,
@@ -27,27 +31,39 @@ public class EventCardRemoveButtonUI : MonoBehaviour
         this.characterClass = characterClass;
         this.card = card;
 
-        if (characterNameText != null)
+        if (card == null)
         {
-            characterNameText.text =
-                $"キャラクター {characterIndex}";
+            return;
         }
 
-        if (cardNameText != null)
+        // カード画像
+        if (cardImage != null)
         {
-            cardNameText.text = card.skillName;
+            cardImage.sprite = card.icon;
         }
 
-        if (descriptionText != null)
+        // カード名
+        if (nameText != null)
         {
-            descriptionText.text = card.description;
+            nameText.text = card.skillName;
         }
 
-        if (iconImage != null)
+        // コスト
+        if (costText != null)
         {
-            iconImage.sprite = card.icon;
+            costText.text = card.cost.ToString();
+        }
+
+        // 説明
+        if (explanationText != null)
+        {
+            explanationText.text = card.description;
         }
     }
+
+    // =========================================================
+    // カード選択
+    // =========================================================
 
     public void OnClick()
     {

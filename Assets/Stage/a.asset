@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9580f6a13cdf0ca48aca25e302eb6fe2, type: 3}
-  m_Name: 1-1-2
+  m_Name: a
   m_EditorClassIdentifier: Assembly-CSharp::StageNodeData
-  stageId: 112
-  stageName: "\u30A4\u30D9\u30F3\u30C8"
+  stageId: 5
+  stageName: 
   description: 
   stageType: 2
   eventTable: {fileID: 11400000, guid: 008ba7ddc1c149e4aa5838adbb581fa0, type: 2}
-  useFixedEvent: 0
-  fixedEvent: {fileID: 0}
+  useFixedEvent: 1
+  fixedEvent: {fileID: 11400000, guid: c56cf897a793b9e47a9751cda59404d3, type: 2}
   enemyPrefabs: []
   nextStages:
-  - {fileID: 11400000, guid: f998e04e9aaef3149a63699acd744b51, type: 2}
+  - {fileID: 11400000, guid: 936ed24424e05e34a8dbb7388d17dd1c, type: 2}

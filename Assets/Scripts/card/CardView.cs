@@ -43,6 +43,12 @@ public class CardView : MonoBehaviour
     // カードがクリックされたときに呼ばれる関数
     public void OnClick()
     {
+        if (CardSelectionManager.Instance == null)
+        {
+            Debug.LogWarning("[CardView] CardSelectionManager.Instance is null");
+            return;
+        }
+
         CardSelectionManager.Instance.Select(this);
     }
 

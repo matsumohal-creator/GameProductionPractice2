@@ -13,8 +13,11 @@ public class EventEffectManager : MonoBehaviour
 
     public bool ApplyEffects(
         List<EventEffectData> effects,
-        StageNodeData stage)
+        StageNodeData stage,
+        out List<EventCardAddData> acquiredCards)
     {
+        acquiredCards = new List<EventCardAddData>();
+
         if (effects == null)
         {
             return false;
@@ -36,7 +39,9 @@ public class EventEffectManager : MonoBehaviour
                 continue;
             }
 
-            ApplyEffect(effect);
+            ApplyEffect(
+                effect,
+                acquiredCards);
         }
 
         return requiresCardRemoval;
@@ -46,7 +51,9 @@ public class EventEffectManager : MonoBehaviour
     // 効果の種類ごとの処理
     // =========================================================
 
-    private void ApplyEffect(EventEffectData effect)
+    private void ApplyEffect(
+        EventEffectData effect,
+        List<EventCardAddData> acquiredCards)
     {
         switch (effect.effectType)
         {
@@ -71,7 +78,7 @@ public class EventEffectManager : MonoBehaviour
                 break;
 
             case EventEffectType.AddCard:
-                AddRandomCardToParty();
+                AddRandomCardToParty(acquiredCards);
                 break;
         }
     }
@@ -292,7 +299,8 @@ public class EventEffectManager : MonoBehaviour
     // ランダムカード追加
     // =========================================================
 
-    private void AddRandomCardToParty()
+    private void AddRandomCardToParty(
+        List<EventCardAddData> acquiredCards)
     {
         List<PartyMemberData> party = GetPartyMembers();
 
@@ -322,6 +330,13 @@ public class EventEffectManager : MonoBehaviour
             }
 
             member.deck.Add(card);
+
+            // UI表示用に獲得情報を保存
+            acquiredCards.Add(
+                new EventCardAddData(
+                    member.characterIndex,
+                    member.characterClass,
+                    card));
 
             Debug.Log(
                 $"[EventEffect] {member.characterIndex}番 " +

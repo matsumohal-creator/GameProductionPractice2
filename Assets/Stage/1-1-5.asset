@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9580f6a13cdf0ca48aca25e302eb6fe2, type: 3}
-  m_Name: 1-1
-  m_EditorClassIdentifier: 
-  stageId: 11
-  stageName: "\u30C7\u30D0\u30C3\u30B0Now"
+  m_Name: 1-1-5
+  m_EditorClassIdentifier: Assembly-CSharp::StageNodeData
+  stageId: 115
+  stageName: 
   description: 
   stageType: 1
   eventTable: {fileID: 0}
   useFixedEvent: 0
   fixedEvent: {fileID: 0}
   enemyPrefabs:
-  - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
+  - {fileID: 1456464827486147717, guid: 0f2a00c263807f545b22bbc55b169880, type: 3}
+  - {fileID: 6175158424261858384, guid: c75419f5b7907d74195f2207682d3106, type: 3}
   nextStages:
-  - {fileID: 11400000, guid: b295d3cb75602bf4ba49078bcbe8ef46, type: 2}
-  - {fileID: 11400000, guid: cb0a6aa0a347d8a48a638ba0fcc6e310, type: 2}
+  - {fileID: 11400000, guid: 1006c37d81481484aac4f5e19457a7e2, type: 2}

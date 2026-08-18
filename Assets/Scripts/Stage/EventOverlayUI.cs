@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -26,6 +27,19 @@ public class EventOverlayUI : MonoBehaviour
     [SerializeField]
     private EventCardRemoveUI cardRemoveUI;
 
+    [Header("カード獲得UI")]
+    [SerializeField]
+    private GameObject cardAddRoot;
+
+    [SerializeField]
+    private EventCardAddUI cardAddUI;
+
+    // 今回のイベントでカード削除が必要か
+    private bool pendingCardRemoval;
+
+    // 今回のイベントで獲得したカード
+    private List<EventCardAddData> pendingAcquiredCards;
+
     private StageManager stageManager;
     private StageNodeData currentStage;
     private EventData currentEvent;
@@ -44,6 +58,11 @@ public class EventOverlayUI : MonoBehaviour
         {
             resultRoot.SetActive(false);
         }
+
+        if (cardAddRoot != null)
+        {
+            cardAddRoot.SetActive(false);
+        }
     }
 
     public void Initialize(
@@ -58,6 +77,12 @@ public class EventOverlayUI : MonoBehaviour
             cardRemoveUI.Initialize(
                 eventEffectManager,
                 OnCardRemoveCompleted);
+        }
+
+        if (cardAddUI != null)
+        {
+            cardAddUI.Initialize(
+                OnCardAddCompleted);
         }
     }
 
@@ -84,18 +109,72 @@ public class EventOverlayUI : MonoBehaviour
             return;
         }
 
-        // ランダムでイベントを1つ選択
-        int randomIndex = Random.Range(
-            0,
-            stage.eventTable.events.Count);
+        // -----------------------------------------------------
+        // 固定イベントを使用
+        // -----------------------------------------------------
 
-        currentEvent = stage.eventTable.events[randomIndex];
-
-        if (currentEvent == null)
+        if (stage.useFixedEvent)
         {
-            Debug.LogWarning("選択されたEventDataがnullです");
-            return;
+            if (stage.fixedEvent == null)
+            {
+                Debug.LogWarning(
+                    $"ステージ {stage.stageName} は固定イベント設定ですが、" +
+                    "Fixed Eventが設定されていません");
+
+                return;
+            }
+
+            currentEvent = stage.fixedEvent;
+
+            Debug.Log(
+                $"固定イベント発生: {currentEvent.eventTitle}");
         }
+        // -----------------------------------------------------
+        // 通常のランダムイベント
+        // -----------------------------------------------------
+        else
+        {
+            // イベント一覧が存在しない
+            if (stage.eventTable == null)
+            {
+                Debug.LogWarning(
+                    $"イベントステージ {stage.stageName} に" +
+                    "EventTableが設定されていません");
+
+                return;
+            }
+
+            // イベント一覧が空
+            if (stage.eventTable.events == null ||
+                stage.eventTable.events.Count == 0)
+            {
+                Debug.LogWarning(
+                    $"イベントステージ {stage.stageName} の" +
+                    "EventTableにイベントがありません");
+
+                return;
+            }
+
+            // ランダムでイベントを1つ選択
+            int randomIndex = Random.Range(
+                0,
+                stage.eventTable.events.Count);
+
+            currentEvent =
+                stage.eventTable.events[randomIndex];
+
+            if (currentEvent == null)
+            {
+                Debug.LogWarning(
+                    "選択されたEventDataがnullです");
+
+                return;
+            }
+
+            Debug.Log(
+                $"ランダムイベント発生: {currentEvent.eventTitle}");
+        }
+
 
         gameObject.SetActive(true);
 
@@ -104,10 +183,18 @@ public class EventOverlayUI : MonoBehaviour
             cardRemoveRoot.SetActive(false);
         }
 
+        if (cardAddRoot != null)
+        {
+            cardAddRoot.SetActive(false);
+        }
+
         if (resultRoot != null)
         {
             resultRoot.SetActive(false);
         }
+
+        pendingCardRemoval = false;
+        pendingAcquiredCards = null;
 
         titleText.text = currentEvent.eventTitle;
 
@@ -183,40 +270,56 @@ public class EventOverlayUI : MonoBehaviour
         choiceRoot.gameObject.SetActive(false);
 
         // -----------------------------------------
+        // 今回のイベント効果情報を初期化
+        // -----------------------------------------
+
+        pendingCardRemoval = false;
+        pendingAcquiredCards = null;
+
+        // -----------------------------------------
         // イベント効果を実行
         // -----------------------------------------
 
-        bool requiresCardRemoval = false;
-
         if (eventEffectManager != null)
         {
-            requiresCardRemoval =
+            pendingCardRemoval =
                 eventEffectManager.ApplyEffects(
                     choice.effects,
-                    currentStage);
+                    currentStage,
+                    out pendingAcquiredCards);
+        }
+
+        // -----------------------------------------
+        // カード獲得が必要
+        // -----------------------------------------
+
+        if (pendingAcquiredCards != null &&
+              pendingAcquiredCards.Count > 0)
+        {
+            if (cardAddRoot != null &&
+                cardAddUI != null)
+            {
+                cardAddRoot.SetActive(true);
+
+                cardAddUI.Show(
+                    pendingAcquiredCards);
+
+                return;
+            }
+
+            Debug.LogWarning(
+                "AddCard効果がありますが、" +
+                "CardAddRoot または EventCardAddUI が設定されていません");
         }
 
         // -----------------------------------------
         // カード削除が必要
         // -----------------------------------------
 
-        if (requiresCardRemoval)
+        if (pendingCardRemoval)
         {
-            if (cardRemoveRoot != null &&
-                cardRemoveUI != null)
-            {
-                // カード削除UIを表示
-                cardRemoveRoot.SetActive(true);
-
-                // カード一覧を生成
-                cardRemoveUI.Show();
-
-                return;
-            }
-
-            Debug.LogWarning(
-                "RemoveCard効果がありますが、" +
-                "CardRemoveRoot または EventCardRemoveUI が設定されていません");
+            ShowCardRemoveUI();
+            return;
         }
 
         // -----------------------------------------
@@ -237,6 +340,39 @@ public class EventOverlayUI : MonoBehaviour
                 : choice.resultText;
     }
 
+    // カード獲得UIが完了したとき
+    private void OnCardAddCompleted()
+    {
+        Debug.Log(
+            "[EventEffect] カード獲得UIが完了しました");
+
+        if (cardAddRoot != null)
+        {
+            cardAddRoot.SetActive(false);
+        }
+
+        // -----------------------------------------
+        // 次にカード削除がある場合
+        // -----------------------------------------
+
+        if (pendingCardRemoval)
+        {
+            ShowCardRemoveUI();
+            return;
+        }
+
+        // -----------------------------------------
+        // カード削除がない場合
+        // -----------------------------------------
+
+        if (currentChoice == null)
+        {
+            return;
+        }
+
+        ShowResult(currentChoice);
+    }
+
     private void OnCardRemoveCompleted()
     {
         Debug.Log(
@@ -247,10 +383,32 @@ public class EventOverlayUI : MonoBehaviour
             cardRemoveRoot.SetActive(false);
         }
 
+        pendingCardRemoval = false;
+
         if (currentChoice == null)
         {
             return;
         }
+
+        ShowResult(currentChoice);
+    }
+
+    // カード削除UIを表示
+    private void ShowCardRemoveUI()
+    {
+        if (cardRemoveRoot != null &&
+            cardRemoveUI != null)
+        {
+            cardRemoveRoot.SetActive(true);
+
+            cardRemoveUI.Show();
+
+            return;
+        }
+
+        Debug.LogWarning(
+            "RemoveCard効果がありますが、" +
+            "CardRemoveRoot または EventCardRemoveUI が設定されていません");
 
         ShowResult(currentChoice);
     }

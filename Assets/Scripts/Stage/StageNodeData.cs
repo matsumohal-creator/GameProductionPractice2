@@ -23,6 +23,11 @@ public class StageNodeData : ScriptableObject
     [Header("イベント一覧(Event のみ使用)")]
     public EventTableData eventTable;
 
+    [Header("固定イベント")]
+    public bool useFixedEvent = false;
+
+    public EventData fixedEvent;
+
     [Header("出現する敵（Battle/Boss のみ使用）")]
     public List<GameObject> enemyPrefabs = new();
 

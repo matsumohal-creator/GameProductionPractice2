@@ -71,6 +71,7 @@ public class OptionManager : MonoBehaviour
 
     public void OpenBGM()
     {
+        optionPanel.SetActive(true);
         Debug.Log("OpenBGM");
 
         CloseAll();
@@ -86,6 +87,7 @@ public class OptionManager : MonoBehaviour
 
     public void OpenGraphic()
     {
+        
         CloseAll();
 
         graphicWindow.SetActive(true);
@@ -110,9 +112,6 @@ public class OptionManager : MonoBehaviour
     {
         // オプションパネルを閉じる
         optionPanel.SetActive(false);
-
-        // 背景暗転も消す
-        darkBack.SetActive(false);
     }
 
     // =========================

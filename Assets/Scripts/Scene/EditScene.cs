@@ -12,6 +12,10 @@ public class EditScene : MonoBehaviour
     [SerializeField]
     private List<CharacterDeckData> characterDecks;
 
+    [Header("キャラクターPrefab")]
+    [SerializeField]
+    private List<PlayerBase> characterPrefabs;
+
     // 編成可能な最大人数
     [SerializeField]
     private int maxSelectedCount = 4;
@@ -69,6 +73,24 @@ public class EditScene : MonoBehaviour
     public void Character5Click()
     {
         OnCharacterClick(5);
+    }
+
+    private int GetCharacterMaxHp(int index)
+    {
+        if (characterPrefabs == null || index < 0 || index >= characterPrefabs.Count)
+        {
+            Debug.LogWarning($"CharacterIndex={index} の characterPrefab が未設定です。HPは既定値を使用します。");
+            return 100;
+        }
+
+        PlayerBase prefab = characterPrefabs[index];
+        if (prefab == null)
+        {
+            Debug.LogWarning($"CharacterIndex={index} の characterPrefab が null です。HPは既定値を使用します。");
+            return 100;
+        }
+
+        return Mathf.Max(1, prefab.MaxHp);
     }
 
     public void GoToBattle()
@@ -129,7 +151,7 @@ public class EditScene : MonoBehaviour
                 deckData.characterClass;
 
             // HP初期化
-            member.maxHp = 100;
+            member.maxHp = GetCharacterMaxHp(index);
             member.currentHp = member.maxHp;
 
             // 初期デッキをコピー

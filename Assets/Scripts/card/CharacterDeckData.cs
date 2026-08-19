@@ -5,6 +5,5 @@ using UnityEngine;
 public class CharacterDeckData : ScriptableObject
 {
     public CharacterClass characterClass;
-
     public List<SkillData> startDeck;
 }

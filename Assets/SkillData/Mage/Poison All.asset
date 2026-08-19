@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Poison All
   m_EditorClassIdentifier: 
   skillName: "\u6BD2\u3092\u632F\u308A\u6492\u304F"
-  description: "\u6575\u5168\u4F53\u306B\u6BD2\u30923\u305A\u3064\u4ED8\u4E0E\u3059\u308B"
+  description: "\u6575\u5168\u4F53\u306B\u6BD2\u30924\u305A\u3064\u4ED8\u4E0E\u3059\u308B"
   icon: {fileID: 21300000, guid: b5da50cb562af404bad753c1e5907a7f, type: 3}
   cost: 2
   targetType: 3
   effects:
   - effectType: 3
     specialType: 0
-    value: 3
+    value: 4
     statusEffect: {fileID: 11400000, guid: 82e0d744e854abd4a812ade4ffe6333f, type: 2}
     duration: 4
     stack: 4

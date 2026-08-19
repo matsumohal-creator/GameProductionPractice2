@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Slash
   m_EditorClassIdentifier: 
   skillName: "\u30B9\u30E9\u30C3\u30B7\u30E5"
-  description: "\u6575\u5358\u4F53\u306B\u5BFE\u3057\u30666\u30C0\u30E1\u30FC\u30B8\u4E0E\u3048\u308B"
+  description: "\u6575\u5358\u4F53\u306B\u5BFE\u3057\u306610\u30C0\u30E1\u30FC\u30B8\u4E0E\u3048\u308B"
   icon: {fileID: 21300000, guid: 6fe7801d913631946bcc309aab2a937f, type: 3}
   cost: 1
   targetType: 0
   effects:
   - effectType: 0
     specialType: 0
-    value: 6
+    value: 12
     statusEffect: {fileID: 0}
     duration: 0
     stack: 0

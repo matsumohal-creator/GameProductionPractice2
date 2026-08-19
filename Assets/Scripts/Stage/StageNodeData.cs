@@ -20,6 +20,10 @@ public class StageNodeData : ScriptableObject
     [Header("ステージ種別")]
     public StageType stageType = StageType.Battle;
 
+    [Header("ステージアイコン")]
+    public Sprite battleIcon;
+    public Sprite eventIcon;
+
     [Header("イベント一覧(Event のみ使用)")]
     public EventTableData eventTable;
 

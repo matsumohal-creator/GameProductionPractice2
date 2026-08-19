@@ -52,6 +52,30 @@ public class StageButton : MonoBehaviour
         {
             clearIcon.SetActive(false);
         }
+        UpdateStageIcon();
+    }
+
+    private void UpdateStageIcon()
+    {
+        if (iconImage == null || stageData == null)
+        {
+            return;
+        }
+
+        switch (stageData.stageType)
+        {
+            case StageType.Battle:
+            case StageType.Boss:
+                iconImage.sprite = stageData.battleIcon;
+                break;
+
+            case StageType.Event:
+                iconImage.sprite = stageData.eventIcon;
+                break;
+
+            default:
+                break;
+        }
     }
 
     // ボタンのインタラクティブ状態を設定するメソッド

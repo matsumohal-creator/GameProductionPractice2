@@ -26,4 +26,10 @@ public static class SaveManager
         // ゲーム開始時に CurrentSave を生成しておきます。
         _ = CurrentSave;
     }
+
+    // 新しいゲームを開始するため、セーブデータを初期化
+    public static void ResetSave()
+    {
+        currentSave = new SaveData();
+    }
 }

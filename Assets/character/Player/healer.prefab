@@ -119,7 +119,7 @@ MonoBehaviour:
   maxEnergy: 3
   currentEnergy: 3
   shield: 0
-  speed: 0
+  speed: 1
   statusEffectMaster: []
   skills: []
   characterClass: 2

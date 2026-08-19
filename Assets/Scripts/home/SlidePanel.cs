@@ -4,7 +4,7 @@ using System.Collections;
 public class SlidePanel : MonoBehaviour
 {
     private RectTransform rect;
-
+    [SerializeField] private OptionManager optionManager;
     [SerializeField] private Vector2 hiddenPos;
     [SerializeField] private Vector2 showPos;
     [SerializeField] private float speed = 10f;
@@ -55,6 +55,8 @@ public class SlidePanel : MonoBehaviour
         {
             return;
         }
+
+        optionManager.CloseOption();
 
         StopAllCoroutines();
         StartCoroutine(MovePanel(hiddenPos));

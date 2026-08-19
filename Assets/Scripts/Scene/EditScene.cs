@@ -128,6 +128,10 @@ public class EditScene : MonoBehaviour
             member.characterClass =
                 deckData.characterClass;
 
+            // HP初期化
+            member.maxHp = 100;
+            member.currentHp = member.maxHp;
+
             // 初期デッキをコピー
             member.deck =
                 deckData.startDeck != null
@@ -138,7 +142,7 @@ public class EditScene : MonoBehaviour
             SaveManager.CurrentSave.partyMembers.Add(member);
 
             Debug.Log(
-                $"[EditScene] パーティ保存: CharacterIndex = {index}");
+                $"[EditScene] パーティ保存: CharacterIndex = {index}, HP = {member.currentHp}/{member.maxHp}");
         }
 
         //ステージシーンへ移行

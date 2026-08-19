@@ -10,10 +10,10 @@ public class PartyMemberData
     public CharacterClass characterClass;
 
     // Œ»İHP
-    public int currentHp;
+    public int currentHp = 100;
 
     // Å‘åHP
-    public int maxHp;
+    public int maxHp = 100;
 
     // ƒfƒbƒL
     public List<SkillData> deck = new();

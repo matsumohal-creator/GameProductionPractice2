@@ -19,6 +19,7 @@ MonoBehaviour:
   eventTable: {fileID: 0}
   useFixedEvent: 0
   fixedEvent: {fileID: 0}
+  isGameClearStage: 1
   enemyPrefabs:
   - {fileID: 6393167836672575299, guid: 2c505bddff8f59f4b996df65781d71bc, type: 3}
   nextStages: []

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,10 +32,22 @@ public class StageManager : MonoBehaviour
     // クエスト情報UIが開いているかどうかを管理するフラグ
     private bool isQuestInfoOpen = false;
 
+    // ゲームクリア時のテキスト表示用のGameObject
+    [SerializeField]
+    private GameObject demoClearPanel;
+
+    [SerializeField]
+    private float gameClearWaitTime = 3.0f;
+
     private void Start()
     {
         // CurrentSaveをそのまま参照して、ステージ進行データを共有します。
         saveData = SaveManager.CurrentSave;
+
+        if (demoClearPanel != null)
+        {
+            demoClearPanel.SetActive(false);
+        }
 
         // 開始地点をクリア済み扱い
         if (!saveData.clearedStageIds.Contains(stageMap.startStage.stageId))
@@ -253,11 +266,28 @@ public class StageManager : MonoBehaviour
     {
         int clearedId = saveData.currentBattleStageId;
 
+        StageNodeData clearedStage = GetStageById(clearedId);
+
+        if (clearedStage == null)
+        {
+            Debug.LogWarning($"クリア対象のステージが見つかりません : {clearedId}");
+            return;
+        }
+
+        // ステージをクリア済みに登録
         MarkStageCleared(clearedId);
 
+        // 現在位置を更新
         saveData.currentStageId = clearedId;
 
         Debug.Log($"ステージ {clearedId} をクリアしました");
+
+        // ゲームクリア判定
+        if (clearedStage.isGameClearStage)
+        {
+            GameClear();
+            return;
+        }
 
         ShowAvailableStages();
         stageMarker.SetPositionImmediate(saveData.currentStageId);
@@ -278,5 +308,26 @@ public class StageManager : MonoBehaviour
         CompleteCurrentBattleStage();
 
         Debug.Log($"イベント {stage.stageName} を完了");
+    }
+
+    private void GameClear()
+    {
+        StartCoroutine(GameClearSequence());
+    }
+
+    private IEnumerator GameClearSequence()
+    {
+        // 体験版終了メッセージを表示
+        if (demoClearPanel != null)
+        {
+            demoClearPanel.SetActive(true);
+        }
+
+        // 指定時間待つ
+        yield return new WaitForSeconds(gameClearWaitTime);
+
+        // タイトルシーンへ戻る
+        SceneLoader.NextSceneName = "TitleScene";
+        SceneManager.LoadScene("LoadingScene");
     }
 }

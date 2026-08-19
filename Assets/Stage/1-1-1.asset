@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1-1-1
   m_EditorClassIdentifier: Assembly-CSharp::StageNodeData
   stageId: 111
-  stageName: abc
+  stageName: 
   description: gaubg
   stageType: 1
   battleIcon: {fileID: 21300000, guid: 055b6ce9de94abc4f91582b583540481, type: 3}

@@ -832,4 +832,20 @@ public class BattleManager : MonoBehaviour
 
         return candidates[index];
     }
+
+    /// <summary>
+    /// 生存している最初の敵を取得する（ターゲット未選択時のフォールバック用）
+    /// </summary>
+    public EnemyBase GetFirstLivingEnemy()
+    {
+        foreach (EnemyBase enemy in enemies)
+        {
+            // nullでなく、HPが1以上（生存）の敵を返す
+            if (enemy != null && enemy.CurrentHp > 0)
+            {
+                return enemy;
+            }
+        }
+        return null; // 生存している敵がいない場合
+    }
 }

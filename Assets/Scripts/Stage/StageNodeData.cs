@@ -28,6 +28,9 @@ public class StageNodeData : ScriptableObject
 
     public EventData fixedEvent;
 
+    [Header("ゲームクリア設定")]
+    public bool isGameClearStage = false;
+
     [Header("出現する敵（Battle/Boss のみ使用）")]
     public List<GameObject> enemyPrefabs = new();
 

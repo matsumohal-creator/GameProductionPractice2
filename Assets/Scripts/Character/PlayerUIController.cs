@@ -4,16 +4,20 @@ using UnityEngine.UI;
 
 public class PlayerUIController : MonoBehaviour
 {
-    private RectTransform rectTransform;
-    private Camera mainCamera;
-
     [Header("UI Elements")]
+
+    // プレイヤーUIの固定位置
+    // 画面中央より左
     [SerializeField]
-    private Vector3 uiOffset = new Vector3(0, 2, 0);
+    private Vector2 fixedPosition = new Vector2(-350f, 250f);
 
     // 選択フレーム
     [SerializeField]
     private GameObject selectionFrame;
+
+    // UIクリック用ボタン
+    [SerializeField]
+    private Button targetButton;
 
     // 名前
     [SerializeField]
@@ -40,8 +44,8 @@ public class PlayerUIController : MonoBehaviour
 
     public PlayerBase Target => player;
 
-    // UIを置くCanvas
-    private Canvas canvas;
+    // UIのRectTransform
+    private RectTransform rectTransform;
 
     public void Initialize(PlayerBase target)
     {
@@ -49,24 +53,26 @@ public class PlayerUIController : MonoBehaviour
 
         rectTransform = GetComponent<RectTransform>();
 
-        mainCamera = Camera.main;
-
-        canvas = GetComponentInParent<Canvas>();
-
-        if (canvas == null)
+        // 名前
+        if (nameText != null)
         {
-            Debug.LogError(
-                "PlayerUIController: 親Canvasが見つかりません"
-            );
-
-            return;
+            nameText.text = player.CharacterName;
         }
 
-        nameText.text = player.CharacterName;
-
+        // UI更新
         UIRefresh();
 
-        FollowTarget();
+        // 固定位置に配置
+        SetFixedPosition();
+
+        if (targetButton != null)
+        {
+            targetButton.onClick.RemoveAllListeners();
+
+            targetButton.onClick.AddListener(
+                OnClickPlayer
+            );
+        }
     }
 
     // UI更新
@@ -84,6 +90,7 @@ public class PlayerUIController : MonoBehaviour
                 (float)player.CurrentHp / player.MaxHp;
         }
 
+        // HPテキスト
         if (hpText != null)
         {
             hpText.text =
@@ -94,49 +101,15 @@ public class PlayerUIController : MonoBehaviour
         RefreshShield();
     }
 
-    private void LateUpdate()
+    // 固定位置
+    private void SetFixedPosition()
     {
-        if (player == null)
+        if (rectTransform == null)
         {
             return;
         }
 
-        FollowTarget();
-    }
-
-    // キャラクターの位置にUIを追従
-    private void FollowTarget()
-    {
-        if (player == null ||
-            mainCamera == null ||
-            canvas == null)
-        {
-            return;
-        }
-
-        Vector3 worldPos =
-            player.transform.position +
-            player.UIOffset;
-
-        Vector3 screenPos =
-            mainCamera.WorldToScreenPoint(worldPos);
-
-        RectTransform canvasRect =
-            canvas.GetComponent<RectTransform>();
-
-        Camera canvasCamera =
-            canvas.renderMode == RenderMode.ScreenSpaceOverlay
-            ? null
-            : canvas.worldCamera;
-
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRect,
-            screenPos,
-            canvasCamera,
-            out Vector2 localPos))
-        {
-            rectTransform.localPosition = localPos;
-        }
+        rectTransform.anchoredPosition = fixedPosition;
     }
 
     // 選択状態
@@ -178,5 +151,28 @@ public class PlayerUIController : MonoBehaviour
             shieldText.text =
                 player.Shield.ToString();
         }
+    }
+
+    private void OnClickPlayer()
+    {
+        if (player == null)
+        {
+            return;
+        }
+
+        if (BattleTargetSelector.Instance == null)
+        {
+            Debug.LogError(
+                "BattleTargetSelectorが存在しません"
+            );
+
+            return;
+        }
+
+        BattleTargetSelector.Instance.SelectPlayer(player);
+
+        Debug.Log(
+            $"Player UIクリック: {player.CharacterName}"
+        );
     }
 }

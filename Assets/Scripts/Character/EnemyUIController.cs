@@ -4,92 +4,152 @@ using UnityEngine.UI;
 
 public class EnemyUIController : MonoBehaviour
 {
-    private RectTransform rectTransform;
-    private Camera mainCamera;
-    private CanvasGroup canvasGroup;
+    [Header("UI")]
+    [SerializeField]
+    private GameObject selectionFrame;
 
     [SerializeField]
-    private Vector3 uiOffset = new Vector3(0, 0, 0);
+    private Button targetButton;
 
-    [Header("UI")]
-    //[SerializeField] private Image icon;
-    [SerializeField] private GameObject selectionFrame;
+    [SerializeField]
+    private TMP_Text nameText;
 
-    [SerializeField] private TMP_Text nameText;
+    [SerializeField]
+    private Image hpFill;
 
-    [SerializeField] private Image hpFill;
-    [SerializeField] private TMP_Text hpText;
+    [SerializeField]
+    private TMP_Text hpText;
 
-    [SerializeField] private TMP_Text shieldText;
+    [SerializeField]
+    private TMP_Text shieldText;
 
-    [SerializeField] private Transform statusIconRoot;
+    [SerializeField]
+    private Transform statusIconRoot;
 
+    // 対象Enemy
     private EnemyBase enemy;
+
     public EnemyBase Target => enemy;
 
     public void Initialize(EnemyBase target)
     {
         enemy = target;
 
-        rectTransform = GetComponent<RectTransform>();
-        mainCamera = Camera.main;
-        canvasGroup = GetComponent<CanvasGroup>();
+        if (enemy == null)
+        {
+            Debug.LogError("EnemyUIController: Enemyがnullです");
+            return;
+        }
 
-        //icon.sprite = enemy.Icon;
-        nameText.text = enemy.CharacterName;
+        // 名前
+        if (nameText != null)
+        {
+            nameText.text = enemy.CharacterName;
+        }
 
         UIRefresh();
+
+        if (targetButton != null)
+        {
+            targetButton.onClick.RemoveAllListeners();
+
+            targetButton.onClick.AddListener(
+                OnClickEnemy
+            );
+        }
     }
 
+    // UI更新
     public void UIRefresh()
     {
-        hpFill.fillAmount =
-            (float)enemy.CurrentHp / enemy.MaxHp;
+        if (enemy == null)
+        {
+            return;
+        }
 
-        hpText.text =
-            $"{enemy.CurrentHp}/{enemy.MaxHp}";
+        // HP
+        if (hpFill != null)
+        {
+            hpFill.fillAmount =
+                (float)enemy.CurrentHp / enemy.MaxHp;
+        }
+
+        // HPテキスト
+        if (hpText != null)
+        {
+            hpText.text =
+                $"{enemy.CurrentHp}/{enemy.MaxHp}";
+        }
 
         RefreshShield();
-
         RefreshDeadState();
     }
 
+    // 選択状態
     public void SetSelected(bool value)
     {
-        selectionFrame.SetActive(value);
+        if (selectionFrame != null)
+        {
+            selectionFrame.SetActive(value);
+        }
     }
 
+    // シールド
     private void RefreshShield()
     {
+        if (shieldText == null)
+        {
+            return;
+        }
+
         bool hasShield = enemy.Shield > 0;
 
         shieldText.gameObject.SetActive(hasShield);
 
         if (hasShield)
-            shieldText.text = enemy.Shield.ToString();
+        {
+            shieldText.text =
+                enemy.Shield.ToString();
+        }
     }
 
+    // 戦闘不能表示
     private void RefreshDeadState()
     {
+        CanvasGroup canvasGroup =
+            GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+        {
+            return;
+        }
+
         bool dead = enemy.CurrentHp <= 0;
 
-        GetComponent<CanvasGroup>().alpha =
+        canvasGroup.alpha =
             dead ? 0.4f : 1f;
     }
 
-    private void LateUpdate()
+    private void OnClickEnemy()
     {
-        if (enemy == null) return;
-
-        Vector3 screenPos =
-            mainCamera.WorldToScreenPoint(
-                enemy.transform.position + uiOffset);
-
-        gameObject.SetActive(screenPos.z > 0);
-
-        if (screenPos.z > 0)
+        if (enemy == null)
         {
-            rectTransform.position = screenPos;
+            return;
         }
+
+        if (BattleTargetSelector.Instance == null)
+        {
+            Debug.LogError(
+                "BattleTargetSelectorが存在しません"
+            );
+
+            return;
+        }
+
+        BattleTargetSelector.Instance.SelectEnemy(enemy);
+
+        Debug.Log(
+            $"Enemy UIクリック: {enemy.CharacterName}"
+        );
     }
 }

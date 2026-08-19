@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b9cd9f08db73848b52347782b860c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boom
-  characterName: "\u30DC\u30E0"
+  characterName: "\u3067\u304B\u30B9\u30E9\u30A4\u30E0"
   maxHp: 61
   currentHp: 61
   shield: 0

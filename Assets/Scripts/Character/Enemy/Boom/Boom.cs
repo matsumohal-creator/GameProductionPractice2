@@ -1,69 +1,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boom : EnemyBase
+// スライムの行動パターン
+// 1ターン目: 10ダメージの攻撃
+// 2ターン目: 何もしない
+// 3ターン目: 攻撃前に筋力+5して攻撃、攻撃後に筋力をリセット
+// 以降ループ
+public class Boom: EnemyBase
 {
-    [SerializeField]
-    private int attackDamage = 7;
-
-    [SerializeField]
-    private int explosionDamage = 14;
-
-    [SerializeField]
-    private int reviveCountdownTurns = 2;
-
+    // 現在のターンカウント（1?3でループ）
     private int turnCount = 1;
-    private bool isCountdownActive;
-    private int remainingCountdownTurns;
+
+    // 基本攻撃力（1ターン目、3ターン目共に10）
+    [SerializeField]
+    private int baseAttackDamage = 10;
+
+    // 3ターン目の攻撃前に付与する筋力バフのスタック数
+    [SerializeField]
+    private int strengthStack = 5;
 
     public override void ExecuteTurn()
     {
-        // 通常行動中は1～3ターンループ、カウントダウン中は爆発処理を優先
-        List<PlayerBase> players = BattleManager.Instance.Players;
-        List<PlayerBase> alivePlayers = new List<PlayerBase>();
-
-        foreach (PlayerBase player in players)
-        {
-            if (player.CurrentHp > 0)
-            {
-                alivePlayers.Add(player);
-            }
-        }
-
-        if (alivePlayers.Count == 0)
-        {
-            return;
-        }
-
-        if (isCountdownActive)
-        {
-            remainingCountdownTurns--;
-
-            if (remainingCountdownTurns <= 0)
-            {
-                ExplodeAndDie(alivePlayers);
-            }
-            else
-            {
-                Debug.Log(name + " は爆発準備中... 残り " + remainingCountdownTurns + " ターン");
-            }
-
-            return;
-        }
-
+        // ターンカウントに応じた行動
+        // 行動はturnCount(1～3)で分岐し、最後にループ
         switch (turnCount)
         {
             case 1:
-                ExecuteAttack(alivePlayers);
+                // 1ターン目: 10ダメージ攻撃
+                ExecuteAttack(baseAttackDamage);
                 break;
+
             case 2:
-                Debug.Log(name + " は様子をうかがっている...");
+                // 2ターン目: 何もしない
+                Debug.Log(name + " は力を溜めている...");
                 break;
+
             case 3:
-                ExecuteAttack(alivePlayers);
+                // 3ターン目: 攻撃前に筋力+5してから攻撃
+                ApplyStatusEffect(StatusEffectType.Strength, 1, strengthStack);
+                Debug.Log(name + " は筋力が上がった（+" + strengthStack + "）");
+
+                ExecuteAttack(baseAttackDamage);
+
+                // 攻撃後は筋力をリセット
+                RemoveStatusEffect(StatusEffectType.Strength);
+                Debug.Log(name + " の筋力が元に戻った");
                 break;
         }
 
+        // ターンカウントを進める（3ターンでループ）
         turnCount++;
         if (turnCount > 3)
         {
@@ -71,68 +56,4 @@ public class Boom : EnemyBase
         }
     }
 
-    public override void TakeDamage(int amount, IStatusEffectTarget attacker = null)
-    {
-        if (isCountdownActive)
-        {
-            return;
-        }
-
-        base.TakeDamage(amount);
-
-        if (CurrentHp <= 0)
-        {
-            StartExplosionCountdown();
-        }
-    }
-
-    public override void TakeDirectDamage(int amount)
-    {
-        if (isCountdownActive)
-        {
-            return;
-        }
-
-        base.TakeDirectDamage(amount);
-
-        if (CurrentHp <= 0)
-        {
-            StartExplosionCountdown();
-        }
-    }
-
-    private void StartExplosionCountdown()
-    {
-        isCountdownActive = true;
-        remainingCountdownTurns = Mathf.Max(1, reviveCountdownTurns);
-
-        SetHp(1);
-        ClearStatusEffects();
-
-        Debug.Log(name + " は倒れた... しかし " + remainingCountdownTurns + " ターン後に爆発する");
-    }
-
-    private void ExecuteAttack(List<PlayerBase> targets)
-    {
-        PlayerBase target = targets[Random.Range(0, targets.Count)];
-        int finalDamage = DamageCalculator.CalculateDamage(attackDamage, this, target);
-
-        target.TakeDamage(finalDamage);
-
-        Debug.Log(name + " が " + target.name + " に " + finalDamage + " のダメージを与えた");
-    }
-
-    private void ExplodeAndDie(List<PlayerBase> alivePlayers)
-    {
-        Debug.Log(name + " が爆発した！");
-
-        foreach (PlayerBase player in alivePlayers)
-        {
-            player.TakeDamage(explosionDamage);
-            Debug.Log(player.name + " は " + explosionDamage + " のダメージを受けた");
-        }
-
-        isCountdownActive = false;
-        SetHp(0);
-    }
 }

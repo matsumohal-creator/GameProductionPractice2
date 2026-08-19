@@ -27,6 +27,12 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     private EventEffectManager eventEffectManager;
 
+    [SerializeField]
+    private DeckListUI deckListUI;
+
+    [SerializeField]
+    private PartyHpUI partyHpUI;
+
     // セーブデータを保持する変数
     private SaveData saveData;
     // クエスト情報UIが開いているかどうかを管理するフラグ
@@ -65,6 +71,11 @@ public class StageManager : MonoBehaviour
         // イベントUIを初期化
         eventOverlayUI.Initialize(this, eventEffectManager);
 
+        if (partyHpUI != null)
+        {
+            partyHpUI.Refresh();
+        }
+
         // 現在のステージ情報をロードする
         LoadCurrentStage();
     }
@@ -76,6 +87,17 @@ public class StageManager : MonoBehaviour
         {
             DebugUnlockSelectedStage();
         }
+    }
+
+    public void ShowDeckList()
+    {
+        if (deckListUI == null)
+        {
+            Debug.LogWarning("DeckListUIが設定されていません");
+            return;
+        }
+
+        deckListUI.ShowDeck();
     }
 
     // デバッグ用：選択中ステージをクリア扱いにする

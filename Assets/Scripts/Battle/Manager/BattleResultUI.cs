@@ -86,6 +86,7 @@ public class BattleResultUI : MonoBehaviour
 
         //β版
         //今後（マスター版）はオーバーレイ表示に変更
-      SceneManager.LoadScene("StageScene");
+        SceneLoader.NextSceneName = "SelectCardsScene";
+        SceneManager.LoadScene("LoadingScene");
     }
 }

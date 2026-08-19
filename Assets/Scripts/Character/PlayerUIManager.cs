@@ -54,7 +54,7 @@ public class PlayerUIManager : MonoBehaviour
         }
 
         // プレイヤーUIを生成
-        for (int i = 0; i < players.Count; i++)
+        for (int i = players.Count - 1; i >= 0; i--)
         {
             PlayerBase player = players[i];
 
@@ -73,12 +73,14 @@ public class PlayerUIManager : MonoBehaviour
             ui.Initialize(player);
 
             // 左から順番に配置
+            int positionIndex = players.Count - 1 - i;
+
             RectTransform rect =
                 ui.GetComponent<RectTransform>();
 
             rect.anchoredPosition =
                 startPosition +
-                new Vector2(i * spacing, 0);
+                new Vector2(positionIndex * spacing, 0);
 
             playerUIs.Add(ui);
         }

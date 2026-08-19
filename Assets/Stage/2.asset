@@ -16,9 +16,12 @@ MonoBehaviour:
   stageName: asf
   description: asf
   stageType: 1
+  battleIcon: {fileID: 21300000, guid: 055b6ce9de94abc4f91582b583540481, type: 3}
+  eventIcon: {fileID: 21300000, guid: e3d8c69b5d9ca574ea1ecaf210b636b6, type: 3}
   eventTable: {fileID: 0}
   useFixedEvent: 0
   fixedEvent: {fileID: 0}
+  isGameClearStage: 0
   enemyPrefabs:
   - {fileID: 8658986864154508826, guid: 169fa12cc25b4084cac0295861c836ad, type: 3}
   nextStages:

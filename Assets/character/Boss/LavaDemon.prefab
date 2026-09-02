@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Floor1Boss
   characterName: "\u6EB6\u5CA9\u30C7\u30FC\u30E2\u30F3"
-  maxHp: 500
-  currentHp: 500
+  maxHp: 200
+  currentHp: 200
   shield: 0
   speed: 0
   attackPower: 0
